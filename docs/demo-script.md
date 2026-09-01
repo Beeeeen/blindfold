@@ -113,7 +113,7 @@ live. A chart appears on the page.
 
 ## Things to say only if there is room
 
-- 43 automated checks run against a real Chrome, 14 of them through the
+- 76 automated checks run against a real Chrome, 14 of them through the
   browser's own WebMCP API
 - Every grade is one click to override, and the toolset re-registers instantly
 - The sample data is generated in-page, so no real person's record ships in
