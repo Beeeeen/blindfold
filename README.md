@@ -2,6 +2,8 @@
 
 **Analysis your AI never sees.**
 
+**Live: <https://beeeeen.github.io/blindfold/>**
+
 Blindfold is a data workbench that hands an AI agent the controls to a dataset it
 is structurally unable to read. You drop in a spreadsheet of salaries, patient
 records or customer accounts. The agent decides what to compute. The page

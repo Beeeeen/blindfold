@@ -149,8 +149,8 @@ a compliance team actually needs before they will let this near production data.
 
 ## Submission checklist
 
-- [ ] Live URL, HTTPS, reachable in ChatGPT's browser or Chrome + flag
-- [ ] Public repo, MIT licence, full source — https://github.com/Beeeeen/blindfold
+- [x] Live URL, HTTPS, reachable in ChatGPT's browser or Chrome + flag — https://beeeeen.github.io/blindfold/
+- [x] Public repo, MIT licence, full source — https://github.com/Beeeeen/blindfold
 - [ ] Demo video under 3:00, public on YouTube, **with audio**
 - [ ] Text description covering use-case fit, UX benefit, implementation
 - [ ] Submitted before **3 Sep 2026, 13:00 PDT** (4 Sep, 04:00 Taiwan)
