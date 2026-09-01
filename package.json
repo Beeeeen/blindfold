@@ -1,0 +1,28 @@
+{
+  "name": "blindfold",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Analysis your AI never sees. A WebMCP data workbench where the agent orchestrates queries it is structurally unable to read.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "node test/smoke.mjs",
+    "shot": "node test/shot.mjs",
+    "test:live": "node test/webmcp-live.mjs",
+    "test:coverage": "node test/coverage.mjs",
+    "test:all": "node test/smoke.mjs && node test/webmcp-live.mjs && node test/coverage.mjs && node test/race.mjs",
+    "test:race": "node test/race.mjs"
+  },
+  "dependencies": {
+    "@duckdb/duckdb-wasm": "^1.29.0",
+    "@observablehq/plot": "^0.6.17"
+  },
+  "devDependencies": {
+    "@duckdb/node-api": "^1.5.5-r.4",
+    "puppeteer-core": "^25.9.0",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.5"
+  }
+}

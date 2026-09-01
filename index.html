@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Blindfold — analysis your AI never sees</title>
+    <meta
+      name="description"
+      content="A WebMCP data workbench. The agent designs the analysis, the page performs it, and the raw rows never leave your browser."
+    />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%99%88%3C/text%3E%3C/svg%3E" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <div>
+          <h1>Blindfold</h1>
+          <p class="tagline">The agent runs the analysis. It never sees the data.</p>
+        </div>
+      </div>
+      <div class="status" id="mcp-status" data-state="checking">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span class="status-text">Checking for WebMCP…</span>
+      </div>
+    </header>
+
+    <main class="layout">
+      <!-- ── Left: the data and how it was classified ─────────────────── -->
+      <section class="panel panel-data" aria-labelledby="data-heading">
+        <h2 id="data-heading">Your data</h2>
+
+        <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Load a data file">
+          <p class="dropzone-title">Drop a CSV, Parquet or JSON file</p>
+          <p class="dropzone-sub">It is opened inside this tab. Nothing is uploaded.</p>
+          <div class="dropzone-actions">
+            <button type="button" class="btn btn-primary" id="pick-file">Choose file</button>
+            <button type="button" class="btn" id="load-sample">Use sample payroll</button>
+          </div>
+          <input type="file" id="file-input" accept=".csv,.tsv,.parquet,.json,.ndjson" hidden />
+        </div>
+
+        <div class="dataset" id="dataset" hidden>
+          <div class="dataset-head">
+            <strong id="dataset-name">—</strong>
+            <button type="button" class="btn btn-quiet" id="change-file">Change</button>
+          </div>
+          <p class="dataset-meta" id="dataset-meta"></p>
+
+          <h3 class="subhead">
+            Column classification
+            <span class="hint" title="Every column is graded before an agent is told it exists. The grade decides which tools may touch it. Click a grade to override.">?</span>
+          </h3>
+          <ul class="columns" id="columns"></ul>
+
+          <p class="legend">
+            <span class="tier tier-identifier">sealed</span> never leaves the page ·
+            <span class="tier tier-sensitive">personal</span> aggregates only ·
+            <span class="tier tier-quasi">category</span> groupable ·
+            <span class="tier tier-safe">safe</span>
+          </p>
+        </div>
+      </section>
+
+      <!-- ── Centre: what the human sees ──────────────────────────────── -->
+      <section class="panel panel-stage" aria-labelledby="stage-heading">
+        <h2 id="stage-heading" class="sr-only">Findings</h2>
+
+        <div class="charts" id="charts">
+          <div class="chart-empty">
+            <p class="empty-title">Nothing drawn yet</p>
+            <p class="empty-sub">
+              Load a dataset, then ask your agent something like<br />
+              <em>“Where is pay least equitable, and show me a chart of it.”</em>
+            </p>
+          </div>
+        </div>
+
+        <div class="feed-wrap">
+          <h3 class="subhead">
+            What the agent asked
+            <span class="hint" title="Every tool call the agent made, in order, with the guard's verdict.">?</span>
+          </h3>
+          <ol class="feed" id="feed">
+            <li class="feed-empty">No tool calls yet.</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ── Right: the receipt ───────────────────────────────────────── -->
+      <section class="panel panel-ledger" aria-labelledby="ledger-heading">
+        <h2 id="ledger-heading">Disclosure ledger</h2>
+
+        <div class="headline">
+          <span class="headline-value" id="rows-released">0</span>
+          <span class="headline-label">raw rows released to the agent</span>
+        </div>
+
+        <dl class="meters">
+          <div class="meter">
+            <dt>In this page</dt>
+            <dd id="bytes-in">0 B</dd>
+          </div>
+          <div class="meter">
+            <dt>Released to agent</dt>
+            <dd id="bytes-out">0 B</dd>
+          </div>
+          <div class="meter">
+            <dt>Calls refused</dt>
+            <dd id="calls-blocked">0</dd>
+          </div>
+          <div class="meter">
+            <dt>Groups suppressed</dt>
+            <dd id="groups-suppressed">0</dd>
+          </div>
+        </dl>
+
+        <div class="budget">
+          <div class="budget-head">
+            <span>Disclosure budget</span>
+            <span id="budget-text">0 / 2000</span>
+          </div>
+          <div class="budget-track"><div class="budget-fill" id="budget-fill"></div></div>
+          <p class="budget-note">
+            Enough narrow questions can reconstruct a row even when every single answer looks harmless. The budget caps
+            how many values one session may ever learn.
+          </p>
+        </div>
+
+        <details class="runner">
+          <summary>Run a tool without an agent</summary>
+          <p class="runner-note">For reviewing this page in a browser that has no WebMCP host attached.</p>
+          <label class="field">
+            <span>Tool</span>
+            <select id="runner-tool"></select>
+          </label>
+          <label class="field">
+            <span>Arguments (JSON)</span>
+            <textarea id="runner-args" rows="4" spellcheck="false">{}</textarea>
+          </label>
+          <button type="button" class="btn btn-primary" id="runner-go">Call tool</button>
+          <pre class="runner-out" id="runner-out" hidden></pre>
+        </details>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>
+        Built for the WebMCP Challenge. Everything above runs in this tab —
+        <a href="https://duckdb.org/docs/api/wasm/overview" rel="noopener">DuckDB-WASM</a> for the queries,
+        <a href="https://github.com/webmachinelearning/webmcp" rel="noopener">WebMCP</a> for the agent surface.
+      </p>
+    </footer>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
