@@ -715,6 +715,17 @@ button.tier {
   font-variant-numeric: tabular-nums;
 }
 
+.ratio {
+  margin: 12px 0 0;
+  padding: 10px 12px;
+  border-left: 3px solid var(--accent);
+  background: var(--paper);
+  border-radius: 0 6px 6px 0;
+  font-size: 11.5px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
 .budget {
   margin-top: 18px;
 }

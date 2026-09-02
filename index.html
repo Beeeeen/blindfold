@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Blindfold — analysis your AI never sees</title>
+    <title>Blindfold — analyse what your AI cannot read</title>
     <meta
       name="description"
-      content="A WebMCP data workbench. The agent designs the analysis, the page performs it, and the raw rows never leave your browser."
+      content="A WebMCP data workbench. Your agent analyses a file far past what it could ever read into context — because it never reads it. The rows stay in your browser."
     />
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%99%88%3C/text%3E%3C/svg%3E" />
   </head>
@@ -16,7 +16,7 @@
         <span class="brand-mark" aria-hidden="true"></span>
         <div>
           <h1>Blindfold</h1>
-          <p class="tagline">The agent runs the analysis. It never sees the data.</p>
+          <p class="tagline">Analyse a file your AI could never read — without showing it a single row.</p>
         </div>
       </div>
       <div class="status" id="mcp-status" data-state="checking">
@@ -32,7 +32,7 @@
 
         <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Load a data file">
           <p class="dropzone-title">Drop a CSV, Parquet or JSON file</p>
-          <p class="dropzone-sub">It is opened inside this tab. Nothing is uploaded.</p>
+          <p class="dropzone-sub">Opened inside this tab. A million rows is fine — nothing is uploaded, nothing is sampled.</p>
           <div class="dropzone-actions">
             <button type="button" class="btn btn-primary" id="pick-file">Choose file</button>
             <button type="button" class="btn" id="load-sample">Use sample payroll</button>
@@ -138,6 +138,8 @@
             <dd id="groups-suppressed">0</dd>
           </div>
         </dl>
+
+        <p class="ratio" id="ratio" hidden></p>
 
         <div class="budget">
           <div class="budget-head">

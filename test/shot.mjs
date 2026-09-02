@@ -1,4 +1,6 @@
 import puppeteer from 'puppeteer-core';
+import { existsSync, statSync } from 'node:fs';
+import { join } from 'node:path';
 
 const b = await puppeteer.launch({
   executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe',
@@ -8,8 +10,16 @@ const b = await puppeteer.launch({
 });
 const p = await b.newPage();
 await p.goto('http://localhost:4173/', { waitUntil: 'networkidle2', timeout: 120000 });
-await p.click('#load-sample');
-await p.waitForFunction(() => document.querySelectorAll('#columns .column').length > 0, { timeout: 180000 });
+// Shoot the screenshot against the big file when it exists, so the ledger in
+// the README shows the numbers the README quotes.
+const big = join(process.cwd(), 'sample-data', 'employee_compensation_2026.csv');
+if (existsSync(big) && statSync(big).size > 50 * 1024 * 1024) {
+  const input = await p.$('#file-input');
+  await input.uploadFile(big);
+} else {
+  await p.click('#load-sample');
+}
+await p.waitForFunction(() => /\d[\d,]* rows/.test(document.querySelector('#dataset-meta')?.textContent ?? ''), { timeout: 600000 });
 
 const call = (n, a) => p.evaluate((x, y) => window.blindfold.callTool(x, y), n, a);
 

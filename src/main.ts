@@ -45,6 +45,7 @@ const el = {
   sealTest: $<HTMLButtonElement>('#seal-test'),
   sealResults: $('#seal-results'),
   transcriptCopy: $<HTMLButtonElement>('#transcript-copy'),
+  ratio: $('#ratio'),
 };
 
 let info: DatasetInfo | null = null;
@@ -126,6 +127,19 @@ ledger.subscribe((s) => {
   el.bytesOut.textContent = bytes(s.bytesReleased);
   el.callsBlocked.textContent = String(s.callsBlocked);
   el.groupsSuppressed.textContent = String(s.groupsSuppressed);
+
+  // The ratio is the argument in one line: the file is enormous, the answer is
+  // tiny, and the difference never had to travel.
+  if (s.bytesIngested > 0 && s.bytesReleased > 0) {
+    const ratio = Math.round(s.bytesIngested / s.bytesReleased);
+    const tokens = Math.round(s.bytesIngested / 4);
+    el.ratio.hidden = false;
+    el.ratio.textContent =
+      `Roughly ${tokens.toLocaleString()} tokens of text in this page — far past any model's context window. ` +
+      `The agent has read 1 byte for every ${ratio.toLocaleString()} it did not.`;
+  } else {
+    el.ratio.hidden = true;
+  }
 
   const pct = Math.min(100, (s.cellsReleased / s.budgetCells) * 100);
   el.budgetText.textContent = `${s.cellsReleased} / ${s.budgetCells}`;

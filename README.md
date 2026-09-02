@@ -1,13 +1,28 @@
 # Blindfold
 
-**Analysis your AI never sees.**
+**Analyse a file your AI could never read — without showing it a single row.**
 
 **Live: <https://beeeeen.github.io/blindfold/>**
 
-Blindfold is a data workbench that hands an AI agent the controls to a dataset it
-is structurally unable to read. You drop in a spreadsheet of salaries, patient
-records or customer accounts. The agent decides what to compute. The page
-computes it. Only the answer crosses back.
+A 99 MB spreadsheet is about 26 million tokens. No model can read that. Paste a
+fraction of it and you get an answer about a fraction of your data; upload the
+whole thing and you have handed over every name and salary in it.
+
+Blindfold does neither. The file opens inside your browser tab, the agent gets
+tools instead of rows, and it directs an analysis over data it is structurally
+unable to see.
+
+| A million rows, 99 MB | |
+|---|---|
+| Read and classified | 3.2 s |
+| Median salary by department | 0.07 s |
+| Pay gap by level, both cohorts k-checked | 0.13 s |
+| Bonus by level × region × department | 0.09 s |
+| **Sent to the agent** | **27 KB — about 6,800 tokens** |
+| **Raw rows sent to the agent** | **0** |
+
+One byte reached the agent for every 3,799 that did not. Measured, not
+estimated: `npm run test:scale`.
 
 ![Blindfold analysing a payroll file](docs/screenshot.png)
 
@@ -15,13 +30,22 @@ computes it. Only the answer crosses back.
 
 ## The problem
 
-Every organisation with data worth analysing has a rule against pasting it into a
-chatbot, and the rule is correct. Uploading a payroll file to an AI service means
-handing over every row, every name, every salary — to answer a question whose
-answer is one number.
+Two walls, and every real dataset hits both.
 
-So the analysis does not happen, or it happens badly, in a spreadsheet, by
-somebody who has better things to do.
+**The context window.** Anything worth analysing is bigger than a model can
+read. The usual workaround is to paste a sample, which answers a question about
+the sample rather than about your data.
+
+**The upload.** Every organisation with data worth analysing has a rule against
+pasting it into a chatbot, and the rule is correct: it means handing over every
+row, every name, every salary, to learn a single number.
+
+So the analysis doesn't happen, or it happens badly in a spreadsheet, by somebody
+with better things to do.
+
+The two walls have the same door. If the agent never reads the rows, the file
+can be any size *and* nothing has to be disclosed. Those stop being two features
+and become one.
 
 ## The idea
 
@@ -195,6 +219,9 @@ npm run test:coverage # 33 checks: user files, every chart kind, every refusal
 npm run test:seal    # 19 checks: the seal holds, and the transcript names nobody
 npm run test:race    # 5 runs: clicking before the engine has finished booting
 npm run test:all     # all of the above
+
+npm run sample -- 1000000   # write the 99 MB file
+npm run test:scale          # 8 checks: a million rows, timings, the ratio
 ```
 
 `npm test` drives a real Chrome and asserts that the compiled SQL runs, that the

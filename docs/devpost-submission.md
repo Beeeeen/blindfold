@@ -8,24 +8,30 @@ of those.
 
 ## Tagline (short)
 
-Analysis your AI never sees. The agent designs the query, the browser runs it,
-and the raw rows never leave the page.
+Analyse a file your AI could never read — without showing it a single row.
+A million rows in the tab, 27 KB to the agent, zero rows disclosed.
 
 ---
 
 ## Inspiration
 
-Every organisation with data worth analysing has a rule against pasting it into a
-chatbot, and the rule is correct. Uploading a payroll file to answer one question
-means handing over every row, every name, every salary — to learn a single
-number. So the analysis doesn't happen, or it happens badly in a spreadsheet, by
-someone with better things to do.
+Every real dataset hits two walls at once, and they are usually treated as
+separate problems.
 
-The usual fixes are all about the model: run it locally, sign a DPA, redact first.
-WebMCP suggests a different one. If the tool executes *inside the page*, the data
-can stay somewhere the agent has no way to address, while the agent still directs
-the work. That isn't a convenience — it's a different trust model, and it only
-became available when tools started running in the browser.
+The first is size. A 99 MB spreadsheet is roughly 26 million tokens. No model
+reads that, so people paste a sample and get an answer about the sample.
+
+The second is disclosure. Uploading the whole file to answer one question means
+handing over every name and salary in it, which is why most organisations ban it
+outright.
+
+The realisation that started this project is that both walls have the same door.
+If the agent never reads the rows, the file can be any size *and* nothing has to
+be disclosed — those stop being two features and become one consequence of the
+same design. WebMCP is what makes it reachable: the tool executes inside the
+page, so the data can sit in memory the agent has no way to address while the
+agent still directs the work. That is not a convenience. It is a different trust
+model, and it only became available when tools started running in the browser.
 
 ## What it does
 
@@ -65,9 +71,20 @@ cannot do is see a row.
 - **A transcript, not a summary.** Every call is stored with the exact text that
   went back, character for character. Search it for a name and there is none.
 
-On the 50,000-row sample it finds a real seeded result — a gender pay gap of about
-3% at IC1-IC3 and 12-14% from IC4 upward — having read 4.9 MB and disclosed about
-3.7 KB of aggregates.
+Measured on a million rows — 99 MB, about 26 million tokens of text:
+
+| | |
+|---|---|
+| Read and classified | 3.2 s |
+| Median salary by department | 0.07 s |
+| Pay gap by level, both cohorts k-checked | 0.13 s |
+| Bonus by level × region × department | 0.09 s |
+| Sent to the agent | 27 KB, about 6,800 tokens |
+| Raw rows sent to the agent | 0 |
+
+One byte reached the agent for every 3,799 that did not, and on the way it found
+a real seeded result: a gender pay gap of about 3% at IC1–IC3 that widens to
+12–14% from IC4 upward. The model never saw a salary.
 
 ## How we built it
 

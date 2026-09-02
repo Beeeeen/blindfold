@@ -15,25 +15,34 @@ the project working live.
       load in the video is dead air.
 - [ ] Click **Use sample payroll** once, then reload — proves generation speed
       without making the viewer watch it.
-- [ ] `npm run sample` for the on-disk copy you drag in and open in Excel for
-      the opening shot. It is the same data as the button, so the figures match.
+- [ ] `npm run sample -- 1000000` for the 99 MB file the opening shot needs.
+      Excel will refuse it past ~1,048,576 rows — that refusal is a good shot.
+      The in-app button stays at 50,000 so it generates instantly.
 - [ ] Screen at 1440p or higher, browser zoom ~110% so the ledger numbers read.
 
 ---
 
-## 0:00 – 0:20 · The problem, stated once
+## 0:00 – 0:22 · Two walls, one shot
 
-> "This is a payroll file. Fifty thousand employees — names, emails, salaries.
-> If I paste this into an AI chat to ask one question, I have just handed over
-> every row. So in most companies, this analysis never happens."
+> "A million employee records. Ninety-nine megabytes — about twenty-six million
+> tokens. No model can read this. And if I could upload it, I'd be handing over
+> every name and salary in it just to ask one question. So normally this
+> analysis just doesn't happen."
 
-**On screen:** the file open in a spreadsheet, scrolling. Names and salaries
-visible. Close it.
+**On screen:** the file in a spreadsheet, scrolling fast through names and
+salaries. Show the file size in the properties dialog. Close it.
 
-## 0:20 – 0:45 · Load it, show the grading
+Keep this beat tight — the point is only to plant *large* and *sensitive*
+before anything else happens.
 
-> "Blindfold opens it inside the browser tab. Nothing is uploaded. And before
-> the agent is even told this file exists, every column gets graded."
+## 0:22 – 0:50 · Drop it in, watch the clock
+
+> "Blindfold opens it inside the browser tab. Ninety-nine megabytes, three
+> seconds, nothing uploaded. And before the agent is even told this file exists,
+> every column gets graded."
+
+**On screen:** drag the 99 MB file in. Let the viewer see it land — the row
+count reading 1,000,000 is the whole first act paying off.
 
 **On screen:** drop the file in. Point at the left panel:
 `employee_id`, `full_name`, `email` → **sealed**. `base_salary` → **personal**.
@@ -59,9 +68,10 @@ Open ChatGPT's address-bar tool list to show the eight names.
 **On screen:** let the tool calls run. The "What the agent asked" feed fills in
 live. A chart appears on the page.
 
-> "It's calling describe_dataset, then compare_groups, then rendering. Watch the
-> ledger on the right — four point nine megabytes went into this page. Three
-> kilobytes have come back out. Zero raw rows."
+> "It's calling describe_dataset, then compare_groups, then rendering. Every one
+> of those ran across all million rows in about a tenth of a second. And watch
+> the ledger — ninety-nine megabytes went into this page. Twenty-seven kilobytes
+> came back out. Zero raw rows."
 
 **Let the answer land:** the gap is ~3% at IC1-IC3 and 12-14% from IC4 up.
 Say the figures that are on screen, not round numbers near them.
@@ -118,14 +128,14 @@ own violation messages.
 
 ## Shot list (in order)
 
-1. Spreadsheet with real-looking rows, scrolling — 8s
-2. Drop file into Blindfold, column panel populating — 12s
+1. Spreadsheet scrolling through a million rows, file size visible — 10s
+2. Drag the 99 MB file in, row count landing on 1,000,000 — 12s
 3. Close-up: three `sealed` badges — 6s
 4. Status pill flipping to *WebMCP connected* — 4s
 5. ChatGPT tool list in the address bar — 6s
 6. Prompt typed, tool calls streaming in the feed — 25s
 7. Chart appearing — 8s
-8. Close-up: ledger `4.9 MB in / 3.7 KB out / 0 raw rows` — 8s
+8. Close-up: ledger `99 MB in / 27 KB out / 0 raw rows` and the 1:3,799 line — 10s
 9. Adversarial prompt, two red refusals — 20s
 9b. "Try to leak data on purpose" — five refusals + DevTools console — 15s
 9c. A feed row expanded, showing the verbatim payload — 8s
