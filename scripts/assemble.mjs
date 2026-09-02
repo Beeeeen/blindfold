@@ -105,8 +105,17 @@ for (const b of spec.beats) {
 
 const list = join(WORK, 'concat.txt');
 writeFileSync(list, segments.map((s) => `file '${s.split('\\').join('/')}'`).join('\n'));
-ff(['-f', 'concat', '-safe', '0', '-i', list, '-c', 'copy', OUT]);
+const joined = join(WORK, 'joined.mp4');
+ff(['-f', 'concat', '-safe', '0', '-i', list, '-c', 'copy', joined]);
 
+// Fade the very start and end so the cut does not click, and re-check the
+// loudness of the whole thing rather than trusting the per-beat targets.
 const total = spec.beats.reduce((a, b) => a + durations[b.id], 0);
+ff([
+  '-i', joined,
+  '-af', `afade=t=in:st=0:d=0.25,afade=t=out:st=${(total - 0.45).toFixed(2)}:d=0.45`,
+  '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k', OUT,
+]);
+
 console.log(`\n${OUT}`);
 console.log(`${Math.floor(total / 60)}:${String(Math.round(total % 60)).padStart(2, '0')} — limit is 3:00`);

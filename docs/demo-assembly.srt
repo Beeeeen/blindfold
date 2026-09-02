@@ -1,0 +1,167 @@
+1
+00:00:00,097 --> 00:00:01,833
+A million people's salaries.
+
+2
+00:00:02,264 --> 00:00:05,847
+Ninety-nine megabytes twenty-six million tokens.
+
+3
+00:00:06,278 --> 00:00:08,194
+No AI can read a file this size.
+
+4
+00:00:08,653 --> 00:00:11,069
+And you would never paste it into one anyway.
+
+5
+00:00:11,579 --> 00:00:13,657
+So watch one analyse it anyway,
+
+6
+00:00:14,133 --> 00:00:16,443
+without ever seeing a single row.
+
+7
+00:00:16,933 --> 00:00:19,765
+Every column is graded before the agent is told
+
+8
+00:00:19,765 --> 00:00:20,951
+the file exists.
+
+9
+00:00:21,347 --> 00:00:23,974
+Name, email, employee ID sealed.
+
+10
+00:00:24,370 --> 00:00:25,530
+It cannot group by them,
+
+11
+00:00:25,938 --> 00:00:28,158
+filter on them, or ever receive them.
+
+12
+00:00:28,643 --> 00:00:31,756
+Eight WebMCP tools, and notice what is missing:
+
+13
+00:00:32,176 --> 00:00:33,592
+there is no run_sql.
+
+14
+00:00:34,000 --> 00:00:36,360
+The agent cannot write a query at all.
+
+15
+00:00:36,768 --> 00:00:37,852
+It fills in a form,
+
+16
+00:00:38,286 --> 00:00:39,562
+and the page compiles it.
+
+17
+00:00:40,080 --> 00:00:40,562
+Schema.
+
+18
+00:00:40,979 --> 00:00:41,929
+Cohort comparison.
+
+19
+00:00:42,346 --> 00:00:42,736
+Chart.
+
+20
+00:00:43,166 --> 00:00:46,174
+Each one across all one million rows in under
+
+21
+00:00:46,174 --> 00:00:47,059
+a tenth of a second.
+
+22
+00:00:47,515 --> 00:00:50,744
+Three percent pay gap at the junior levels thirteen
+
+23
+00:00:50,900 --> 00:00:51,994
+at the senior ones.
+
+24
+00:00:52,497 --> 00:00:53,799
+Ask who is paid most,
+
+25
+00:00:54,190 --> 00:00:55,232
+and it refuses.
+
+26
+00:00:55,648 --> 00:00:58,226
+A maximum is one real person's salary.
+
+27
+00:00:58,656 --> 00:01:01,065
+And the refusal tells the agent what to ask
+
+28
+00:01:01,065 --> 00:01:03,539
+instead, so it recovers on the next turn.
+
+29
+00:01:04,054 --> 00:01:07,073
+But a counter reading zero is just this page
+
+30
+00:01:07,086 --> 00:01:08,735
+marking its own homework.
+
+31
+00:01:09,161 --> 00:01:11,847
+So the page revokes its own network access.
+
+32
+00:01:12,272 --> 00:01:14,919
+Watch me try to leak the data on purpose.
+
+33
+00:01:15,437 --> 00:01:15,823
+Fetch.
+
+34
+00:01:16,235 --> 00:01:16,940
+XHR.
+
+35
+00:01:17,179 --> 00:01:18,030
+WebSocket.
+
+36
+00:01:18,483 --> 00:01:18,815
+Beacon.
+
+37
+00:01:19,241 --> 00:01:20,225
+Tracking pixel.
+
+38
+00:01:20,637 --> 00:01:22,299
+Chrome refuses all five.
+
+39
+00:01:22,824 --> 00:01:24,362
+Ninety-nine megabytes in.
+
+40
+00:01:24,802 --> 00:01:25,612
+Kilobytes out.
+
+41
+00:01:26,066 --> 00:01:27,041
+Zero rows.
+
+42
+00:01:27,494 --> 00:01:31,327
+Blindfold analyse a file your AI could never read.

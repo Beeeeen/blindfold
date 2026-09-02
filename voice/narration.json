@@ -1,7 +1,7 @@
 {
-  "voice": "en-US-AvaMultilingualNeural",
+  "voice": "en-US-AndrewMultilingualNeural",
   "rate": "-4%",
-  "note": "Roughly 100 seconds. Hook first: the impossible thing before any setup. Every beat has footage the recorder produces, so the video is complete without filming anything. 05b is an optional swap if you shoot the ChatGPT conversation.",
+  "note": "Roughly 100 seconds. Hook first: the impossible thing before any setup. Every beat has footage the recorder produces, so the video is complete without filming anything. 05b is an optional swap if you shoot the ChatGPT conversation. Voice chosen by measurement: widest intonation spread of the four multilingual voices (4.45 semitones vs 3.39 for Ava, 2.55 for Brian), and the register OpenAI-facing material needs -- Microsoft tags it Warm, Confident, Authentic, Honest.",
   "beats": [
     {
       "id": "01-hook",

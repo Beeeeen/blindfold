@@ -1,21 +1,21 @@
 # Cut sheet
 
-Voice: `en-US-AvaMultilingualNeural` at rate `-4%`. Regenerate with `npm run voice`.
+Voice: `en-US-AndrewMultilingualNeural` at rate `-4%`. Regenerate with `npm run voice`.
 
-**Total narration 1:33**, against a 3:00 limit. Leave the gaps between
+**Total narration 1:32**, against a 3:00 limit. Leave the gaps between
 clips short — the numbers below are speech only.
 
 | # | Clip | Length | Footage |
 |---|---|---|---|
-| 1 | `voice/01-hook.mp3` | 11.9s | B-roll: the raw file scrolling, then the drop landing on 1,000,000 rows. |
-| 2 | `voice/02-claim.mp3` | 5.1s | B-roll: hold on the loaded dataset and the sealed badges. |
-| 3 | `voice/03-grading.mp3` | 12.4s | B-roll: cursor across the three sealed badges. |
-| 4 | `voice/04-tools.mp3` | 11.0s | B-roll: the registered tool list opens. |
-| 5 | `voice/05-work.mp3` | 12.9s | B-roll: the tools run, both charts appear. |
-| 6 | `voice/06-refuse.mp3` | 11.8s | B-roll: two refusals appear in red. |
-| 7 | `voice/07-seal.mp3` | 19.1s | B-roll: the leak test refuses all five channels. |
-| 8 | `voice/08-close.mp3` | 8.8s | B-roll: rest on the ledger. |
-| 9 | `voice/05b-chatgpt.mp3` | 14.6s | YOU: the ChatGPT conversation, if you shoot it. Swap it in for 05-work. |
+| 1 | `voice/01-hook.mp3` | 11.5s | B-roll: the raw file scrolling, then the drop landing on 1,000,000 rows. |
+| 2 | `voice/02-claim.mp3` | 5.4s | B-roll: hold on the loaded dataset and the sealed badges. |
+| 3 | `voice/03-grading.mp3` | 11.7s | B-roll: cursor across the three sealed badges. |
+| 4 | `voice/04-tools.mp3` | 11.4s | B-roll: the registered tool list opens. |
+| 5 | `voice/05-work.mp3` | 12.4s | B-roll: the tools run, both charts appear. |
+| 6 | `voice/06-refuse.mp3` | 11.5s | B-roll: two refusals appear in red. |
+| 7 | `voice/07-seal.mp3` | 18.8s | B-roll: the leak test refuses all five channels. |
+| 8 | `voice/08-close.mp3` | 9.0s | B-roll: rest on the ledger. |
+| 9 | `voice/05b-chatgpt.mp3` | 14.9s | YOU: the ChatGPT conversation, if you shoot it. Swap it in for 05-work. |
 
 ## What you still have to shoot
 

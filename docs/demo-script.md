@@ -87,10 +87,26 @@ flattens the delivery, which is the opposite of warmth), a very small room, and
 `loudnorm` to −16 LUFS. Every beat lands within 0.7 LU of the others; raw
 synthesis was −19 to −21 and uneven.
 
-**Voice choice.** `npm run voice:lab` synthesises the same line in all four
-multilingual voices, dry and mastered, with spoken labels, into
-`voice/lab/comparison.mp3`. Switch by changing `voice` in
-`voice/narration.json`:
+**Voice choice, decided by measurement.** `scripts/voice-analyse.py` tracks
+fundamental frequency across the same line in each candidate. What people are
+reacting to when they call a synthetic read flat is objective — the pitch barely
+moves:
+
+| Voice | Median F0 | Intonation spread |
+|---|---|---|
+| **Andrew** (in use) | 116 Hz | **4.45 semitones** |
+| Emma | 172 Hz | 4.44 st |
+| Ava | 208 Hz | 3.39 st |
+| Brian | 123 Hz | 2.55 st |
+
+Andrew and Emma are level on range; Andrew takes it on register. Microsoft tags
+it *Warm, Confident, Authentic, Honest*, which is the voice a project whose
+whole argument is "don't trust me, check it" needs. Emma's *Cheerful* is wrong
+for the subject.
+
+`npm run voice:lab` renders all four dry and mastered with spoken labels into
+`voice/lab/comparison.mp3` if you want to overrule this by ear. Switch by
+changing `voice` in `voice/narration.json`:
 
 | Voice | Microsoft's own description |
 |---|---|
@@ -98,6 +114,20 @@ multilingual voices, dry and mastered, with spoken labels, into
 | `en-US-AndrewMultilingualNeural` | Warm, Confident, Authentic, Honest |
 | `en-US-BrianMultilingualNeural` | Approachable, Casual, Sincere |
 | `en-US-EmmaMultilingualNeural` | Cheerful, Clear, Conversational |
+
+## Captions
+
+`npm run captions` → `docs/demo-assembly.srt`, 42 cues. Upload it with the
+video; YouTube's automatic captions will not spell WebMCP, run_sql, XHR or
+sendBeacon, and a judge reading in a second language sees those mistakes instead
+of the argument.
+
+The timings come from the synthesiser rather than from recognition, so they are
+exact. Two things the raw word events need fixing first: they arrive stripped of
+punctuation, so cues are aligned back against the source line to restore it and
+break on clauses; and the script spells some terms out so the voice says them
+properly, which a reader should not see — "A-I" becomes "AI", "run-S-Q-L"
+becomes `run_sql`.
 
 ## Recording notes
 
