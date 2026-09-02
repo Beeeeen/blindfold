@@ -21,7 +21,8 @@
     "record": "node test/record.mjs",
     "voice": "node scripts/make-voice.mjs",
     "assemble": "node scripts/assemble.mjs",
-    "fileview": "node scripts/make-fileview.mjs"
+    "fileview": "node scripts/make-fileview.mjs",
+    "test:coldload": "node test/coldload.mjs"
   },
   "dependencies": {
     "@duckdb/duckdb-wasm": "^1.29.0",
