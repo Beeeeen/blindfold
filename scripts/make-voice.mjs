@@ -10,7 +10,7 @@
  * words take.
  */
 import { execFileSync } from 'node:child_process';
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
 
 const ROOT = process.cwd();
@@ -21,6 +21,32 @@ const HELPER =
 
 const spec = JSON.parse(readFileSync(join(VOICE_DIR, 'narration.json'), 'utf8'));
 mkdirSync(VOICE_DIR, { recursive: true });
+
+/**
+ * The clearest tell of a synthesised read is that every line moves at the same
+ * speed. A person slows for the line that matters and picks up through the
+ * connective tissue, so each beat carries its own rate and the delivery has a
+ * shape.
+ */
+const rateFor = (beat) => beat.rate ?? spec.rate;
+
+/**
+ * What separates a recorded voice from a synthesised one is mostly not the
+ * synthesis -- it is that nobody put the result through a desk. High-pass out
+ * the rumble, dip where TTS gets boxy, lift presence and air, compress gently
+ * (heavy compression flattens the delivery, which is the opposite of warmth),
+ * add a room so small you only notice it when it is gone, and land on the
+ * loudness target video platforms expect.
+ */
+const MASTER = [
+  'highpass=f=75',
+  'equalizer=f=220:t=q:w=1.2:g=-2.5',
+  'equalizer=f=2800:t=q:w=1.8:g=2',
+  'equalizer=f=9500:t=h:g=2.5',
+  'acompressor=threshold=-20dB:ratio=2.2:attack=15:release=240:makeup=1.5',
+  'aecho=0.9:0.25:22:0.09',
+  'loudnorm=I=-16:TP=-1.5:LRA=11',
+].join(',');
 
 const durationOf = (file) =>
   Number(
@@ -38,18 +64,22 @@ for (const beat of [...spec.beats, ...(spec.optional ?? [])]) {
   const timings = join(VOICE_DIR, `${beat.id}.timings.json`);
   writeFileSync(txt, beat.text, 'utf8');
 
+  const raw = join(VOICE_DIR, `${beat.id}.raw.mp3`);
   execFileSync(
     'python',
-    [HELPER, '--text-file', txt, '--voice', spec.voice, `--rate=${spec.rate}`,
-      '--out-audio', mp3, '--out-timings', timings],
+    [HELPER, '--text-file', txt, '--voice', spec.voice, `--rate=${rateFor(beat)}`,
+      '--out-audio', raw, '--out-timings', timings],
     { stdio: 'pipe' },
   );
+  execFileSync('ffmpeg', ['-y', '-v', 'error', '-i', raw, '-af', MASTER,
+    '-c:a', 'libmp3lame', '-b:a', '192k', mp3], { stdio: 'pipe' });
+  rmSync(raw, { force: true });
 
   const seconds = durationOf(mp3);
   const isOptional = (spec.optional ?? []).some((o) => o.id === beat.id);
   if (!isOptional) total += seconds;
   results.push({ ...beat, seconds, isOptional });
-  console.log(`  ${beat.id.padEnd(14)} ${seconds.toFixed(1)}s`);
+  console.log(`  ${beat.id.padEnd(14)} ${seconds.toFixed(1)}s   rate ${rateFor(beat)}`);
 }
 
 const mmss = (s) => `${Math.floor(s / 60)}:${String(Math.round(s % 60)).padStart(2, '0')}`;

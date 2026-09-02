@@ -10,7 +10,8 @@
         "26,000,000 tokens",
         "no model can read this"
       ],
-      "text": "A million people's salaries. Ninety-nine megabytes — twenty-six million tokens. No A-I can read a file this size. And you would never paste it into one anyway."
+      "text": "A million people's salaries. Ninety-nine megabytes — twenty-six million tokens. No A-I can read a file this size. And you would never paste it into one anyway.",
+      "rate": "-10%"
     },
     {
       "id": "02-claim",
@@ -19,17 +20,20 @@
         "0 rows disclosed",
         "and it still answers"
       ],
-      "text": "So watch one analyse it anyway, without ever seeing a single row."
+      "text": "So watch one analyse it anyway, without ever seeing a single row.",
+      "rate": "-8%"
     },
     {
       "id": "03-grading",
       "footage": "B-roll: cursor across the three sealed badges.",
-      "text": "Every column is graded before the agent is told the file exists. Name, email, employee I-D — sealed. It cannot group by them, filter on them, or ever receive them."
+      "text": "Every column is graded before the agent is told the file exists. Name, email, employee I-D — sealed. It cannot group by them, filter on them, or ever receive them.",
+      "rate": "-2%"
     },
     {
       "id": "04-tools",
       "footage": "B-roll: the registered tool list opens.",
-      "text": "Eight WebMCP tools, and notice what is missing: there is no run-S-Q-L. The agent cannot write a query at all. It fills in a form, and the page compiles it."
+      "text": "Eight WebMCP tools, and notice what is missing: there is no run-S-Q-L. The agent cannot write a query at all. It fills in a form, and the page compiles it.",
+      "rate": "-2%"
     },
     {
       "id": "05-work",
@@ -38,12 +42,14 @@
         "(timed at record time)",
         "across 1,000,000 rows"
       ],
-      "text": "Schema. Cohort comparison. Chart. Each one across all one million rows in under a tenth of a second. Three percent pay gap at the junior levels — thirteen at the senior ones."
+      "text": "Schema. Cohort comparison. Chart. Each one across all one million rows in under a tenth of a second. Three percent pay gap at the junior levels — thirteen at the senior ones.",
+      "rate": "-4%"
     },
     {
       "id": "06-refuse",
       "footage": "B-roll: two refusals appear in red.",
-      "text": "Ask who is paid most, and it refuses. A maximum is one real person's salary. And the refusal tells the agent what to ask instead, so it recovers on the next turn."
+      "text": "Ask who is paid most, and it refuses. A maximum is one real person's salary. And the refusal tells the agent what to ask instead, so it recovers on the next turn.",
+      "rate": "-4%"
     },
     {
       "id": "07-seal",
@@ -52,7 +58,8 @@
         "enforced by the browser",
         "not promised by the app"
       ],
-      "text": "But a counter reading zero is just this page marking its own homework. So the page revokes its own network access. Watch me try to leak the data on purpose. Fetch. X-H-R. WebSocket. Beacon. Tracking pixel. Chrome refuses all five."
+      "text": "But a counter reading zero is just this page marking its own homework. So the page revokes its own network access. Watch me try to leak the data on purpose. Fetch. X-H-R. WebSocket. Beacon. Tracking pixel. Chrome refuses all five.",
+      "rate": "-6%"
     },
     {
       "id": "08-close",
@@ -61,14 +68,16 @@
         "(read from the ledger at record time)",
         "0 raw rows"
       ],
-      "text": "Ninety-nine megabytes in. Kilobytes out. Zero rows. Blindfold — analyse a file your A-I could never read."
+      "text": "Ninety-nine megabytes in. Kilobytes out. Zero rows. Blindfold — analyse a file your A-I could never read.",
+      "rate": "-9%"
     }
   ],
   "optional": [
     {
       "id": "05b-chatgpt",
       "footage": "YOU: the ChatGPT conversation, if you shoot it. Swap it in for 05-work.",
-      "text": "So I ask ChatGPT where pay is least equitable. It reads the schema, compares the cohorts level by level, and draws me the chart. Each of those ran across all one million rows in under a tenth of a second."
+      "text": "So I ask ChatGPT where pay is least equitable. It reads the schema, compares the cohorts level by level, and draws me the chart. Each of those ran across all one million rows in under a tenth of a second.",
+      "rate": "-4%"
     }
   ]
 }

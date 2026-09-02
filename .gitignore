@@ -15,3 +15,4 @@ voice/*.timings.json
 docs/.assembly
 docs/demo-assembly.mp4
 docs/.fileview
+voice/lab

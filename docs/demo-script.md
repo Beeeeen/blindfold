@@ -71,6 +71,34 @@ least equitable in this company, and show me a chart of it."* Needs GPT-5.6 Sol
 or Terra — Luna has WebMCP disabled — and a workspace that is not Enterprise or
 Edu.
 
+## The narration
+
+Edge TTS, same helper the content-factory pipeline uses. Three things keep it
+from sounding synthesised:
+
+**Per-beat pacing.** Every line moves at its own rate — `-10%` for the hook,
+`-2%` through the mechanism, `-9%` to land the close. A constant rate across
+every line is the loudest tell that nobody actually spoke it. Set `rate` on any
+beat in `voice/narration.json`.
+
+**A mastering chain.** High-pass, a dip at 220 Hz where TTS gets boxy, presence
+at 2.8 kHz, air above 9.5 kHz, gentle compression (2.2:1 — heavy compression
+flattens the delivery, which is the opposite of warmth), a very small room, and
+`loudnorm` to −16 LUFS. Every beat lands within 0.7 LU of the others; raw
+synthesis was −19 to −21 and uneven.
+
+**Voice choice.** `npm run voice:lab` synthesises the same line in all four
+multilingual voices, dry and mastered, with spoken labels, into
+`voice/lab/comparison.mp3`. Switch by changing `voice` in
+`voice/narration.json`:
+
+| Voice | Microsoft's own description |
+|---|---|
+| `en-US-AvaMultilingualNeural` | Expressive, Caring, Pleasant, Friendly |
+| `en-US-AndrewMultilingualNeural` | Warm, Confident, Authentic, Honest |
+| `en-US-BrianMultilingualNeural` | Approachable, Casual, Sincere |
+| `en-US-EmmaMultilingualNeural` | Cheerful, Clear, Conversational |
+
 ## Recording notes
 
 - 1600×900 viewport at 2× → 2400×1350, downscaled to 1080p on assembly.
