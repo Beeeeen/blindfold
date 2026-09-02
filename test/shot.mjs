@@ -66,6 +66,8 @@ await p.evaluate(() => {
   const refusal = rows.find((r) => r.dataset.verdict === 'blocked');
   (refusal ?? rows[0])?.click();
 });
+// Open the tool list so the screenshot shows the whole surface the page offers.
+await p.evaluate(() => document.querySelector('#tools-offered')?.setAttribute('open', ''));
 await new Promise((r) => setTimeout(r, 1200));
 await p.screenshot({ path: 'docs/screenshot.png', fullPage: false });
 console.log('wrote docs/screenshot.png');

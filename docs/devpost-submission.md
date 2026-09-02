@@ -154,7 +154,7 @@ do" section covering the differencing risk, the heuristic classifier, and the
 fact that column *names* are metadata the agent does see. k-anonymity is not
 differential privacy and the project says so.
 
-Also: 76 automated checks driving a real Chrome, asserting not just that the
+Also: 95 automated checks driving a real Chrome, asserting not just that the
 queries run but that every refusal the guard advertises actually fires — and
 14 of them go through the browser's own WebMCP API rather than our abstraction
 over it, which is the only reason we found the re-registration bug at all.

@@ -222,6 +222,7 @@ npm run test:all     # all of the above
 
 npm run sample -- 1000000   # write the 99 MB file
 npm run test:scale          # 8 checks: a million rows, timings, the ratio
+npm run test:coldload       # what a first-time visitor waits for
 ```
 
 `npm test` drives a real Chrome and asserts that the compiled SQL runs, that the
