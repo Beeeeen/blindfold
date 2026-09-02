@@ -49,8 +49,21 @@ Nothing is missing. One thing is optional:
 **The ChatGPT conversation.** The tool calls in the B-roll go through the
 browser's real WebMCP API, so the execution is genuine, but a script chooses
 them rather than a model — which is why the narration never says otherwise.
-Shoot the conversation and swap it in for beat 5; the alternate line is already
-synthesised at `voice/05b-chatgpt.mp3` (14.6s).
+Confirmed working in the ChatGPT desktop app: the page reports
+*WebMCP connected — 8 tools offered* there.
+
+Record the conversation with anything (Win+G is enough), then:
+
+```bash
+npm run chatgpt -- path/to/recording.mp4            # whole clip
+npm run chatgpt -- path/to/recording.mp4 --from 4 --to 42   # or trim it
+npm run assemble
+```
+
+It is fitted to the 14.6s alternate line by adjusting speed, so record for as
+long as the agent needs. Assembly prefers the take while
+`docs/broll/05b-chatgpt.webm` exists; delete that file to go back to the
+scripted one.
 
 To shoot it: `Ctrl+Shift+B` in the ChatGPT desktop app, go to
 `https://beeeeen.github.io/blindfold/`, load the sample, and ask *"Where is pay

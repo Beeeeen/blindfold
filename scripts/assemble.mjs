@@ -65,6 +65,17 @@ async function makeCards(missing) {
   await browser.close();
 }
 
+const chatgptTake = join(BROLL, '05b-chatgpt.webm');
+const useChatgpt = existsSync(chatgptTake);
+if (useChatgpt) {
+  const alt = (spec.optional ?? []).find((o) => o.id === '05b-chatgpt');
+  const i = spec.beats.findIndex((b) => b.id === '05-work');
+  if (alt && i >= 0) {
+    spec.beats[i] = alt;
+    console.log('using your ChatGPT take for beat 5');
+  }
+}
+
 const missing = spec.beats.filter((b) => !existsSync(join(BROLL, `${b.id}.webm`)));
 if (missing.length) {
   console.log('placeholder cards:', missing.map((b) => b.id).join(', '));

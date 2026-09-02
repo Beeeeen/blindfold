@@ -22,7 +22,8 @@
     "voice": "node scripts/make-voice.mjs",
     "assemble": "node scripts/assemble.mjs",
     "fileview": "node scripts/make-fileview.mjs",
-    "test:coldload": "node test/coldload.mjs"
+    "test:coldload": "node test/coldload.mjs",
+    "chatgpt": "node scripts/use-chatgpt-clip.mjs"
   },
   "dependencies": {
     "@duckdb/duckdb-wasm": "^1.29.0",
