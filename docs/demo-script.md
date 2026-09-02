@@ -1,4 +1,4 @@
-# Demo video script — 2:45
+# Demo video script — 2:50
 
 Requirement: under 3 minutes, public YouTube, **with audio narration**, showing
 the project working live.
@@ -81,7 +81,24 @@ Say the figures that are on screen, not round numbers near them.
 > refusal tells it what to ask instead — median, p25, p75. So it recovers on the
 > next turn instead of giving up."
 
-## 2:15 – 2:35 · Why in-page matters
+## 2:15 – 2:30 · Prove it, don't claim it
+
+**On screen:** the ledger panel. Click **Try to leak data on purpose**. Five
+lines appear, all refused. Open DevTools Console alongside to show the browser's
+own violation messages.
+
+> "The counter saying zero is just this page marking its own homework. So once
+> the engine starts, the page takes away its own network access. Watch — I'll
+> try to leak the data deliberately. Fetch, XHR, WebSocket, beacon, tracking
+> pixel. The browser refuses all five. That's not me promising; that's Chrome
+> enforcing a policy you can read out of the page yourself."
+
+**Then:** click a row in the feed to expand the verbatim payload.
+
+> "And this is every byte the agent actually received. Not a summary — the
+> literal text. Search it for a name and there isn't one."
+
+## 2:30 – 2:40 · Why in-page matters
 
 **On screen:** point at the chart, then at the ledger.
 
@@ -90,7 +107,7 @@ Say the figures that are on screen, not round numbers near them.
 > gets back is the word 'drawn'. A server-side agent can't show you something
 > without holding it first. This one can."
 
-## 2:35 – 2:45 · Close
+## 2:40 – 2:50 · Close
 
 > "k-anonymity of five, a disclosure budget, and a receipt for every byte.
 > Blindfold. The agent runs the analysis — it never sees the data."
@@ -110,6 +127,8 @@ Say the figures that are on screen, not round numbers near them.
 7. Chart appearing — 8s
 8. Close-up: ledger `4.9 MB in / 3.7 KB out / 0 raw rows` — 8s
 9. Adversarial prompt, two red refusals — 20s
+9b. "Try to leak data on purpose" — five refusals + DevTools console — 15s
+9c. A feed row expanded, showing the verbatim payload — 8s
 10. Close-up: a refusal message with its remedy — 8s
 11. Chart + ledger together — 12s
 12. Ledger, full frame — 6s

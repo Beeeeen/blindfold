@@ -79,8 +79,13 @@
         <div class="feed-wrap">
           <h3 class="subhead">
             What the agent asked
-            <span class="hint" title="Every tool call the agent made, in order, with the guard's verdict.">?</span>
+            <span class="hint" title="Every tool call the agent made, in order, with the guard's verdict. Click any row to read, character for character, exactly what the agent got back.">?</span>
+            <button type="button" class="btn btn-quiet feed-copy" id="transcript-copy">Copy full transcript</button>
           </h3>
+          <p class="feed-note">
+            Click a row to see the exact bytes that crossed. Nothing is summarised — search it for a name or an email
+            address and see that there is none.
+          </p>
           <ol class="feed" id="feed">
             <li class="feed-empty">No tool calls yet.</li>
           </ol>
@@ -94,6 +99,25 @@
         <div class="headline">
           <span class="headline-value" id="rows-released">0</span>
           <span class="headline-label">raw rows released to the agent</span>
+        </div>
+
+        <!-- The part that is not this page marking its own homework. -->
+        <div class="seal" id="seal" data-sealed="false">
+          <div class="seal-head">
+            <span class="seal-dot" aria-hidden="true"></span>
+            <strong id="seal-title">Sealing…</strong>
+          </div>
+          <p class="seal-sub" id="seal-sub">
+            When the engine finishes starting, this page revokes its own network access.
+          </p>
+          <button type="button" class="btn btn-quiet seal-test" id="seal-test" disabled>
+            Try to leak data on purpose
+          </button>
+          <ul class="seal-results" id="seal-results" hidden></ul>
+          <p class="seal-verify">
+            Don't take our word for it: open DevTools → Network and watch it stay empty, or read the policy out of
+            <code>document.head</code> yourself.
+          </p>
         </div>
 
         <dl class="meters">

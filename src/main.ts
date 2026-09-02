@@ -6,6 +6,7 @@ import * as ledger from './ledger';
 import * as tools from './tools';
 import { mountCharts, clearCharts } from './chart';
 import { sampleFile } from './sample';
+import * as seal from './seal';
 
 const $ = <T extends HTMLElement>(sel: string): T => {
   const el = document.querySelector<T>(sel);
@@ -38,6 +39,12 @@ const el = {
   runnerArgs: $<HTMLTextAreaElement>('#runner-args'),
   runnerGo: $<HTMLButtonElement>('#runner-go'),
   runnerOut: $<HTMLPreElement>('#runner-out'),
+  seal: $('#seal'),
+  sealTitle: $('#seal-title'),
+  sealSub: $('#seal-sub'),
+  sealTest: $<HTMLButtonElement>('#seal-test'),
+  sealResults: $('#seal-results'),
+  transcriptCopy: $<HTMLButtonElement>('#transcript-copy'),
 };
 
 let info: DatasetInfo | null = null;
@@ -110,6 +117,9 @@ function renderColumns(): void {
 
 /* ── Ledger ─────────────────────────────────────────────────────────── */
 
+/** Which feed rows are showing their verbatim payload. */
+const expanded = new Set<number>();
+
 ledger.subscribe((s) => {
   el.rowsReleased.textContent = '0';
   el.bytesIn.textContent = bytes(s.bytesIngested);
@@ -122,47 +132,122 @@ ledger.subscribe((s) => {
   el.budgetFill.style.width = `${pct}%`;
   el.budgetFill.classList.toggle('is-high', pct >= 60 && pct < 100);
   el.budgetFill.classList.toggle('is-full', pct >= 100);
+
+  renderFeed(s.entries);
 });
 
 /* ── Activity feed ──────────────────────────────────────────────────── */
 
-let pending: HTMLLIElement | null = null;
-
-tools.onToolActivity((name, phase, detail) => {
-  const empty = el.feed.querySelector('.feed-empty');
-  if (empty) empty.remove();
-
-  if (phase === 'call') {
-    const li = document.createElement('li');
-    li.className = 'feed-item';
-    li.dataset.verdict = 'pending';
-
-    const tool = document.createElement('span');
-    tool.className = 'feed-tool';
-    tool.textContent = name;
-
-    const time = document.createElement('span');
-    time.className = 'feed-time';
-    time.textContent = new Date().toLocaleTimeString();
-
-    const args = document.createElement('p');
-    args.className = 'feed-args';
-    args.textContent = detail === '{}' ? '(no arguments)' : detail;
-
-    li.append(tool, time, args);
-    el.feed.prepend(li);
-    pending = li;
+/**
+ * Rendered from the ledger rather than from live events, so what is on screen
+ * is the same record the transcript exports. A feed that could drift from the
+ * ledger would undermine the only thing this panel is for.
+ */
+function renderFeed(entries: ledger.LedgerEntry[]): void {
+  if (!entries.length) {
+    el.feed.replaceChildren(
+      Object.assign(document.createElement('li'), { className: 'feed-empty', textContent: 'No tool calls yet.' }),
+    );
     return;
   }
 
-  const target = pending;
-  pending = null;
-  if (!target) return;
-  target.dataset.verdict = detail.startsWith('blocked') || detail.startsWith('error') ? 'blocked' : 'released';
-  const note = document.createElement('p');
-  note.className = 'feed-detail';
-  note.textContent = detail.replace(/^(blocked|error) - /, '');
-  target.append(note);
+  const items = [...entries].reverse().map((e) => {
+    const li = document.createElement('li');
+    li.className = 'feed-item';
+    li.dataset.verdict = e.verdict;
+    li.tabIndex = 0;
+    li.title = 'Click to see exactly what the agent received';
+
+    const tool = document.createElement('span');
+    tool.className = 'feed-tool';
+    tool.textContent = e.tool;
+
+    const time = document.createElement('span');
+    time.className = 'feed-time';
+    time.textContent = new Date(e.at).toLocaleTimeString();
+
+    const args = document.createElement('p');
+    args.className = 'feed-args';
+    args.textContent = e.args && e.args !== '{}' ? e.args : '(no arguments)';
+
+    const note = document.createElement('p');
+    note.className = 'feed-detail';
+    note.textContent = e.detail;
+
+    li.append(tool, time, args, note);
+
+    if (expanded.has(e.id)) {
+      const label = document.createElement('p');
+      label.className = 'feed-returned-label';
+      label.textContent = `Received by the agent — ${e.bytesReleased} bytes`;
+      const pre = document.createElement('pre');
+      pre.className = 'feed-returned';
+      pre.textContent = e.returned || '(nothing)';
+      li.append(label, pre);
+    }
+
+    const toggle = () => {
+      if (expanded.has(e.id)) expanded.delete(e.id);
+      else expanded.add(e.id);
+      renderFeed(ledger.snapshot().entries);
+    };
+    li.addEventListener('click', toggle);
+    li.addEventListener('keydown', (ev) => {
+      if ((ev as KeyboardEvent).key === 'Enter' || (ev as KeyboardEvent).key === ' ') {
+        ev.preventDefault();
+        toggle();
+      }
+    });
+    return li;
+  });
+
+  el.feed.replaceChildren(...items);
+}
+
+el.transcriptCopy.addEventListener('click', async () => {
+  const text = ledger.transcript();
+  try {
+    await navigator.clipboard.writeText(text);
+    el.transcriptCopy.textContent = 'Copied';
+  } catch {
+    // Clipboard permission can be refused; showing it is still better than nothing.
+    el.runnerOut.hidden = false;
+    el.runnerOut.textContent = text;
+    el.transcriptCopy.textContent = 'Shown below';
+  }
+  setTimeout(() => {
+    el.transcriptCopy.textContent = 'Copy full transcript';
+  }, 2000);
+});
+
+/* ── The seal ───────────────────────────────────────────────────────── */
+
+seal.subscribe((s) => {
+  el.seal.dataset.sealed = String(s.sealed);
+  el.sealTest.disabled = !s.sealed;
+  if (!s.sealed) return;
+  el.sealTitle.textContent = 'Page sealed';
+  el.sealSub.textContent =
+    s.violations > 0
+      ? `The browser has refused ${s.violations} outbound request${s.violations === 1 ? '' : 's'} from this tab.`
+      : 'The browser is now refusing every outbound request from this tab — fetch, XHR, WebSocket, beacons, pixels.';
+});
+
+el.sealTest.addEventListener('click', async () => {
+  el.sealTest.disabled = true;
+  el.sealTest.textContent = 'Trying…';
+  const results = await seal.testSeal();
+  el.sealResults.hidden = false;
+  el.sealResults.replaceChildren(
+    ...results.map((r) => {
+      const li = document.createElement('li');
+      li.dataset.blocked = String(r.blocked);
+      li.textContent = `${r.channel} — ${r.blocked ? 'refused' : r.detail}`;
+      return li;
+    }),
+  );
+  el.sealTest.disabled = false;
+  el.sealTest.textContent = 'Try again';
 });
 
 /* ── Tool offering ──────────────────────────────────────────────────── */
@@ -208,7 +293,6 @@ async function ingest(file: File): Promise<void> {
   columns = [];
   renderColumns();
   clearCharts();
-  el.feed.replaceChildren();
   ledger.reset();
   el.runnerTool.replaceChildren();
   await tools.withdrawAll();
@@ -216,6 +300,9 @@ async function ingest(file: File): Promise<void> {
 
   try {
     await initDb();
+    // Once the engine is up, nothing this app does ever needs the network
+    // again -- so take it away, and let the browser be the one enforcing it.
+    seal.seal();
     info = await loadFile(file);
     columns = classifyDataset(info);
 
@@ -318,6 +405,9 @@ Object.defineProperty(window, 'blindfold', {
     callTool: tools.callTool,
     listTools: tools.registeredTools,
     ledger: ledger.snapshot,
+    transcript: ledger.transcript,
+    testSeal: seal.testSeal,
+    seal: seal.state,
     columns: () => columns.map((c) => ({ name: c.name, tier: c.tier, type: c.type, sqlType: c.sqlType })),
   },
   writable: false,

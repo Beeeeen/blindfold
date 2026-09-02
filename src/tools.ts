@@ -97,23 +97,35 @@ function guarded(
         };
       }
     }
-    announce(name, 'call', JSON.stringify(input));
+    const args = JSON.stringify(input);
+    announce(name, 'call', args);
     try {
       const { summary, payload, suppressed = 0 } = await handler(input);
-      ledger.record(name, 'released', summary, payload, suppressed);
+      const result = ok(summary, payload);
+      // The ledger stores the outgoing text verbatim, not a description of it.
+      ledger.record({
+        tool: name,
+        verdict: 'released',
+        detail: summary,
+        payload,
+        groupsSuppressed: suppressed,
+        args,
+        returned: result.content.map((c) => c.text).join('\n'),
+      });
       announce(name, 'result', summary);
-      return ok(summary, payload);
+      return result;
     } catch (err) {
       if (err instanceof PolicyError) {
         const text = `Refused by the disclosure guard.\n\n${err.message}\n\nWhat to do instead: ${err.remedy}`;
-        ledger.record(name, 'blocked', err.message);
+        ledger.record({ tool: name, verdict: 'blocked', detail: err.message, args, returned: text });
         announce(name, 'result', `blocked - ${err.message}`);
         return { content: [{ type: 'text', text }] };
       }
       const message = err instanceof Error ? err.message : String(err);
-      ledger.record(name, 'blocked', message);
+      const text = `The query could not be run: ${message}`;
+      ledger.record({ tool: name, verdict: 'blocked', detail: message, args, returned: text });
       announce(name, 'result', `error - ${message}`);
-      return { content: [{ type: 'text', text: `The query could not be run: ${message}` }] };
+      return { content: [{ type: 'text', text }] };
     }
   };
 }

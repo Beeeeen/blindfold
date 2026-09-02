@@ -15,6 +15,14 @@ export interface LedgerEntry {
   cellsReleased: number;
   bytesReleased: number;
   groupsSuppressed: number;
+  /** What the agent was asked for. */
+  args: string;
+  /**
+   * The exact text handed back to the agent, character for character. A summary
+   * would only be another claim; this is the thing itself, so a sceptic can
+   * read every byte that crossed and check for themselves that no row is in it.
+   */
+  returned: string;
 }
 
 export interface LedgerSnapshot {
@@ -42,13 +50,25 @@ export function noteIngest(bytes: number, rows: number): void {
   emit();
 }
 
-export function record(
-  tool: string,
-  verdict: Verdict,
-  detail: string,
-  payload?: unknown,
+export interface RecordInput {
+  tool: string;
+  verdict: Verdict;
+  detail: string;
+  payload?: unknown;
+  groupsSuppressed?: number;
+  args?: string;
+  returned?: string;
+}
+
+export function record({
+  tool,
+  verdict,
+  detail,
+  payload,
   groupsSuppressed = 0,
-): LedgerEntry {
+  args = '',
+  returned = '',
+}: RecordInput): LedgerEntry {
   const serialised = payload === undefined ? '' : JSON.stringify(payload);
   const cells = countCells(payload);
   const entry: LedgerEntry = {
@@ -60,6 +80,8 @@ export function record(
     cellsReleased: verdict === 'released' ? cells : 0,
     bytesReleased: verdict === 'released' ? new TextEncoder().encode(serialised).length : 0,
     groupsSuppressed,
+    args,
+    returned,
   };
   entries.push(entry);
   emit();
@@ -106,4 +128,40 @@ export function reset(): void {
   entries.length = 0;
   nextId = 1;
   emit();
+}
+
+/**
+ * The whole session as plain text: every call, and verbatim, everything that
+ * went back. Meant to be read by a person who does not believe the summary —
+ * search it for a name or an email address and see that there is nothing there.
+ */
+export function transcript(): string {
+  const s = snapshot();
+  const lines = [
+    'BLINDFOLD DISCLOSURE TRANSCRIPT',
+    `Generated ${new Date().toISOString()}`,
+    '',
+    `Bytes read into the page:      ${s.bytesIngested.toLocaleString()}`,
+    `Rows read into the page:       ${s.rowsIngested.toLocaleString()}`,
+    `Bytes released to the agent:   ${s.bytesReleased.toLocaleString()}`,
+    `Raw rows released:             0`,
+    `Values released:               ${s.cellsReleased} of ${s.budgetCells} budget`,
+    `Calls refused:                 ${s.callsBlocked}`,
+    `Groups suppressed as too small:${s.groupsSuppressed}`,
+    '',
+    'Below is every tool call in order, and character for character everything',
+    'the agent received back. Nothing is summarised. Search it yourself.',
+    '',
+  ];
+  for (const e of s.entries) {
+    lines.push(
+      '─'.repeat(72),
+      `#${e.id}  ${new Date(e.at).toISOString()}  ${e.tool}  [${e.verdict}]`,
+      `ASKED:    ${e.args || '(no arguments)'}`,
+      'RECEIVED:',
+      e.returned || '(nothing)',
+      '',
+    );
+  }
+  return lines.join('\n');
 }

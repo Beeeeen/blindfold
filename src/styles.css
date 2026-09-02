@@ -520,6 +520,54 @@ button.tier {
   overflow-wrap: anywhere;
 }
 
+.feed-item {
+  cursor: pointer;
+}
+
+.feed-item:hover {
+  filter: brightness(0.985);
+}
+
+/* The verbatim payload, revealed on click. */
+.feed-returned {
+  grid-column: 1 / -1;
+  margin: 8px 0 0;
+  padding: 9px 10px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.5;
+  max-height: 240px;
+  overflow: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.feed-returned-label {
+  grid-column: 1 / -1;
+  margin: 8px 0 0;
+  font-size: 10.5px;
+  font-weight: 650;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.feed-note {
+  margin: 0 0 10px;
+  font-size: 11.5px;
+  line-height: 1.6;
+  color: var(--ink-faint);
+}
+
+.feed-copy {
+  margin-left: auto;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
 /* ── Ledger ───────────────────────────────────────────────────────── */
 
 .headline {
@@ -544,6 +592,99 @@ button.tier {
   margin-top: 7px;
   font-size: 12.5px;
   color: #2c6146;
+}
+
+/* ── The seal ─────────────────────────────────────────────────────── */
+
+.seal {
+  margin-top: 14px;
+  padding: 13px 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: var(--paper);
+}
+
+.seal[data-sealed="true"] {
+  border-color: #b7d8c6;
+  background: var(--accent-soft);
+}
+
+.seal-head {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+}
+
+.seal-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--ink-faint);
+  flex: none;
+}
+
+.seal[data-sealed="true"] .seal-dot {
+  background: var(--accent);
+}
+
+.seal-head strong {
+  font-size: 13.5px;
+}
+
+.seal[data-sealed="true"] .seal-head strong {
+  color: #145034;
+}
+
+.seal-sub {
+  margin: 6px 0 0;
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+.seal-test {
+  margin-top: 10px;
+  width: 100%;
+}
+
+.seal-results {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.seal-results li {
+  display: flex;
+  gap: 7px;
+  align-items: baseline;
+  font-size: 11.5px;
+  font-family: var(--mono);
+}
+
+.seal-results li::before {
+  content: "✕";
+  color: var(--danger);
+  font-family: inherit;
+}
+
+.seal-results li[data-blocked="true"]::before {
+  content: "✓";
+  color: var(--accent);
+}
+
+.seal-verify {
+  margin: 10px 0 0;
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--ink-faint);
+}
+
+.seal-verify code {
+  font-family: var(--mono);
+  font-size: 10.5px;
 }
 
 .meters {

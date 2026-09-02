@@ -48,6 +48,14 @@ await call('render_chart', {
   y_label: 'Median base salary (USD)',
 });
 
+// Expand a refusal so the screenshot shows the verbatim payload, and run the
+// exfiltration probe so the seal panel is populated.
+await p.evaluate(() => window.blindfold.testSeal());
+await p.evaluate(() => {
+  const rows = [...document.querySelectorAll('#feed .feed-item')];
+  const refusal = rows.find((r) => r.dataset.verdict === 'blocked');
+  (refusal ?? rows[0])?.click();
+});
 await new Promise((r) => setTimeout(r, 1200));
 await p.screenshot({ path: 'docs/screenshot.png', fullPage: false });
 console.log('wrote docs/screenshot.png');

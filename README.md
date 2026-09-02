@@ -42,7 +42,10 @@ Blindfold makes that concrete:
 - Every grouped result is passed through k-anonymity suppression before it is
   allowed to become a tool return value.
 - A running ledger shows the human exactly how many bytes went in and how few
-  came out.
+  came out, with the exact text of every answer kept verbatim.
+- Once the engine has booted, the page **revokes its own network access** with a
+  Content Security Policy, so the guarantee is enforced by the browser rather
+  than asserted by the app.
 
 The design rule throughout: **a leak should be impossible to express, not merely
 refused after the fact.**
@@ -101,7 +104,46 @@ it. `compare_groups` is stricter still: *both* cohorts must independently clear
 k, because a "gap" computed over two people is just those two people's salaries
 with extra steps.
 
-### 5. `render_chart` is a one-way mirror
+### 5. The page revokes its own network access
+
+A ledger reading "nothing left this tab" is the page marking its own homework.
+So it doesn't stop there. Once the engine has booted, Blindfold injects a
+Content Security Policy that takes away its own ability to reach the network:
+
+```
+connect-src 'none'; form-action 'none'; img-src data:;
+media-src 'none'; object-src 'none'; frame-src 'none'
+```
+
+From that moment the **browser** refuses every outbound channel — `fetch`,
+`XMLHttpRequest`, WebSocket, `sendBeacon`, tracking pixels, form posts.
+Not the app promising; the browser enforcing. Policies compose by intersection,
+so this can only tighten what the document already allowed, and nothing here
+needs the network after startup.
+
+There is a **Try to leak data on purpose** button in the ledger panel that
+attempts all five channels and shows you what the browser did with each. And
+three ways to check without trusting any of the above:
+
+| Check | What it proves |
+|---|---|
+| DevTools → Network, then use the app | Nothing goes out, at all |
+| `document.querySelector('meta[http-equiv="Content-Security-Policy"]').content` | Read the policy yourself |
+| DevTools → Console during the leak test | The browser logging its own refusals |
+
+### 6. The transcript is the receipt, not a summary
+
+Every tool call is recorded with the exact text that went back to the agent,
+character for character. Click any row in *What the agent asked* to read it, or
+**Copy full transcript** for the whole session.
+
+That is the answer to "how do I know the AI didn't get my data": don't take the
+counter's word for it — read every byte that crossed and search it for a name.
+`npm run test:seal` does exactly that automatically, running a full analysis and
+then grepping the transcript for emails, employee IDs and person names from the
+source data.
+
+### 7. `render_chart` is a one-way mirror
 
 The agent supplies rows it already has and a shape to draw. The chart appears on
 the human's screen. What the agent receives back is the word "drawn".
@@ -149,7 +191,8 @@ npm run preview      # in one terminal
 
 npm test             # 29 checks: engine, classifier, guard, charts, ledger
 npm run test:live    # 14 checks: against Chrome's real WebMCP implementation
-npm run test:coverage # 30 checks: user files, every chart kind, every refusal
+npm run test:coverage # 33 checks: user files, every chart kind, every refusal
+npm run test:seal    # 19 checks: the seal holds, and the transcript names nobody
 npm run test:race    # 5 runs: clicking before the engine has finished booting
 npm run test:all     # all of the above
 ```

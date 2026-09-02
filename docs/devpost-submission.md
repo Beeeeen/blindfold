@@ -55,6 +55,15 @@ cannot do is see a row.
   it recovers on the next turn rather than giving up.
 - **A ledger, on screen.** Bytes into the page versus bytes released to the agent,
   values spent against a disclosure budget, calls refused, groups suppressed.
+- **The page revokes its own network access.** A counter reading zero is the page
+  marking its own homework, so once the engine boots Blindfold injects a CSP
+  taking away its own ability to reach the network — `connect-src 'none'`,
+  `form-action 'none'`, `img-src data:`. From then on the *browser* refuses
+  fetch, XHR, WebSocket, sendBeacon and tracking pixels. There is a button that
+  attempts all five so you can watch them fail, and you can read the policy out
+  of `document.head` yourself.
+- **A transcript, not a summary.** Every call is stored with the exact text that
+  went back, character for character. Search it for a name and there is none.
 
 On the 50,000-row sample it finds a real seeded result — a gender pay gap of about
 3% at IC1-IC3 and 12-14% from IC4 upward — having read 4.9 MB and disclosed about
@@ -82,6 +91,13 @@ Three WebMCP details did most of the work:
 3. **Refusals are return values, not exceptions.** Each carries the reason and a
    legal alternative, which turns the guard into something the agent can navigate
    rather than something it fights.
+
+The hardest question this project has to answer is not "is it private" but "how
+would I know". Being open source is not an answer, because nobody reads the
+source; a ledger is not an answer, because the page computes it. The two things
+that actually transfer are a policy the *browser* enforces and the verbatim text
+of everything that crossed. Both are in the UI, and both are checkable in about
+fifteen seconds by someone who assumes we are lying.
 
 ## Challenges we ran into
 
@@ -132,6 +148,19 @@ That "the tool runs in the page" is the whole point of WebMCP, and most of the
 interesting designs come from asking what the page can do that a server cannot.
 Holding data the agent can't reach is one. Showing a human something the agent
 never sees is another.
+
+## The question we could not answer at first
+
+An early reviewer asked how a user is supposed to *know* the AI never got their
+data, given the ledger is computed by the same page making the claim. That was
+fair, and the honest answer at the time was "read the source".
+
+The fix came from realising a page can tighten its own Content Security Policy
+after load, and that Chrome honours it. Nothing here needs the network once
+DuckDB's wasm is instantiated, so the app now takes that capability away from
+itself the moment the engine is ready. Verified from outside the page: the test
+driver watches the network and confirms nothing ever reaches a third party,
+while the deliberate exfiltration probes show up as failures.
 
 ## What's next
 
