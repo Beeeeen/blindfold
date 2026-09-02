@@ -230,6 +230,15 @@ worse than none:
   in it.
 - **`min`/`max` are blocked on personal measurements but allowed elsewhere**, so
   a column graded `category` by mistake can still leak an extreme value.
+- **The seal does not cover top-level navigation.** CSP has no shipped directive
+  that stops a page sending itself to `https://elsewhere/?data=…`, so that one
+  channel remains open in principle. It is not a silent one — the tab would
+  visibly leave the page in front of you — but it is a real gap and it would be
+  dishonest to draw the box without it.
+- **The seal binds the page, not the agent.** It guarantees your rows never
+  leave this tab. What the agent does with the aggregates it legitimately
+  received is between you and your agent — and the transcript is there so you
+  can see exactly what that was.
 - **The guarantee is about the agent, not about your device.** Data stays in
   your tab; it does not stay secret from anything else running on your machine.
 
