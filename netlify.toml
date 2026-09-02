@@ -1,3 +1,11 @@
+# Kept as an alternative host, not because anything requires it: every sponsor
+# prize in this challenge rides along with a top-ten finish, and none of them
+# asks the project to be deployed on that sponsor's platform. The live URL is
+# GitHub Pages, built by .github/workflows/deploy.yml.
+#
+# WebMCP needs a secure context. Netlify serves HTTPS by default, so this works
+# as-is if the primary host ever needs replacing.
+
 [build]
   command = "npm run build"
   publish = "dist"
@@ -5,7 +13,6 @@
 [build.environment]
   NODE_VERSION = "22"
 
-# WebMCP requires a secure context; Netlify serves HTTPS by default.
 [[headers]]
   for = "/*"
   [headers.values]
