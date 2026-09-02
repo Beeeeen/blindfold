@@ -32,7 +32,7 @@ const durationOf = (file) =>
 const results = [];
 let total = 0;
 
-for (const beat of spec.beats) {
+for (const beat of [...spec.beats, ...(spec.optional ?? [])]) {
   const txt = join(VOICE_DIR, `${beat.id}.txt`);
   const mp3 = join(VOICE_DIR, `${beat.id}.mp3`);
   const timings = join(VOICE_DIR, `${beat.id}.timings.json`);
@@ -46,14 +46,15 @@ for (const beat of spec.beats) {
   );
 
   const seconds = durationOf(mp3);
-  total += seconds;
-  results.push({ ...beat, seconds });
+  const isOptional = (spec.optional ?? []).some((o) => o.id === beat.id);
+  if (!isOptional) total += seconds;
+  results.push({ ...beat, seconds, isOptional });
   console.log(`  ${beat.id.padEnd(14)} ${seconds.toFixed(1)}s`);
 }
 
 const mmss = (s) => `${Math.floor(s / 60)}:${String(Math.round(s % 60)).padStart(2, '0')}`;
 console.log(`\ntotal narration: ${mmss(total)} (limit 3:00)`);
-if (total > 175) console.log('WARNING: too close to the 3:00 cap — trim a beat.');
+if (total > 165) console.log('WARNING: too close to the 3:00 cap — trim a beat.');
 
 // Durations the recorder reads, so the visuals hold as long as the words do.
 writeFileSync(
@@ -75,9 +76,8 @@ const sheet = [
   '',
   '## What you still have to shoot',
   '',
-  ...results.filter((r) => r.footage.startsWith('YOU:')).map((r) => `- **${r.id}** — ${r.footage.slice(5)}`),
-  '',
-  'Everything else is already recorded in `docs/broll/`, one clip per line.',
+  'Nothing. Every required beat is recorded in `docs/broll/`. The optional swap',
+  'above is the only thing a camera would add.',
   '',
   '## Assembling',
   '',

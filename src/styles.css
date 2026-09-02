@@ -822,6 +822,37 @@ button.tier {
   resize: vertical;
 }
 
+.tool-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.tool-list li {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  padding: 5px 8px;
+  border-radius: 6px;
+  background: var(--paper);
+  font-family: var(--mono);
+  font-size: 11.5px;
+}
+
+/* An arrow in for the read-only tools, an arrow back for the one that draws. */
+.tool-list li::before {
+  content: "→";
+  color: var(--accent);
+}
+
+.tool-list li[data-write="true"]::before {
+  content: "↵";
+  color: var(--warn);
+}
+
 .runner-out {
   margin: 12px 0 0;
   padding: 10px;

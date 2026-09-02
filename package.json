@@ -20,7 +20,8 @@
     "test:scale": "node test/scale.mjs",
     "record": "node test/record.mjs",
     "voice": "node scripts/make-voice.mjs",
-    "assemble": "node scripts/assemble.mjs"
+    "assemble": "node scripts/assemble.mjs",
+    "fileview": "node scripts/make-fileview.mjs"
   },
   "dependencies": {
     "@duckdb/duckdb-wasm": "^1.29.0",

@@ -46,6 +46,8 @@ const el = {
   sealResults: $('#seal-results'),
   transcriptCopy: $<HTMLButtonElement>('#transcript-copy'),
   ratio: $('#ratio'),
+  toolList: $('#tool-list'),
+  toolsOffered: $('#tools-offered'),
 };
 
 let info: DatasetInfo | null = null;
@@ -282,12 +284,22 @@ async function offerTools(): Promise<void> {
   paintStatus(names.length);
 
   el.runnerTool.replaceChildren();
+  el.toolList.replaceChildren();
   for (const name of names) {
     const opt = document.createElement('option');
     opt.value = name;
     opt.textContent = name;
     el.runnerTool.append(opt);
+
+    const li = document.createElement('li');
+    // render_chart is the only one that changes anything, so mark it: the list
+    // should read as a capability surface, not an undifferentiated menu.
+    li.dataset.write = String(name === 'render_chart');
+    li.textContent = name;
+    el.toolList.append(li);
   }
+  const summary = el.toolsOffered.querySelector('summary');
+  if (summary) summary.textContent = `What the agent is being offered — ${names.length} tools`;
 }
 
 /* ── Loading ────────────────────────────────────────────────────────── */

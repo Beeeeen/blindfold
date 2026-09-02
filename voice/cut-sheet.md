@@ -1,29 +1,26 @@
 # Cut sheet
 
-Voice: `en-US-AvaMultilingualNeural` at rate `-6%`. Regenerate with `npm run voice`.
+Voice: `en-US-AvaMultilingualNeural` at rate `-4%`. Regenerate with `npm run voice`.
 
-**Total narration 2:39**, against a 3:00 limit. Leave the gaps between
+**Total narration 1:32**, against a 3:00 limit. Leave the gaps between
 clips short — the numbers below are speech only.
 
 | # | Clip | Length | Footage |
 |---|---|---|---|
-| 1 | `voice/01-problem.mp3` | 23.8s | YOU: the file open in a spreadsheet, scrolling. File size visible. |
-| 2 | `voice/02-load.mp3` | 7.2s | B-roll: the file lands, row count reaches 1,000,000. |
-| 3 | `voice/03-grading.mp3` | 18.6s | B-roll: cursor moves across the sealed badges. |
-| 4 | `voice/04-tools.mp3` | 13.9s | YOU: ChatGPT's address bar, Site tools open, showing the eight names. |
-| 5 | `voice/05-agent.mp3` | 22.7s | YOU: the ChatGPT conversation. Ask where pay is least equitable, let the tool calls stream. |
-| 6 | `voice/06-refusals.mp3` | 20.2s | B-roll: the two refusals appear in red in the feed. |
-| 7 | `voice/07-seal.mp3` | 28.5s | B-roll: the leak test runs, five channels refuse. |
-| 8 | `voice/08-verbatim.mp3` | 9.0s | B-roll: a feed row expands to its verbatim payload. |
-| 9 | `voice/09-close.mp3` | 15.1s | B-roll: rest on the ledger. |
+| 1 | `voice/01-hook.mp3` | 11.5s | B-roll: the raw file scrolling, then the drop landing on 1,000,000 rows. |
+| 2 | `voice/02-claim.mp3` | 4.9s | B-roll: hold on the loaded dataset and the sealed badges. |
+| 3 | `voice/03-grading.mp3` | 12.4s | B-roll: cursor across the three sealed badges. |
+| 4 | `voice/04-tools.mp3` | 11.2s | B-roll: the registered tool list opens. |
+| 5 | `voice/05-work.mp3` | 12.9s | B-roll: the tools run, both charts appear. |
+| 6 | `voice/06-refuse.mp3` | 11.8s | B-roll: two refusals appear in red. |
+| 7 | `voice/07-seal.mp3` | 18.6s | B-roll: the leak test refuses all five channels. |
+| 8 | `voice/08-close.mp3` | 8.4s | B-roll: rest on the ledger. |
+| 9 | `voice/05b-chatgpt.mp3` | 14.6s | YOU: the ChatGPT conversation, if you shoot it. Swap it in for 05-work. |
 
 ## What you still have to shoot
 
-- **01-problem** — the file open in a spreadsheet, scrolling. File size visible.
-- **04-tools** — ChatGPT's address bar, Site tools open, showing the eight names.
-- **05-agent** — the ChatGPT conversation. Ask where pay is least equitable, let the tool calls stream.
-
-Everything else is already recorded in `docs/broll/`, one clip per line.
+Nothing. Every required beat is recorded in `docs/broll/`. The optional swap
+above is the only thing a camera would add.
 
 ## Assembling
 

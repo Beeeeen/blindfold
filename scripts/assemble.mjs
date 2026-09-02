@@ -96,6 +96,6 @@ const list = join(WORK, 'concat.txt');
 writeFileSync(list, segments.map((s) => `file '${s.split('\\').join('/')}'`).join('\n'));
 ff(['-f', 'concat', '-safe', '0', '-i', list, '-c', 'copy', OUT]);
 
-const total = Object.values(durations).reduce((a, b) => a + b, 0);
+const total = spec.beats.reduce((a, b) => a + durations[b.id], 0);
 console.log(`\n${OUT}`);
 console.log(`${Math.floor(total / 60)}:${String(Math.round(total % 60)).padStart(2, '0')} — limit is 3:00`);
