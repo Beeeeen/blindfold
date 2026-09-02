@@ -18,7 +18,9 @@
     "test:sample": "node test/verify-sample-file.mjs",
     "test:seal": "node test/seal.mjs",
     "test:scale": "node test/scale.mjs",
-    "record": "node test/record.mjs"
+    "record": "node test/record.mjs",
+    "voice": "node scripts/make-voice.mjs",
+    "assemble": "node scripts/assemble.mjs"
   },
   "dependencies": {
     "@duckdb/duckdb-wasm": "^1.29.0",

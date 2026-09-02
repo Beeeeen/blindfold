@@ -8,3 +8,9 @@ sample-data
 docs/demo-raw.webm
 docs/*.webm
 docs/*.mp4
+docs/broll
+voice/*.mp3
+voice/*.txt
+voice/*.timings.json
+docs/.assembly
+docs/demo-assembly.mp4

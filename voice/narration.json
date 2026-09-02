@@ -1,0 +1,52 @@
+{
+  "voice": "en-US-AvaMultilingualNeural",
+  "rate": "-6%",
+  "note": "Beat ids match the B-roll scene markers in test/record.mjs. Beats 1 and 5 need footage only you can shoot: the spreadsheet, and the ChatGPT conversation.",
+  "beats": [
+    {
+      "id": "01-problem",
+      "footage": "YOU: the file open in a spreadsheet, scrolling. File size visible.",
+      "text": "This is a payroll file. A million employees — names, emails, salaries. Ninety-nine megabytes, which is about twenty-six million tokens. No model can read that. And if I upload it, I've handed over every name and every salary in it, just to ask one question. So in most companies, this analysis simply never happens."
+    },
+    {
+      "id": "02-load",
+      "footage": "B-roll: the file lands, row count reaches 1,000,000.",
+      "text": "Blindfold opens it inside the browser tab. Ninety-nine megabytes, three seconds, nothing uploaded."
+    },
+    {
+      "id": "03-grading",
+      "footage": "B-roll: cursor moves across the sealed badges.",
+      "text": "And before the agent is even told this file exists, every column is graded. Name, email, employee ID — sealed. The agent cannot group by them, filter on them, or ever receive them. Salary is a personal measurement, so it gets aggregates only."
+    },
+    {
+      "id": "04-tools",
+      "footage": "YOU: ChatGPT's address bar, Site tools open, showing the eight names.",
+      "text": "The page offers the agent eight WebMCP tools. Notice what isn't among them: there is no run-SQL. The agent cannot write a query at all. It fills in a form, and the page compiles it."
+    },
+    {
+      "id": "05-agent",
+      "footage": "YOU: the ChatGPT conversation. Ask where pay is least equitable, let the tool calls stream.",
+      "text": "So I ask it where pay is least equitable. It reads the schema, compares the cohorts, and draws me a chart. Every one of those ran across all one million rows in about a tenth of a second. Around three percent at the junior levels, then twelve to fourteen from I-C-four upward. That's a real finding, and the model never saw a single salary."
+    },
+    {
+      "id": "06-refusals",
+      "footage": "B-roll: the two refusals appear in red in the feed.",
+      "text": "Now let me try to break it. Who is the highest paid person here? Grouping by name is refused — that is a sealed column. Maximum salary is refused too, because a maximum is one real person's pay. And notice the refusal tells the agent what to ask instead, so it recovers rather than giving up."
+    },
+    {
+      "id": "07-seal",
+      "footage": "B-roll: the leak test runs, five channels refuse.",
+      "text": "But a counter that reads zero is just this page marking its own homework. So once the engine starts, the page takes away its own network access. Watch — I'll try to leak the data on purpose. Fetch. X-H-R. WebSocket. Beacon. Tracking pixel. The browser refuses all five. That is not me promising. That is Chrome enforcing a policy you can read out of the page yourself."
+    },
+    {
+      "id": "08-verbatim",
+      "footage": "B-roll: a feed row expands to its verbatim payload.",
+      "text": "And this is every byte the agent actually received. Not a summary — the literal text. Search it for a name, and there isn't one."
+    },
+    {
+      "id": "09-close",
+      "footage": "B-roll: rest on the ledger.",
+      "text": "Ninety-nine megabytes in. Under four kilobytes out. One byte reached the agent for every twenty-seven thousand that did not. Blindfold — analyse a file your A-I could never read, without showing it a single row."
+    }
+  ]
+}

@@ -126,28 +126,39 @@ own violation messages.
 
 ---
 
-## Pre-recorded B-roll
+## The video is mostly built already
 
 ```bash
-npm run sample -- 1000000
-npm run record          # → docs/demo-raw.webm, ~40s, 2400x1350
+npm run sample -- 1000000   # the 99 MB file
+npm run voice               # narration → voice/*.mp3, measured
+npm run record              # B-roll → docs/broll/, one clip per line
+npm run assemble            # → docs/demo-assembly.mp4, 2:39
 ```
 
-A scripted run of the whole demo with every beat on time and nothing fumbled:
-the 99 MB file landing, the sealed badges, the leak test refusing all five
-channels, both charts appearing, the two refusals, a feed row expanded to its
-verbatim payload, and a final rest on the ledger. Convert for editing with:
+Watch `docs/demo-assembly.mp4` first. It is the whole video at the right
+pacing: narration under every beat, real footage where it exists, and a card
+saying **Shoot this** with the exact length wherever a shot is yours.
 
-```bash
-ffmpeg -i docs/demo-raw.webm -c:v libx264 -crf 18 -pix_fmt yuv420p   -vf scale=1920:1080:flags=lanczos -r 30 docs/demo-broll.mp4
-```
+Narration is Edge TTS (`en-US-AvaMultilingualNeural`), the same voice pool the
+content-factory pipeline uses. Every B-roll clip was recorded to the measured
+length of its own line, so nothing needs stretching in the edit.
 
-The tool calls in it run through the browser's real WebMCP API, so the
-execution is genuine — but a script chooses the calls, not a model. **Shoot the
-ChatGPT conversation yourself for at least the beat where the agent decides
-what to do**, and cut this footage under the beats where the app is the subject.
-A video that implies a model was reasoning when it wasn't would be a
-misrepresentation, and it is also the most interesting part to show for real.
+Three shots are not in it, on purpose:
+
+| Beat | Shot | Length |
+|---|---|---|
+| 1 | The file in a spreadsheet, scrolling, size visible | 23.8s |
+| 4 | ChatGPT's address bar with Site tools open | 13.9s |
+| 5 | The ChatGPT conversation doing the analysis | 22.7s |
+
+Beat 5 especially: the tool calls in the B-roll go through the browser's real
+WebMCP API, so the execution is genuine, but a script picks them rather than a
+model. Implying a model was reasoning when it wasn't would be a
+misrepresentation — and the agent actually working it out is the most
+interesting thing in the video anyway.
+
+Full mapping in `voice/cut-sheet.md`. Word-level timings in
+`voice/*.timings.json` if you want to cut on a particular word.
 
 ## Shot list (in order)
 
