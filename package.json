@@ -13,7 +13,9 @@
     "test:live": "node test/webmcp-live.mjs",
     "test:coverage": "node test/coverage.mjs",
     "test:all": "node test/smoke.mjs && node test/webmcp-live.mjs && node test/coverage.mjs && node test/race.mjs",
-    "test:race": "node test/race.mjs"
+    "test:race": "node test/race.mjs",
+    "sample": "node scripts/make-sample.mjs",
+    "test:sample": "node test/verify-sample-file.mjs"
   },
   "dependencies": {
     "@duckdb/duckdb-wasm": "^1.29.0",

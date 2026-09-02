@@ -15,6 +15,8 @@ the project working live.
       load in the video is dead air.
 - [ ] Click **Use sample payroll** once, then reload — proves generation speed
       without making the viewer watch it.
+- [ ] `npm run sample` for the on-disk copy you drag in and open in Excel for
+      the opening shot. It is the same data as the button, so the figures match.
 - [ ] Screen at 1440p or higher, browser zoom ~110% so the ledger numbers read.
 
 ---
@@ -61,7 +63,8 @@ live. A chart appears on the page.
 > ledger on the right — four point nine megabytes went into this page. Three
 > kilobytes have come back out. Zero raw rows."
 
-**Let the answer land:** the gap is ~2% at junior levels and ~13% from IC4 up.
+**Let the answer land:** the gap is ~3% at IC1-IC3 and 12-14% from IC4 up.
+Say the figures that are on screen, not round numbers near them.
 
 > "That's a real finding, and the model never saw a single salary."
 

@@ -4,3 +4,4 @@ dist
 *.local
 .vite
 test/fixtures
+sample-data

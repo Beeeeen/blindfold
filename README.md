@@ -130,8 +130,13 @@ the tab. Then ask your agent:
 
 > Where is pay least equitable in this company, and show me a chart of it.
 
-It will find that the gender pay gap is around 2% at junior levels and around
-13% from IC4 upward — without ever having seen a salary.
+It will find that the gender pay gap runs about 3% at IC1-IC3 and 12-14% from
+IC4 upward — without ever having seen a salary.
+
+**Want it as a file?** `npm run sample` writes the same 50,000 rows to
+`sample-data/employee_compensation_2026.csv` so you can drag it in, or open it in
+a spreadsheet to see what you would otherwise have been uploading. Pass a row
+count to make it smaller: `npm run sample -- 5000`.
 
 **No agent handy?** Open *Run a tool without an agent* in the ledger panel and
 call the same tools by hand. The whole app is reviewable without a WebMCP host.

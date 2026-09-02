@@ -56,9 +56,9 @@ cannot do is see a row.
 - **A ledger, on screen.** Bytes into the page versus bytes released to the agent,
   values spent against a disclosure budget, calls refused, groups suppressed.
 
-On the 50,000-row sample it finds a real seeded result — a gender pay gap near 2%
-at junior levels and near 13% from IC4 upward — having read 4.9 MB and disclosed
-about 3.7 KB of aggregates.
+On the 50,000-row sample it finds a real seeded result — a gender pay gap of about
+3% at IC1-IC3 and 12-14% from IC4 upward — having read 4.9 MB and disclosed about
+3.7 KB of aggregates.
 
 ## How we built it
 
