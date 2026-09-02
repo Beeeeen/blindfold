@@ -123,6 +123,24 @@ export function renderChart(spec: ChartSpec): number {
   return data.length;
 }
 
+/**
+ * Clearing has to put the placeholder back. Emptying the container outright
+ * leaves a blank panel from the moment a file loads until the agent happens to
+ * draw something, which is exactly the stretch where a new user most needs
+ * telling what to do next.
+ */
 export function clearCharts(): void {
-  if (container) container.innerHTML = '';
+  if (!container) return;
+  container.replaceChildren();
+  const empty = document.createElement('div');
+  empty.className = 'chart-empty';
+  const title = document.createElement('p');
+  title.className = 'empty-title';
+  title.textContent = 'Nothing drawn yet';
+  const sub = document.createElement('p');
+  sub.className = 'empty-sub';
+  sub.innerHTML =
+    'Ask your agent something like<br /><em>“Where is pay least equitable, and show me a chart of it.”</em>';
+  empty.append(title, sub);
+  container.append(empty);
 }

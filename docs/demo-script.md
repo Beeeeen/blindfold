@@ -126,6 +126,29 @@ own violation messages.
 
 ---
 
+## Pre-recorded B-roll
+
+```bash
+npm run sample -- 1000000
+npm run record          # → docs/demo-raw.webm, ~40s, 2400x1350
+```
+
+A scripted run of the whole demo with every beat on time and nothing fumbled:
+the 99 MB file landing, the sealed badges, the leak test refusing all five
+channels, both charts appearing, the two refusals, a feed row expanded to its
+verbatim payload, and a final rest on the ledger. Convert for editing with:
+
+```bash
+ffmpeg -i docs/demo-raw.webm -c:v libx264 -crf 18 -pix_fmt yuv420p   -vf scale=1920:1080:flags=lanczos -r 30 docs/demo-broll.mp4
+```
+
+The tool calls in it run through the browser's real WebMCP API, so the
+execution is genuine — but a script chooses the calls, not a model. **Shoot the
+ChatGPT conversation yourself for at least the beat where the agent decides
+what to do**, and cut this footage under the beats where the app is the subject.
+A video that implies a model was reasoning when it wasn't would be a
+misrepresentation, and it is also the most interesting part to show for real.
+
 ## Shot list (in order)
 
 1. Spreadsheet scrolling through a million rows, file size visible — 10s

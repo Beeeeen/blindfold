@@ -17,7 +17,8 @@
     "sample": "node scripts/make-sample.mjs",
     "test:sample": "node test/verify-sample-file.mjs",
     "test:seal": "node test/seal.mjs",
-    "test:scale": "node test/scale.mjs"
+    "test:scale": "node test/scale.mjs",
+    "record": "node test/record.mjs"
   },
   "dependencies": {
     "@duckdb/duckdb-wasm": "^1.29.0",

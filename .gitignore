@@ -5,3 +5,6 @@ dist
 .vite
 test/fixtures
 sample-data
+docs/demo-raw.webm
+docs/*.webm
+docs/*.mp4
