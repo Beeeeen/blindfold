@@ -43,177 +43,213 @@ It cannot group by them,
 filter on them, or ever receive them.
 
 12
-00:00:28,656 --> 00:00:31,794
-Eight WebMCP tools, and notice what is missing:
+00:00:28,658 --> 00:00:32,044
+The grading is a heuristic — column names and how
 
 13
-00:00:32,266 --> 00:00:33,886
-there is no run_sql.
+00:00:32,044 --> 00:00:35,260
+unique the values are — so sometimes it will be
 
 14
-00:00:34,294 --> 00:00:36,590
-The agent cannot write a query at all.
+00:00:35,260 --> 00:00:35,585
+wrong.
 
 15
-00:00:37,011 --> 00:00:38,044
-It fills in a form,
+00:00:36,002 --> 00:00:37,031
+One click overrules it.
 
 16
-00:00:38,337 --> 00:00:39,549
-and the page compiles it.
+00:00:37,460 --> 00:00:39,244
+Watch what happens when I seal a column the
 
 17
-00:00:39,983 --> 00:00:43,018
-The same eight tools appear in ChatGPT and in
+00:00:39,244 --> 00:00:43,124
+agent was just using: every tool is withdrawn and
 
 18
-00:00:43,018 --> 00:00:44,205
-Chrome behind the flag.
+00:00:43,124 --> 00:00:46,913
+re-registered, the descriptions rewritten around the new grading,
 
 19
-00:00:44,600 --> 00:00:46,462
-This is the standard, not one app.
+00:00:47,330 --> 00:00:49,062
+and the query that worked a moment ago is
 
 20
-00:00:46,968 --> 00:00:47,476
-Schema.
+00:00:49,075 --> 00:00:49,830
+refused.
 
 21
-00:00:47,893 --> 00:00:48,895
-Cohort comparison.
+00:00:50,350 --> 00:00:53,488
+Eight WebMCP tools, and notice what is missing:
 
 22
-00:00:49,325 --> 00:00:49,716
-Chart.
+00:00:53,960 --> 00:00:55,580
+there is no run_sql.
 
 23
-00:00:50,132 --> 00:00:53,309
-Each one across all one million rows in under
+00:00:55,988 --> 00:00:58,284
+The agent cannot write a query at all.
 
 24
-00:00:53,322 --> 00:00:54,260
-a tenth of a second.
+00:00:58,705 --> 00:00:59,738
+It fills in a form,
 
 25
-00:00:54,676 --> 00:00:56,265
-And look at what just happened with that chart:
+00:01:00,031 --> 00:01:01,243
+and the page compiles it.
 
 26
-00:00:56,656 --> 00:00:57,828
-the agent asked for it,
+00:01:01,677 --> 00:01:04,712
+The same eight tools appear in ChatGPT and in
 
 27
-00:00:58,062 --> 00:01:00,197
-I can see it, and the agent got back
+00:01:04,712 --> 00:01:05,899
+Chrome behind the flag.
 
 28
-00:01:00,210 --> 00:01:01,200
-one word — drawn.
+00:01:06,294 --> 00:01:08,156
+This is the standard, not one app.
 
 29
-00:01:01,669 --> 00:01:03,674
-Three percent pay gap at the junior levels,
+00:01:08,662 --> 00:01:09,170
+Schema.
 
 30
-00:01:03,921 --> 00:01:05,783
-thirteen at the senior ones.
+00:01:09,587 --> 00:01:10,589
+Cohort comparison.
 
 31
-00:01:06,297 --> 00:01:07,599
-Ask who is paid most,
+00:01:11,019 --> 00:01:11,410
+Chart.
 
 32
-00:01:07,990 --> 00:01:09,032
-and it refuses.
+00:01:11,826 --> 00:01:15,003
+Each one across all one million rows in under
 
 33
-00:01:09,448 --> 00:01:12,026
-A maximum is one real person's salary.
+00:01:15,016 --> 00:01:15,954
+a tenth of a second.
 
 34
-00:01:12,456 --> 00:01:14,865
-And the refusal tells the agent what to ask
+00:01:16,370 --> 00:01:17,959
+And look at what just happened with that chart:
 
 35
-00:01:14,865 --> 00:01:17,339
-instead, so it recovers on the next turn.
+00:01:18,350 --> 00:01:19,522
+the agent asked for it,
 
 36
-00:01:17,854 --> 00:01:20,873
-But a counter reading zero is just this page
+00:01:19,756 --> 00:01:21,891
+I can see it, and the agent got back
 
 37
-00:01:20,886 --> 00:01:22,535
-marking its own homework.
+00:01:21,904 --> 00:01:22,894
+one word — drawn.
 
 38
-00:01:22,961 --> 00:01:25,647
-So the page revokes its own network access.
+00:01:23,363 --> 00:01:25,368
+Three percent pay gap at the junior levels,
 
 39
-00:01:26,072 --> 00:01:28,719
-Watch me try to leak the data on purpose.
+00:01:25,615 --> 00:01:27,477
+thirteen at the senior ones.
 
 40
-00:01:29,237 --> 00:01:29,623
-Fetch.
+00:01:27,991 --> 00:01:29,293
+Ask who is paid most,
 
 41
-00:01:30,035 --> 00:01:30,740
-XHR.
+00:01:29,684 --> 00:01:30,726
+and it refuses.
 
 42
-00:01:30,979 --> 00:01:31,830
-WebSocket.
+00:01:31,142 --> 00:01:33,720
+A maximum is one real person's salary.
 
 43
-00:01:32,283 --> 00:01:32,615
-Beacon.
+00:01:34,150 --> 00:01:36,559
+And the refusal tells the agent what to ask
 
 44
-00:01:33,041 --> 00:01:34,025
-Tracking pixel.
+00:01:36,559 --> 00:01:39,033
+instead, so it recovers on the next turn.
 
 45
-00:01:34,437 --> 00:01:36,099
-Chrome refuses all five.
+00:01:39,548 --> 00:01:42,567
+But a counter reading zero is just this page
 
 46
-00:01:36,619 --> 00:01:39,527
-And this is every byte the agent actually received.
+00:01:42,580 --> 00:01:44,229
+marking its own homework.
 
 47
-00:01:39,961 --> 00:01:41,974
-Not a summary — the literal text.
+00:01:44,655 --> 00:01:47,341
+So the page revokes its own network access.
 
 48
-00:01:42,396 --> 00:01:43,343
-Search it for a name,
+00:01:47,766 --> 00:01:50,413
+Watch me try to leak the data on purpose.
 
 49
-00:01:43,738 --> 00:01:44,554
-and there is none.
+00:01:50,931 --> 00:01:51,317
+Fetch.
 
 50
-00:01:45,070 --> 00:01:46,622
-Ninety-nine megabytes in.
+00:01:51,729 --> 00:01:52,434
+XHR.
 
 51
-00:01:47,075 --> 00:01:47,900
-Kilobytes out.
+00:01:52,673 --> 00:01:53,524
+WebSocket.
 
 52
-00:01:48,353 --> 00:01:49,287
-Zero rows.
+00:01:53,977 --> 00:01:54,309
+Beacon.
 
 53
-00:01:49,726 --> 00:01:52,213
-And it holds: ten million rows,
+00:01:54,735 --> 00:01:55,719
+Tracking pixel.
 
 54
-00:01:52,433 --> 00:01:56,375
-a full gigabyte, every query still under a second.
+00:01:56,131 --> 00:01:57,793
+Chrome refuses all five.
 
 55
-00:01:56,842 --> 00:02:00,413
+00:01:58,313 --> 00:02:01,221
+And this is every byte the agent actually received.
+
+56
+00:02:01,655 --> 00:02:03,668
+Not a summary — the literal text.
+
+57
+00:02:04,090 --> 00:02:05,037
+Search it for a name,
+
+58
+00:02:05,432 --> 00:02:06,248
+and there is none.
+
+59
+00:02:06,764 --> 00:02:08,316
+Ninety-nine megabytes in.
+
+60
+00:02:08,769 --> 00:02:09,594
+Kilobytes out.
+
+61
+00:02:10,047 --> 00:02:10,981
+Zero rows.
+
+62
+00:02:11,420 --> 00:02:13,907
+And it holds: ten million rows,
+
+63
+00:02:14,127 --> 00:02:18,069
+a full gigabyte, every query still under a second.
+
+64
+00:02:18,536 --> 00:02:22,107
 Blindfold — analyse a file your AI could never read.

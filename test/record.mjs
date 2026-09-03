@@ -218,6 +218,74 @@ try {
     await hidePointer();
   });
 
+  // ── 03b · the human overrules the heuristic ──────────────────────
+  // Shown as a causal chain rather than a feature: change the grading, the
+  // toolset is rebuilt, and a query that worked is now refused.
+  await clip('035-override', async () => {
+    await spotOff();
+    await page.evaluate(() => document.querySelector('#columns')?.scrollIntoView({ block: 'center' }));
+    await beat(700);
+
+    // A query the agent can run right now.
+    await call('aggregate', { agg: 'median', metric: 'base_salary', group_by: ['department'] });
+    await beat(1500);
+
+    // Reclassify department: category -> safe -> ... -> sealed. The badge
+    // cycles, so click until it reads sealed.
+    const tierOf = (name) =>
+      page.evaluate((n) => {
+        const row = [...document.querySelectorAll('#columns .column')]
+          .find((r) => r.querySelector('.column-name')?.textContent === n);
+        return row?.querySelector('.tier')?.textContent ?? null;
+      }, name);
+    const clickTier = (name) =>
+      page.evaluate((n) => {
+        const row = [...document.querySelectorAll('#columns .column')]
+          .find((r) => r.querySelector('.column-name')?.textContent === n);
+        row?.querySelector('.tier')?.click();
+      }, name);
+
+    const sel = '#columns .column:nth-child(4)';
+    await spot(sel, 5);
+    await beat(900);
+    for (let i = 0; i < 4; i++) {
+      if ((await tierOf('department')) === 'sealed') break;
+      await pointAt(`${sel} .tier`);
+      await clickTier('department');
+      await beat(800);
+    }
+    await hidePointer();
+    await beat(1400);
+
+    // The same call, now that department is sealed.
+    await page.evaluate(() => document.querySelector('.feed-wrap')?.scrollIntoView({ block: 'center' }));
+    await spotOff();
+    await beat(600);
+    await call('aggregate', { agg: 'median', metric: 'base_salary', group_by: ['department'] });
+    await beat(1200);
+    await spot('#feed .feed-item:nth-child(1)', 5);
+    await beat(2200);
+    await spotOff();
+
+  });
+
+  // Restore department once the clip has stopped, so the later beats get the
+  // dataset they expect without the badge flipping back on camera.
+  for (let i = 0; i < 4; i++) {
+    const t = await page.evaluate(() => {
+      const row = [...document.querySelectorAll('#columns .column')]
+        .find((r) => r.querySelector('.column-name')?.textContent === 'department');
+      return row?.querySelector('.tier')?.textContent ?? null;
+    });
+    if (t === 'category') break;
+    await page.evaluate(() => {
+      const row = [...document.querySelectorAll('#columns .column')]
+        .find((r) => r.querySelector('.column-name')?.textContent === 'department');
+      row?.querySelector('.tier')?.click();
+    });
+  }
+  await beat(400);
+
   // ── 04 · the tool surface ────────────────────────────────────────
   await clip('04-tools', async () => {
     await page.evaluate(() => document.querySelector('#tools-offered')?.scrollIntoView({ block: 'center' }));

@@ -30,6 +30,12 @@
       "rate": "-2%"
     },
     {
+      "id": "035-override",
+      "footage": "B-roll: department is reclassified to sealed, the toolset rebuilds, the same query is then refused.",
+      "rate": "-4%",
+      "text": "The grading is a heuristic — column names and how unique the values are — so sometimes it will be wrong. One click overrules it. Watch what happens when I seal a column the agent was just using: every tool is withdrawn and re-registered, the descriptions rewritten around the new grading, and the query that worked a moment ago is refused."
+    },
+    {
       "id": "04-tools",
       "footage": "B-roll: the registered tool list opens.",
       "text": "Eight WebMCP tools, and notice what is missing: there is no run-S-Q-L. The agent cannot write a query at all. It fills in a form, and the page compiles it. The same eight tools appear in ChatGPT and in Chrome behind the flag. This is the standard, not one app.",
