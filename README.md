@@ -16,7 +16,9 @@ unable to see.
 |---|---|
 | Read and classified | 3.2 s |
 | Median salary by department | 0.07 s |
-| Pay gap by level, both cohorts k-checked | 0.13 s |
+| Pay gap by level, both cohorts k-checked | 0.11 s |
+| Salary histogram by level | 0.11 s |
+| Tenure vs pay, per department | 0.04 s |
 | Bonus by level × region × department | 0.09 s |
 | **Sent to the agent** | **27 KB — about 6,800 tokens** |
 | **Raw rows sent to the agent** | **0** |
@@ -190,7 +192,8 @@ source data.
 ### 7. `render_chart` is a one-way mirror
 
 The agent supplies rows it already has and a shape to draw. The chart appears on
-the human's screen. What the agent receives back is the word "drawn".
+the human's screen. What the agent receives back is one sentence saying the
+chart is up and that no data came with it — zero bytes of data released.
 
 This is the part that only works because the tool runs in the page. A
 server-side agent cannot show a person something without first holding it

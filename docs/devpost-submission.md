@@ -49,8 +49,9 @@ Three things, in increasing order of how much WebMCP is doing:
    hand an agent the controls to a payroll file while it stays structurally
    unable to read a row. Delegation and disclosure used to be the same act.
 3. **Have an agent show you something it never saw itself.** `render_chart`
-   takes aggregates and a shape, draws on the human's screen, and returns the
-   word "drawn". The person gets the picture; the model gets a receipt. A
+   takes aggregates and a shape, draws on the human's screen, and returns one
+   sentence saying it is up and that nothing came back with it. The person gets
+   the picture; the model gets zero bytes of data. A
    server-side agent cannot show you anything without first holding it.
 
 ### How we implemented WebMCP
@@ -134,7 +135,9 @@ Measured on a million rows — 99 MB, about 26 million tokens of text:
 |---|---|
 | Read and classified | 3.2 s |
 | Median salary by department | 0.07 s |
-| Pay gap by level, both cohorts k-checked | 0.13 s |
+| Pay gap by level, both cohorts k-checked | 0.11 s |
+| Salary histogram by level | 0.11 s |
+| Tenure vs pay, per department | 0.04 s |
 | Bonus by level × region × department | 0.09 s |
 | Sent to the agent | 27 KB, about 6,800 tokens |
 | Raw rows sent to the agent | 0 |
@@ -169,8 +172,9 @@ Three WebMCP details did most of the work:
    of discovering it by trial. Loading a second file unregisters the first file's
    tools.
 2. **`render_chart` is a one-way mirror.** The agent supplies aggregates and a
-   shape; the chart appears on the human's screen; the return value is the word
-   "drawn". A server-side agent cannot show a person something without first
+   shape; the chart appears on the human's screen; the return value is a sentence
+   confirming it, carrying zero bytes of data. A server-side agent cannot show a
+   person something without first
    holding it. This one can — that asymmetry is only available in-page.
 3. **Refusals are return values, not exceptions.** Each carries the reason and a
    legal alternative, which turns the guard into something the agent can navigate
@@ -237,7 +241,7 @@ do" section covering the differencing risk, the heuristic classifier, and the
 fact that column *names* are metadata the agent does see. k-anonymity is not
 differential privacy and the project says so.
 
-Also: 95 automated checks driving a real Chrome, asserting not just that the
+Also: 116 automated checks driving a real Chrome, asserting not just that the
 queries run but that every refusal the guard advertises actually fires — and
 14 of them go through the browser's own WebMCP API rather than our abstraction
 over it, which is the only reason we found the re-registration bug at all.
