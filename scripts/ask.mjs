@@ -115,7 +115,9 @@ try {
     await page.click('#load-sample');
   }
   await page.waitForFunction(
-    () => /\d[\d,]* rows/.test(document.querySelector('#dataset-meta')?.textContent ?? ''),
+    () =>
+      /\d[\d,]* rows/.test(document.querySelector('#dataset-meta')?.textContent ?? '') &&
+      (window.blindfold?.listTools()?.length ?? 0) > 0,
     { timeout: 600000 },
   );
   console.log(await page.$eval('#dataset-meta', (e) => e.textContent.replace(/\s+/g, ' ').trim()));

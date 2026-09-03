@@ -36,7 +36,9 @@ try {
 
   await page.click('#load-sample');
   await page.waitForFunction(
-    () => /\d[\d,]* rows/.test(document.querySelector('#dataset-meta')?.textContent ?? ''),
+    () =>
+      /\d[\d,]* rows/.test(document.querySelector('#dataset-meta')?.textContent ?? '') &&
+      (window.blindfold?.listTools()?.length ?? 0) > 0,
     { timeout: 300000 },
   );
   const usable = Date.now() - t0;

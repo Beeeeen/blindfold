@@ -33,7 +33,9 @@ try {
   await page.goto(URL, { waitUntil: 'networkidle2', timeout: 120000 });
   await page.click('#load-sample');
   await page.waitForFunction(
-    () => /\d[\d,]* rows/.test(document.querySelector('#dataset-meta')?.textContent ?? ''),
+    () =>
+      /\d[\d,]* rows/.test(document.querySelector('#dataset-meta')?.textContent ?? '') &&
+      (window.blindfold?.listTools()?.length ?? 0) > 0,
     { timeout: 180000 },
   );
 

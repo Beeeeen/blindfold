@@ -19,7 +19,9 @@ if (existsSync(big) && statSync(big).size > 50 * 1024 * 1024) {
 } else {
   await p.click('#load-sample');
 }
-await p.waitForFunction(() => /\d[\d,]* rows/.test(document.querySelector('#dataset-meta')?.textContent ?? ''), { timeout: 600000 });
+await p.waitForFunction(() =>
+      /\d[\d,]* rows/.test(document.querySelector('#dataset-meta')?.textContent ?? '') &&
+      (window.blindfold?.listTools()?.length ?? 0) > 0, { timeout: 600000 });
 
 const call = (n, a) => p.evaluate((x, y) => window.blindfold.callTool(x, y), n, a);
 

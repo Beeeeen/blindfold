@@ -89,7 +89,8 @@ try {
       (n) => {
         const nm = document.querySelector('#dataset-name')?.textContent ?? '';
         const t = document.querySelector('#dataset-meta')?.textContent ?? '';
-        return nm === n && (/\d+ rows/.test(t) || /Could not read/.test(t));
+        const ready = (window.blindfold?.listTools()?.length ?? 0) > 0;
+        return nm === n && ((/\d+ rows/.test(t) && ready) || /Could not read/.test(t));
       },
       { timeout: 180000 },
       name,

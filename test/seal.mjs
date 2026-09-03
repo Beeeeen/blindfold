@@ -53,7 +53,9 @@ try {
 
   await page.click('#load-sample');
   await page.waitForFunction(
-    () => /\d+ rows/.test(document.querySelector('#dataset-meta')?.textContent ?? ''),
+    () =>
+      /\d+ rows/.test(document.querySelector('#dataset-meta')?.textContent ?? '') &&
+      (window.blindfold?.listTools()?.length ?? 0) > 0,
     { timeout: 180000 },
   );
 

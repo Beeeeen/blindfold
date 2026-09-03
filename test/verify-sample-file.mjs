@@ -35,7 +35,8 @@ try {
   const call = (n, a) => page.evaluate((x, y) => window.blindfold.callTool(x, y), n, a);
   const settled = () =>
     page.waitForFunction(
-      () => /\d+ rows/.test(document.querySelector('#dataset-meta')?.textContent ?? ''),
+      () =>
+        /\d+ rows/.test(document.querySelector('#dataset-meta')?.textContent ?? '') && (window.blindfold?.listTools()?.length ?? 0) > 0,
       { timeout: 180000 },
     );
 

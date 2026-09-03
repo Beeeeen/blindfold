@@ -42,7 +42,7 @@ try {
   console.log('\nloading sample dataset…');
   await page.click('#load-sample');
   await page.waitForFunction(
-    () => document.querySelectorAll('#columns .column').length > 0,
+    () => document.querySelectorAll('#columns .column').length > 0 && (window.blindfold?.listTools()?.length ?? 0) > 0,
     { timeout: 180000 },
   );
 

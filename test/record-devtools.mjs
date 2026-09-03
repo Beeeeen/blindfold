@@ -74,7 +74,9 @@ try {
   const input = await page.$('#file-input');
   await input.uploadFile(FILE);
   await page.waitForFunction(
-    () => /\d[\d,]* rows/.test(document.querySelector('#dataset-meta')?.textContent ?? ''),
+    () =>
+      /\d[\d,]* rows/.test(document.querySelector('#dataset-meta')?.textContent ?? '') &&
+      (window.blindfold?.listTools()?.length ?? 0) > 0,
     { timeout: 600000 },
   );
 
