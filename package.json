@@ -25,7 +25,8 @@
     "test:coldload": "node test/coldload.mjs",
     "chatgpt": "node scripts/use-chatgpt-clip.mjs",
     "voice:lab": "node scripts/voice-lab.mjs",
-    "captions": "node scripts/make-captions.mjs"
+    "captions": "node scripts/make-captions.mjs",
+    "test:coi": "node test/coi-check.mjs"
   },
   "dependencies": {
     "@duckdb/duckdb-wasm": "^1.29.0",

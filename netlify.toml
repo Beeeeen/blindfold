@@ -1,10 +1,11 @@
-# Kept as an alternative host, not because anything requires it: every sponsor
-# prize in this challenge rides along with a top-ten finish, and none of them
-# asks the project to be deployed on that sponsor's platform. The live URL is
-# GitHub Pages, built by .github/workflows/deploy.yml.
+# A spare host, not a requirement. The live URL is GitHub Pages, built by
+# .github/workflows/deploy.yml, and every sponsor prize in this challenge goes
+# to the top ten with no obligation to deploy on any particular platform.
 #
-# WebMCP needs a secure context. Netlify serves HTTPS by default, so this works
-# as-is if the primary host ever needs replacing.
+# No COOP/COEP headers here on purpose. Those are needed only by DuckDB's `coi`
+# build, which uses SharedArrayBuffer; this app ships only the exception-handling
+# build, so the page runs fine without cross-origin isolation. `npm run
+# test:coi` proves that against whatever is deployed.
 
 [build]
   command = "npm run build"
@@ -12,8 +13,3 @@
 
 [build.environment]
   NODE_VERSION = "22"
-
-[[headers]]
-  for = "/*"
-  [headers.values]
-    Cross-Origin-Opener-Policy = "same-origin"
