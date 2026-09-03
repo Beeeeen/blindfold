@@ -29,7 +29,8 @@ const stillOnly = process.argv.includes('--still');
 const WIN_W = 1195;
 const WIN_H = 672;
 const CAP_W = 1776;   // trimmed 16 px so no neighbouring window shows at the edge
-const CAP_H = 999;    // and 9 px so the taskbar never creeps in
+const CAP_H = 998;    // and 10 px so the taskbar never creeps in; even, because
+                      // libvpx-vp9 rejects an odd height outright
 
 const durations = JSON.parse(readFileSync(join(process.cwd(), 'voice', 'durations.json'), 'utf8'));
 const TARGET_S = durations['07-seal'];
@@ -99,12 +100,13 @@ try {
       '-f', 'gdigrab', '-framerate', '30', '-draw_mouse', '0',
       '-offset_x', '0', '-offset_y', '0', '-video_size', `${CAP_W}x${CAP_H}`, '-i', 'desktop',
       '-t', String(TARGET_S),
-      '-c:v', 'libvpx-vp9', '-b:v', '4M', '-row-mt', '1', '-deadline', 'realtime',
-      '-vf', 'fps=30', out]);
+      '-c:v', 'libvpx-vp9', '-pix_fmt', 'yuv420p', '-b:v', '4M',
+      '-row-mt', '1', '-deadline', 'realtime', out]);
 
     await beat(2400);                              // let the frame settle
-    await page.evaluate(() => window.blindfold.testSeal());
-    await beat(2600);
+    await page.click('#seal-test');
+    await page.waitForFunction(() => document.querySelectorAll('#seal-results li').length >= 5, { timeout: 30000 });
+    await beat(2200);
     await page.evaluate(() => {
       const el = document.querySelector('#seal-results');
       if (!el) return;
