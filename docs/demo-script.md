@@ -31,7 +31,7 @@ Clips land within 0.15s of their narration.
 | 1 | hook | 11.5s | The raw file scrolling past real names and salaries, then it lands on 1,000,000 rows |
 | 2 | claim | 5.4s | The loaded dataset, sealed badges |
 | 3 | grading | 11.7s | Cursor across the three sealed columns |
-| 4 | tools | 11.4s | The registered tool list opening |
+| 4 | tools | 18.3s | The registered tool list opening |
 | 5 | work | 19.3s | Tools run, both charts appear, then the render_chart call that returned one word |
 | 6 | refuse | 11.5s | Two refusals in red |
 | 7 | seal | 18.8s | The leak test refusing all five channels |
