@@ -29,7 +29,8 @@
     "test:coi": "node test/coi-check.mjs",
     "test:csp": "node test/csp-evidence.mjs",
     "record:devtools": "node test/record-devtools.mjs",
-    "ask": "node scripts/ask.mjs"
+    "ask": "node scripts/ask.mjs",
+    "chatgpt:stills": "node scripts/use-chatgpt-stills.mjs"
   },
   "dependencies": {
     "@duckdb/duckdb-wasm": "^1.29.0",

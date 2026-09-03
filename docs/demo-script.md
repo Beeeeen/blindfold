@@ -79,13 +79,25 @@ them rather than a model — which is why the narration never says otherwise.
 Confirmed working in the ChatGPT desktop app: the page reports
 *WebMCP connected — 8 tools offered* there.
 
-Record the conversation with anything (Win+G is enough), then:
+Either a recording or a handful of screenshots works. The rules ask the video
+as a whole to demonstrate the project with audio; they do not ask every second
+of it to move.
 
 ```bash
-npm run chatgpt -- path/to/recording.mp4            # whole clip
+# a screen recording of any length -- Win+G is enough
+npm run chatgpt -- path/to/recording.mp4
 npm run chatgpt -- path/to/recording.mp4 --from 4 --to 42   # or trim it
+
+# or stills: the question typed, the tool calls arriving, the chart drawn
+npm run chatgpt:stills -- shot1.png shot2.png shot3.png
+
 npm run assemble
 ```
+
+Stills are less of a compromise here than they sound. The model took two and a
+half minutes to answer, and most of a real-time recording is therefore someone
+waiting. Each image is held for an equal share of the line with a slow push-in
+and cross-dissolves, which reads as framing rather than as a slideshow.
 
 It is fitted to the 14.6s alternate line by adjusting speed, so record for as
 long as the agent needs. Assembly prefers the take while
