@@ -256,8 +256,9 @@ export async function registerTools({ ctx, fileName }: RegisterOptions): Promise
         const spec = input as unknown as guard.AggregateSpec;
         const res = await guard.aggregate(ctx, spec);
         const what = spec.agg === 'count' ? 'count' : `${spec.agg} of ${spec.metric}`;
+        const grouped = Array.isArray(spec.group_by) ? spec.group_by : spec.group_by ? [spec.group_by] : [];
         return {
-          summary: `${what}${spec.group_by?.length ? ` by ${spec.group_by.join(', ')}` : ''}: ${res.rows.length} row(s). ${res.note}.`,
+          summary: `${what}${grouped.length ? ` by ${grouped.join(', ')}` : ''}: ${res.rows.length} row(s). ${res.note}.`,
           payload: res.rows,
           suppressed: res.groupsSuppressed,
         };

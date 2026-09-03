@@ -184,6 +184,34 @@ try {
   const r6 = await call('aggregate', { agg: 'avg', metric: 'nonexistent_column' });
   check('unknown column gives a usable error', /No column named/.test(r6), r6.slice(0, 120));
 
+  console.log('\nrefusals that name the argument');
+  // Found by pointing a real model at these tools: it guessed parameter names,
+  // got "No column named undefined" back, and retried the same wrong shape four
+  // times over. A refusal that does not say what it wanted teaches nothing.
+  const a1 = await call('aggregate', { aggregate: 'stddev', column: 'base_salary' });
+  check('a misnamed agg argument is named back', /missing required argument: agg/.test(a1), a1.slice(0, 140));
+  check('and the refusal lists what was supplied', /You supplied: aggregate, column/.test(a1), a1.slice(0, 160));
+
+  const a2 = await call('aggregate', { agg: 'stddev', column: 'base_salary' });
+  check('a missing metric names the argument', /passed as "metric"/.test(a2), a2.slice(0, 140));
+
+  const a3 = await call('aggregate', { agg: 'variance', metric: 'base_salary' });
+  check('an unknown agg lists the valid ones', /not an aggregate this tool knows/.test(a3), a3.slice(0, 140));
+  check('and enumerates them', /count, avg, sum, median/.test(a3));
+
+  const a4 = await call('compare_groups', { metric: 'base_salary', category: 'gender' });
+  check('compare_groups names every missing argument',
+    /missing required arguments: split_by, group_a, group_b/.test(a4), a4.slice(0, 160));
+
+  const a5 = await call('aggregate', {
+    agg: 'count', filters: [{ column: 'department', op: 'contains', value: 'Eng' }],
+  });
+  check('an unknown filter operator lists the valid ones',
+    /not a filter operator this tool knows/.test(a5), a5.slice(0, 140));
+
+  const a6 = await call('aggregate', { agg: 'median', metric: 'base_salary', group_by: 'department' });
+  check('a string group_by is taken rather than crashing', /Engineering/.test(a6), a6.slice(0, 140));
+
   console.log('\ncorrelate with group_by');
   const cg = await call('correlate', { x: 'tenure_years', y: 'base_salary', group_by: 'department' });
   check('grouped correlation returns per-group r', /"r"/.test(cg) && /Engineering/.test(cg), cg.slice(0, 160));

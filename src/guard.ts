@@ -49,6 +49,27 @@ function column(ctx: GuardContext, name: string): ClassifiedColumn {
   return col;
 }
 
+/**
+ * Names the arguments a tool is missing.
+ *
+ * An agent that guesses a parameter name lands in `column()` with undefined and
+ * gets told there is no column called "undefined", which is true and useless.
+ * Running a real model against these tools showed it retrying the same wrong
+ * shape four times over. Saying which argument was expected ends that in one
+ * turn, which is the whole point of returning refusals rather than throwing.
+ */
+function requireArgs<T extends object>(spec: T, tool: string, names: (keyof T & string)[]): void {
+  const missing = names.filter((n) => spec[n] === undefined || spec[n] === null || spec[n] === '');
+  if (!missing.length) return;
+  const supplied = Object.keys(spec).filter((k) => (spec as unknown as Record<string, unknown>)[k] !== undefined);
+  throw new PolicyError(
+    `${tool} is missing required argument${missing.length > 1 ? 's' : ''}: ${missing.join(', ')}.` +
+      (supplied.length ? ` You supplied: ${supplied.join(', ')}.` : ''),
+    `${tool} takes exactly these arguments: ${names.join(', ')}` +
+      `. Names must match; a differently named argument is ignored.`,
+  );
+}
+
 /** Columns an agent may group or filter by without singling anyone out. */
 function assertGroupable(col: ClassifiedColumn): void {
   if (col.tier === 'identifier') {
@@ -121,6 +142,12 @@ export function buildWhere(ctx: GuardContext, filters: Filter[] = []): string {
     lte: '<=',
   };
   const clauses = filters.map((f) => {
+    if (!(f.op in ops)) {
+      throw new PolicyError(
+        `"${f.op}" is not a filter operator this tool knows.`,
+        `op must be one of: ${Object.keys(ops).join(', ')}.`,
+      );
+    }
     const col = column(ctx, f.column);
     assertFilterable(col, f.op);
     return `${quoteIdent(col.name)} ${ops[f.op]} ${quoteLiteral(f.value)}`;
@@ -181,15 +208,30 @@ export interface AggregateSpec {
 
 export async function aggregate(ctx: GuardContext, spec: AggregateSpec): Promise<GuardedResult> {
   assertBudget();
+  requireArgs(spec, 'aggregate', ['agg']);
   const agg = spec.agg;
-  const groupBy = spec.group_by ?? [];
+  if (!(agg in AGG_SQL)) {
+    throw new PolicyError(
+      `"${agg}" is not an aggregate this tool knows.`,
+      `agg must be one of: ${Object.keys(AGG_SQL).join(', ')}.`,
+    );
+  }
+  const groupBy = Array.isArray(spec.group_by)
+    ? spec.group_by
+    : spec.group_by
+      ? [spec.group_by as unknown as string]
+      : [];
 
   let valueExpr: string;
   if (agg === 'count') {
     valueExpr = 'COUNT(*)';
   } else {
     if (!spec.metric) {
-      throw new PolicyError(`agg "${agg}" needs a metric column.`, 'Supply metric, or use agg "count".');
+      const supplied = Object.keys(spec).filter((k) => (spec as unknown as Record<string, unknown>)[k] !== undefined);
+      throw new PolicyError(
+        `agg "${agg}" needs a column to measure, passed as "metric". You supplied: ${supplied.join(', ')}.`,
+        'aggregate takes: agg, metric, group_by, filters, sort, limit. group_by is an array of column names.',
+      );
     }
     const metricCol = column(ctx, spec.metric);
     assertMeasurable(metricCol, agg);
@@ -239,6 +281,7 @@ export interface DistributionSpec {
 /** Histogram counts. Bin edges are released; the values inside them are not. */
 export async function distribution(ctx: GuardContext, spec: DistributionSpec): Promise<GuardedResult> {
   assertBudget();
+  requireArgs(spec, 'distribution', ['column']);
   const col = column(ctx, spec.column);
   if (col.tier === 'identifier') {
     throw new PolicyError(`"${col.name}" is sealed.`, 'Choose a numeric column.');
@@ -291,6 +334,7 @@ export interface CorrelateSpec {
 /** Pearson r plus the sample size. Two numbers per group; no rows. */
 export async function correlate(ctx: GuardContext, spec: CorrelateSpec): Promise<GuardedResult> {
   assertBudget();
+  requireArgs(spec, 'correlate', ['x', 'y']);
   for (const name of [spec.x, spec.y]) {
     const col = column(ctx, name);
     if (col.tier === 'identifier') throw new PolicyError(`"${col.name}" is sealed.`, 'Choose numeric columns.');
@@ -330,6 +374,7 @@ export interface CompareSpec {
  */
 export async function compareGroups(ctx: GuardContext, spec: CompareSpec): Promise<GuardedResult> {
   assertBudget();
+  requireArgs(spec, 'compare_groups', ['metric', 'split_by', 'group_a', 'group_b']);
   const metric = column(ctx, spec.metric);
   assertMeasurable(metric, 'avg');
   const split = column(ctx, spec.split_by);
@@ -391,6 +436,7 @@ export async function compareGroups(ctx: GuardContext, spec: CompareSpec): Promi
 
 export async function groupValues(ctx: GuardContext, name: string): Promise<GuardedResult> {
   assertBudget();
+  requireArgs({ column: name }, 'list_group_values', ['column']);
   const col = column(ctx, name);
   assertGroupable(col);
   const rows = await rawQuery(
