@@ -231,7 +231,16 @@ try {
       title: 'Median base salary by department',
       x_label: 'Department', y_label: 'Median base salary (USD)',
     });
-    await beat(1400);
+    await beat(2200);
+
+    // The narration now names the one-way mirror here, so show it: the call
+    // that drew the chart, and the single word that went back for it.
+    await callout(null, null);
+    await page.evaluate(() => document.querySelector('.feed-wrap')?.scrollIntoView({ block: 'center' }));
+    await beat(900);
+    await pointAt('#feed .feed-item:nth-child(1) .feed-detail');
+    await beat(2400);
+    await hidePointer();
   });
 
   // ── 06 · it refuses ──────────────────────────────────────────────
@@ -260,7 +269,20 @@ try {
   });
 
   // ── 08 · rest on the receipt ─────────────────────────────────────
-  await clip('08-close', async () => {
+  // ── 08 · the verbatim payload ────────────────────────────────────
+  // The other half of "how would I know": the seal says nothing left the tab,
+  // this says exactly what crossed to the agent, character for character.
+  await clip('08-verbatim', async () => {
+    await callout(null, null);
+    await page.evaluate(() => document.querySelector('.feed-wrap')?.scrollIntoView({ block: 'center' }));
+    await beat(700);
+    await pointAt('#feed .feed-item:nth-child(3)');
+    await page.evaluate(() => document.querySelectorAll('#feed .feed-item')[2]?.click());
+    await beat(500);
+    await hidePointer();
+  });
+
+  await clip('09-close', async () => {
     await callout(null, null);
     await page.evaluate(() => document.querySelector('.panel-ledger')?.scrollIntoView({ block: 'start' }));
     await beat(1600);

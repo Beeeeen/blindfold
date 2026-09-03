@@ -59,7 +59,15 @@ function withPunctuation(words, sourceText) {
     for (let k = ti; k < Math.min(ti + 4, tokens.length); k++) {
       if (bare(tokens[k]) === target) {
         const token = tokens[k];
+        // A standalone dash carries no timing of its own, so it would vanish
+        // and leave "one word drawn" where the line reads "one word — drawn".
+        const dashes = tokens.slice(ti, k).filter((t) => /^[—–-]$/.test(t));
         ti = k + 1;
+        if (dashes.length) {
+          const core = token.replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu, '');
+          const trail = token.slice(token.indexOf(core) + core.length);
+          return { ...w, word: `${dashes.join(' ')} ${WRITTEN.get(core) ?? core}${trail}` };
+        }
         const core = token.replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu, '');
         const trail = token.slice(token.indexOf(core) + core.length);
         return { ...w, word: (WRITTEN.get(core) ?? core) + trail };

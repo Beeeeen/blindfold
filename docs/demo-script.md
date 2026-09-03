@@ -1,6 +1,6 @@
 # The demo video
 
-**Already built: `docs/demo-assembly.mp4` — 1:32, narrated, ready to upload.**
+**Already built: `docs/demo-assembly.mp4` — 1:47, narrated, captioned, ready to upload.**
 
 The narration is not written out here. It lives in
 [`../voice/narration.json`](../voice/narration.json), which is what the pipeline
@@ -29,13 +29,14 @@ Clips land within 0.15s of their narration.
 | # | Beat | Length | What is on screen |
 |---|---|---|---|
 | 1 | hook | 11.5s | The raw file scrolling past real names and salaries, then it lands on 1,000,000 rows |
-| 2 | claim | 4.9s | The loaded dataset, sealed badges |
-| 3 | grading | 12.4s | Cursor across the three sealed columns |
-| 4 | tools | 11.2s | The registered tool list opening |
-| 5 | work | 12.9s | Tools run, both charts appear |
-| 6 | refuse | 11.8s | Two refusals in red |
-| 7 | seal | 18.6s | The leak test refusing all five channels |
-| 8 | close | 8.4s | The ledger |
+| 2 | claim | 5.4s | The loaded dataset, sealed badges |
+| 3 | grading | 11.7s | Cursor across the three sealed columns |
+| 4 | tools | 11.4s | The registered tool list opening |
+| 5 | work | 19.3s | Tools run, both charts appear, then the render_chart call that returned one word |
+| 6 | refuse | 11.5s | Two refusals in red |
+| 7 | seal | 18.8s | The leak test refusing all five channels |
+| 8 | verbatim | 8.4s | A feed row expanded to its exact payload |
+| 9 | close | 9.0s | The ledger |
 
 Number callouts are burnt in, and the two that quote measurements — the query
 time and the byte counts — are read off the running page at record time rather

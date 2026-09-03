@@ -4,7 +4,7 @@ A million people's salaries.
 
 2
 00:00:02,264 --> 00:00:05,847
-Ninety-nine megabytes twenty-six million tokens.
+Ninety-nine megabytes — twenty-six million tokens.
 
 3
 00:00:06,278 --> 00:00:08,194
@@ -32,7 +32,7 @@ the file exists.
 
 9
 00:00:21,347 --> 00:00:23,974
-Name, email, employee ID sealed.
+Name, email, employee ID — sealed.
 
 10
 00:00:24,370 --> 00:00:25,530
@@ -63,105 +63,137 @@ It fills in a form,
 and the page compiles it.
 
 17
-00:00:40,080 --> 00:00:40,562
+00:00:40,080 --> 00:00:40,588
 Schema.
 
 18
-00:00:40,979 --> 00:00:41,929
+00:00:41,005 --> 00:00:42,007
 Cohort comparison.
 
 19
-00:00:42,346 --> 00:00:42,736
+00:00:42,437 --> 00:00:42,828
 Chart.
 
 20
-00:00:43,166 --> 00:00:46,174
+00:00:43,244 --> 00:00:46,421
 Each one across all one million rows in under
 
 21
-00:00:46,174 --> 00:00:47,059
+00:00:46,434 --> 00:00:47,372
 a tenth of a second.
 
 22
-00:00:47,515 --> 00:00:50,744
-Three percent pay gap at the junior levels thirteen
+00:00:47,788 --> 00:00:49,377
+And look at what just happened with that chart:
 
 23
-00:00:50,900 --> 00:00:51,994
-at the senior ones.
+00:00:49,768 --> 00:00:50,940
+the agent asked for it,
 
 24
-00:00:52,497 --> 00:00:53,799
-Ask who is paid most,
+00:00:51,174 --> 00:00:53,309
+I can see it, and the agent got back
 
 25
-00:00:54,190 --> 00:00:55,232
-and it refuses.
+00:00:53,322 --> 00:00:54,312
+one word — drawn.
 
 26
-00:00:55,648 --> 00:00:58,226
-A maximum is one real person's salary.
+00:00:54,781 --> 00:00:56,786
+Three percent pay gap at the junior levels,
 
 27
-00:00:58,656 --> 00:01:01,065
-And the refusal tells the agent what to ask
+00:00:57,033 --> 00:00:58,895
+thirteen at the senior ones.
 
 28
-00:01:01,065 --> 00:01:03,539
-instead, so it recovers on the next turn.
+00:00:59,409 --> 00:01:00,711
+Ask who is paid most,
 
 29
-00:01:04,054 --> 00:01:07,073
-But a counter reading zero is just this page
+00:01:01,102 --> 00:01:02,144
+and it refuses.
 
 30
-00:01:07,086 --> 00:01:08,735
-marking its own homework.
+00:01:02,560 --> 00:01:05,138
+A maximum is one real person's salary.
 
 31
-00:01:09,161 --> 00:01:11,847
-So the page revokes its own network access.
+00:01:05,568 --> 00:01:07,977
+And the refusal tells the agent what to ask
 
 32
-00:01:12,272 --> 00:01:14,919
-Watch me try to leak the data on purpose.
+00:01:07,977 --> 00:01:10,451
+instead, so it recovers on the next turn.
 
 33
-00:01:15,437 --> 00:01:15,823
-Fetch.
+00:01:10,966 --> 00:01:13,985
+But a counter reading zero is just this page
 
 34
-00:01:16,235 --> 00:01:16,940
-XHR.
+00:01:13,998 --> 00:01:15,647
+marking its own homework.
 
 35
-00:01:17,179 --> 00:01:18,030
-WebSocket.
+00:01:16,073 --> 00:01:18,759
+So the page revokes its own network access.
 
 36
-00:01:18,483 --> 00:01:18,815
-Beacon.
+00:01:19,184 --> 00:01:21,831
+Watch me try to leak the data on purpose.
 
 37
-00:01:19,241 --> 00:01:20,225
-Tracking pixel.
+00:01:22,349 --> 00:01:22,735
+Fetch.
 
 38
-00:01:20,637 --> 00:01:22,299
-Chrome refuses all five.
+00:01:23,147 --> 00:01:23,852
+XHR.
 
 39
-00:01:22,824 --> 00:01:24,362
-Ninety-nine megabytes in.
+00:01:24,091 --> 00:01:24,942
+WebSocket.
 
 40
-00:01:24,802 --> 00:01:25,612
-Kilobytes out.
+00:01:25,395 --> 00:01:25,727
+Beacon.
 
 41
-00:01:26,066 --> 00:01:27,041
-Zero rows.
+00:01:26,153 --> 00:01:27,137
+Tracking pixel.
 
 42
-00:01:27,494 --> 00:01:31,327
-Blindfold analyse a file your AI could never read.
+00:01:27,549 --> 00:01:29,211
+Chrome refuses all five.
+
+43
+00:01:29,731 --> 00:01:32,639
+And this is every byte the agent actually received.
+
+44
+00:01:33,073 --> 00:01:35,086
+Not a summary — the literal text.
+
+45
+00:01:35,508 --> 00:01:36,455
+Search it for a name,
+
+46
+00:01:36,850 --> 00:01:37,666
+and there is none.
+
+47
+00:01:38,182 --> 00:01:39,720
+Ninety-nine megabytes in.
+
+48
+00:01:40,160 --> 00:01:40,970
+Kilobytes out.
+
+49
+00:01:41,424 --> 00:01:42,399
+Zero rows.
+
+50
+00:01:42,852 --> 00:01:46,685
+Blindfold — analyse a file your AI could never read.
