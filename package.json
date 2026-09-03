@@ -30,7 +30,8 @@
     "test:csp": "node test/csp-evidence.mjs",
     "record:devtools": "node test/record-devtools.mjs",
     "ask": "node scripts/ask.mjs",
-    "chatgpt:stills": "node scripts/use-chatgpt-stills.mjs"
+    "chatgpt:stills": "node scripts/use-chatgpt-stills.mjs",
+    "contactsheet": "node scripts/contactsheet.mjs"
   },
   "dependencies": {
     "@duckdb/duckdb-wasm": "^1.29.0",
