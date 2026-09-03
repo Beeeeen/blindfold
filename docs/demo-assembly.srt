@@ -111,145 +111,129 @@ Chrome behind the flag.
 This is the standard, not one app.
 
 29
-00:01:08,662 --> 00:01:09,170
-Schema.
+00:01:08,662 --> 00:01:12,308
+So I ask ChatGPT where pay is least equitable.
 
 30
-00:01:09,587 --> 00:01:10,589
-Cohort comparison.
+00:01:12,738 --> 00:01:15,772
+It reads the schema, compares the cohorts level by
 
 31
-00:01:11,019 --> 00:01:11,410
-Chart.
+00:01:15,772 --> 00:01:17,790
+level, and draws me the chart.
 
 32
-00:01:11,826 --> 00:01:15,003
-Each one across all one million rows in under
+00:01:18,219 --> 00:01:19,170
+It asked for that chart,
 
 33
-00:01:15,016 --> 00:01:15,954
-a tenth of a second.
+00:01:19,417 --> 00:01:21,331
+I can see it, and what it got back
 
 34
-00:01:16,370 --> 00:01:17,959
-And look at what just happened with that chart:
+00:01:21,331 --> 00:01:22,477
+was one word — drawn.
 
 35
-00:01:18,350 --> 00:01:19,522
-the agent asked for it,
+00:01:22,907 --> 00:01:24,522
+It has still never seen a salary.
 
 36
-00:01:19,756 --> 00:01:21,891
-I can see it, and the agent got back
-
-37
-00:01:21,904 --> 00:01:22,894
-one word — drawn.
-
-38
-00:01:23,363 --> 00:01:25,368
-Three percent pay gap at the junior levels,
-
-39
-00:01:25,615 --> 00:01:27,477
-thirteen at the senior ones.
-
-40
-00:01:27,991 --> 00:01:29,293
+00:01:25,015 --> 00:01:26,317
 Ask who is paid most,
 
-41
-00:01:29,684 --> 00:01:30,726
+37
+00:01:26,708 --> 00:01:27,750
 and it refuses.
 
-42
-00:01:31,142 --> 00:01:33,720
+38
+00:01:28,166 --> 00:01:30,744
 A maximum is one real person's salary.
 
-43
-00:01:34,150 --> 00:01:36,559
+39
+00:01:31,174 --> 00:01:33,583
 And the refusal tells the agent what to ask
 
-44
-00:01:36,559 --> 00:01:39,033
+40
+00:01:33,583 --> 00:01:36,057
 instead, so it recovers on the next turn.
 
-45
-00:01:39,548 --> 00:01:42,567
+41
+00:01:36,572 --> 00:01:39,591
 But a counter reading zero is just this page
 
-46
-00:01:42,580 --> 00:01:44,229
+42
+00:01:39,604 --> 00:01:41,253
 marking its own homework.
 
-47
-00:01:44,655 --> 00:01:47,341
+43
+00:01:41,679 --> 00:01:44,365
 So the page revokes its own network access.
 
-48
-00:01:47,766 --> 00:01:50,413
+44
+00:01:44,790 --> 00:01:47,437
 Watch me try to leak the data on purpose.
 
-49
-00:01:50,931 --> 00:01:51,317
+45
+00:01:47,955 --> 00:01:48,341
 Fetch.
 
-50
-00:01:51,729 --> 00:01:52,434
+46
+00:01:48,753 --> 00:01:49,458
 XHR.
 
-51
-00:01:52,673 --> 00:01:53,524
+47
+00:01:49,697 --> 00:01:50,548
 WebSocket.
 
-52
-00:01:53,977 --> 00:01:54,309
+48
+00:01:51,001 --> 00:01:51,333
 Beacon.
 
-53
-00:01:54,735 --> 00:01:55,719
+49
+00:01:51,759 --> 00:01:52,743
 Tracking pixel.
 
-54
-00:01:56,131 --> 00:01:57,793
+50
+00:01:53,155 --> 00:01:54,817
 Chrome refuses all five.
 
-55
-00:01:58,313 --> 00:02:01,221
+51
+00:01:55,337 --> 00:01:58,245
 And this is every byte the agent actually received.
 
-56
-00:02:01,655 --> 00:02:03,668
+52
+00:01:58,679 --> 00:02:00,692
 Not a summary — the literal text.
 
-57
-00:02:04,090 --> 00:02:05,037
+53
+00:02:01,114 --> 00:02:02,061
 Search it for a name,
 
-58
-00:02:05,432 --> 00:02:06,248
+54
+00:02:02,456 --> 00:02:03,272
 and there is none.
 
-59
-00:02:06,764 --> 00:02:08,316
+55
+00:02:03,788 --> 00:02:05,340
 Ninety-nine megabytes in.
 
-60
-00:02:08,769 --> 00:02:09,594
+56
+00:02:05,793 --> 00:02:06,618
 Kilobytes out.
 
-61
-00:02:10,047 --> 00:02:10,981
+57
+00:02:07,071 --> 00:02:08,005
 Zero rows.
 
-62
-00:02:11,420 --> 00:02:13,907
+58
+00:02:08,444 --> 00:02:10,931
 And it holds: ten million rows,
 
-63
-00:02:14,127 --> 00:02:18,069
+59
+00:02:11,151 --> 00:02:15,093
 a full gigabyte, every query still under a second.
 
-64
-00:02:18,536 --> 00:02:22,107
+60
+00:02:15,560 --> 00:02:19,131
 Blindfold — analyse a file your AI could never read.

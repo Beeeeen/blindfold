@@ -14,7 +14,7 @@
  * the scripted take automatically. Delete it to go back.
  */
 import { execFileSync } from 'node:child_process';
-import { existsSync, mkdirSync, readFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 
 const ROOT = process.cwd();
@@ -30,6 +30,27 @@ const flag = (name) => {
 };
 const from = flag('from');
 const to = flag('to');
+
+/**
+ * Several ranges joined, e.g. --ranges 25-35,92-103.
+ *
+ * Compressing one long take evenly puts the payoff in its last second: the
+ * narration talks about the chart for half its length, but the chart only
+ * exists at the very end of the recording. Taking the question and the moment
+ * it lands, and dropping the wait between them, keeps both on screen at close
+ * to real speed.
+ */
+const rangesFlag = args.indexOf('--ranges');
+const ranges = rangesFlag >= 0 && args[rangesFlag + 1]
+  ? args[rangesFlag + 1].split(',').map((r) => {
+      const [a, b] = r.split('-').map(Number);
+      if (!Number.isFinite(a) || !Number.isFinite(b) || b <= a) {
+        console.error(`Bad range "${r}" — expected start-end in seconds.`);
+        process.exit(1);
+      }
+      return [a, b];
+    })
+  : null;
 
 if (!src || !existsSync(resolve(src))) {
   console.error('Usage: npm run chatgpt -- path/to/recording.mp4 [--from 4.5] [--to 38]');
@@ -55,12 +76,29 @@ mkdirSync(BROLL, { recursive: true });
 mkdirSync(WORK, { recursive: true });
 const input = resolve(src);
 
+/** The window is light along the edges this matte sits against. */
+const PAD = process.env.CHATGPT_PAD ?? '0xfbfbfa';
+
 // 1. trim to the part worth showing
 const trimmed = join(WORK, 'chatgpt.trim.mp4');
-const pre = from != null ? ['-ss', String(from)] : [];
-const post = to != null ? ['-t', String(to - (from ?? 0))] : [];
-ff([...pre, '-i', input, ...post, '-an', '-c:v', 'libx264', '-crf', '18', '-preset', 'medium',
-  '-pix_fmt', 'yuv420p', trimmed]);
+if (ranges) {
+  const parts = ranges.map(([a, b], i) => {
+    const out = join(WORK, `chatgpt.part${i}.mp4`);
+    ff(['-ss', String(a), '-i', input, '-t', String(b - a), '-an',
+      '-c:v', 'libx264', '-crf', '18', '-preset', 'medium', '-pix_fmt', 'yuv420p', out]);
+    console.log(`  range ${a}-${b}s`);
+    return out;
+  });
+  const list = join(WORK, 'chatgpt.concat.txt');
+  const forConcat = (f) => f.split('\\').join('/');
+  writeFileSync(list, parts.map((f) => `file '${forConcat(f)}'`).join('\n'));
+  ff(['-f', 'concat', '-safe', '0', '-i', list, '-c', 'copy', trimmed]);
+} else {
+  const pre = from != null ? ['-ss', String(from)] : [];
+  const post = to != null ? ['-t', String(to - (from ?? 0))] : [];
+  ff([...pre, '-i', input, ...post, '-an', '-c:v', 'libx264', '-crf', '18', '-preset', 'medium',
+    '-pix_fmt', 'yuv420p', trimmed]);
+}
 
 const have = probe(trimmed);
 const speed = have / target;
@@ -73,8 +111,9 @@ const out = join(BROLL, '05b-chatgpt.webm');
 ff([
   '-i', trimmed,
   '-filter:v',
-  `setpts=PTS/${speed},scale=2400:1350:force_original_aspect_ratio=decrease,` +
-    'pad=2400:1350:(ow-iw)/2:(oh-ih)/2:color=0x14181a,fps=30',
+  `setpts=PTS/${speed},` +
+    'scale=2400:1350:force_original_aspect_ratio=decrease:flags=lanczos,' +
+    `pad=2400:1350:(ow-iw)/2:(oh-ih)/2:color=${PAD},fps=30`,
   '-an', '-c:v', 'libvpx-vp9', '-b:v', '4M', '-row-mt', '1', '-deadline', 'good',
   out,
 ]);

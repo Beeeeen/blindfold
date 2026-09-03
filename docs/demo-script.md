@@ -1,6 +1,6 @@
 # The demo video
 
-**Already built: `docs/demo-assembly.mp4` — 2:23, narrated, captioned, ready to upload.**
+**Already built: `docs/demo-assembly.mp4` — 2:20, narrated, captioned, with the real ChatGPT conversation in beat 5.**
 
 The narration is not written out here. It lives in
 [`../voice/narration.json`](../voice/narration.json), which is what the pipeline
@@ -33,7 +33,7 @@ Clips land within 0.15s of their narration.
 | 3 | grading | 11.7s | Cursor across the three sealed columns |
 | 3b | override | 21.7s | department reclassified to sealed; the same query then refused |
 | 4 | tools | 18.3s | The registered tool list opening |
-| 5 | work | 19.3s | Tools run, both charts appear, then the render_chart call that returned one word |
+| 5 | work | 16.4s | The ChatGPT conversation: the question, then the chart landing |
 | 6 | refuse | 11.5s | Two refusals in red |
 | 7 | seal | 18.8s | The leak test refusing all five channels |
 | 8 | verbatim | 8.4s | A feed row expanded to its exact payload |
