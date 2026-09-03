@@ -94,8 +94,13 @@ Just send the file path. No trimming needed.
 
 ```bash
 npm run contactsheet -- path/to/recording.mp4   # so I can find the moments
-npm run chatgpt -- path/to/recording.mp4 --from <start> --to <end>
+
+# one recording feeds two beats; --ranges drops the waiting in between
+npm run chatgpt -- path/to/recording.mp4 --ranges <a-b>,<c-d> --callout-at <s>
+npm run chatgpt -- path/to/recording.mp4 --beat 06-refuse --ranges <a-b> --callout-at <s>
+
 npm run assemble
+npm run captions
 ```
 
 If recording turns out to be more trouble than it is worth, screenshots of the

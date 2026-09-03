@@ -94,7 +94,11 @@ for (const b of spec.beats) {
   ff([
     '-i', video, '-i', audio,
     '-map', '0:v:0', '-map', '1:a:0',
-    '-vf', 'scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:color=0x14181a,fps=30',
+    // The screencast clips land a few frames short of their narration, and
+    // -shortest would then clip the tail off every line — ten times over, the
+    // captions end up more than a second adrift. Holding the last frame lets
+    // the audio decide the length, so a beat is exactly as long as it sounds.
+    '-vf', 'scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:color=0x14181a,fps=30,tpad=stop_mode=clone:stop_duration=1',
     '-c:v', 'libx264', '-preset', 'medium', '-crf', '20', '-pix_fmt', 'yuv420p',
     '-c:a', 'aac', '-b:a', '160k', '-ar', '48000', '-ac', '2',
     '-shortest', out,

@@ -1,6 +1,6 @@
 # The demo video
 
-**Already built: `docs/demo-assembly.mp4` — 2:20, narrated, captioned, with the real ChatGPT conversation in beat 5.**
+**Already built: `docs/demo-assembly.mp4` — 2:20, narrated, captioned, with the real ChatGPT conversation in beats 5 and 6.**
 
 The narration is not written out here. It lives in
 [`../voice/narration.json`](../voice/narration.json), which is what the pipeline
@@ -34,14 +34,16 @@ Clips land within 0.15s of their narration.
 | 3b | override | 21.7s | department reclassified to sealed; the same query then refused |
 | 4 | tools | 18.3s | The registered tool list opening |
 | 5 | work | 16.4s | The ChatGPT conversation: the question, then the chart landing |
-| 6 | refuse | 11.5s | Two refusals in red |
+| 6 | refuse | 11.5s | ChatGPT relaying the refusal, and offering a percentile instead |
 | 7 | seal | 18.8s | The leak test refusing all five channels |
 | 8 | verbatim | 8.4s | A feed row expanded to its exact payload |
 | 9 | close | 15.9s | The ledger, then the tested ceiling |
 
 Number callouts are burnt in, and the two that quote measurements — the query
 time and the byte counts — are read off the running page at record time rather
-than typed in. An earlier cut claimed "3.8 KB out" over a ledger reading 1.7 KB,
+than typed in. The ChatGPT beats are shot outside the app, so their callouts are
+rendered from the same markup afterwards and laid over the clip; on screen the
+two sources are indistinguishable. An earlier cut claimed "3.8 KB out" over a ledger reading 1.7 KB,
 because the figure came from a different session.
 
 ## What a camera would still add
@@ -71,7 +73,7 @@ Open DevTools in Chrome 149+ with the WebMCP flag on, load the sample, press
 **Try to leak data on purpose**, and film the Console filling with refusals. Cut
 it over beat 7.
 
-### The ChatGPT conversation (optional)
+### The ChatGPT conversation (in the cut)
 
 **The ChatGPT conversation.** The tool calls in the B-roll go through the
 browser's real WebMCP API, so the execution is genuine, but a script chooses
@@ -99,10 +101,25 @@ half minutes to answer, and most of a real-time recording is therefore someone
 waiting. Each image is held for an equal share of the line with a slow push-in
 and cross-dissolves, which reads as framing rather than as a slideshow.
 
-It is fitted to the 14.6s alternate line by adjusting speed, so record for as
+It is fitted to the 16.4s alternate line by adjusting speed, so record for as
 long as the agent needs. Assembly prefers the take while
 `docs/broll/05b-chatgpt.webm` exists; delete that file to go back to the
 scripted one.
+
+One recording covers both beats. `--ranges` keeps only the parts worth showing
+and drops the wait between them, so the question and the answer both play at
+close to real speed instead of one long take compressed evenly:
+
+```bash
+# beat 5: the question, then the chart landing
+npm run chatgpt -- recording.mp4 --ranges 25-35,92-104 --callout-at 13.2
+
+# beat 6: the refusal, keeping the narration that beat already has
+npm run chatgpt -- recording.mp4 --beat 06-refuse --ranges 166-180 --callout-at 7.7
+```
+
+Each beat has a default callout; `--callout "headline|second line"` overrides it
+and `--no-callout` drops it.
 
 To shoot it: `Ctrl+Shift+B` in the ChatGPT desktop app, go to
 `https://beeeeen.github.io/blindfold/`, load the sample, and ask *"Where is pay
