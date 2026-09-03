@@ -33,7 +33,8 @@
     "chatgpt:stills": "node scripts/use-chatgpt-stills.mjs",
     "contactsheet": "node scripts/contactsheet.mjs",
     "test:attack": "node test/attack.mjs",
-    "test:cut": "node test/verify-cut.mjs"
+    "test:cut": "node test/verify-cut.mjs",
+    "thumbnail": "node scripts/make-thumbnail.mjs"
   },
   "dependencies": {
     "@duckdb/duckdb-wasm": "^1.29.0",
