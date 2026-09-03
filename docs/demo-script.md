@@ -1,6 +1,6 @@
 # The demo video
 
-**Already built: `docs/demo-assembly.mp4` — 2:20, narrated, captioned, with the real ChatGPT conversation in beats 5 and 6.**
+**Already built: `docs/demo-assembly.mp4` — 2:25, narrated, captioned, with the real ChatGPT conversation in beats 5 and 6.**
 
 The narration is not written out here. It lives in
 [`../voice/narration.json`](../voice/narration.json), which is what the pipeline
@@ -34,7 +34,7 @@ Clips land within 0.15s of their narration.
 | 3b | override | 21.7s | department reclassified to sealed; the same query then refused |
 | 4 | tools | 18.3s | The registered tool list opening |
 | 5 | work | 17.3s | The ChatGPT conversation: the question, then the chart landing |
-| 6 | refuse | 11.5s | ChatGPT relaying the refusal, and offering a percentile instead |
+| 6 | refuse | 15.6s | ChatGPT relaying the refusal, and offering a percentile instead |
 | 7 | seal | 18.8s | The leak test refusing all five channels |
 | 8 | verbatim | 8.4s | A feed row expanded to the literal rows the agent received |
 | 9 | close | 15.9s | The ledger, then the tested ceiling |
@@ -115,7 +115,7 @@ close to real speed instead of one long take compressed evenly:
 npm run chatgpt -- recording.mp4 --ranges 25-35,92-104 --callout-at 14.0
 
 # beat 6: the refusal, keeping the narration that beat already has
-npm run chatgpt -- recording.mp4 --beat 06-refuse --ranges 166-180 --callout-at 7.7
+npm run chatgpt -- recording.mp4 --beat 06-refuse --ranges 164-182 --callout-at 10.2
 ```
 
 Each beat has a default callout; `--callout "headline|second line"` overrides it

@@ -2,7 +2,7 @@
 
 Voice: `en-US-AndrewMultilingualNeural` at rate `-4%`. Regenerate with `npm run voice`.
 
-**Total narration 2:23**, against a 3:00 limit. Leave the gaps between
+**Total narration 2:27**, against a 3:00 limit. Leave the gaps between
 clips short — the numbers below are speech only.
 
 | # | Clip | Length | Footage |
@@ -13,7 +13,7 @@ clips short — the numbers below are speech only.
 | 4 | `voice/035-override.mp3` | 21.7s | B-roll: department is reclassified to sealed, the toolset rebuilds, the same query is then refused. |
 | 5 | `voice/04-tools.mp3` | 18.3s | B-roll: the registered tool list opens. |
 | 6 | `voice/05-work.mp3` | 20.1s | B-roll: the tools run, both charts appear. |
-| 7 | `voice/06-refuse.mp3` | 11.5s | YOU: ChatGPT relaying the refusal, if you shot it — otherwise b-roll of two refusals in red. |
+| 7 | `voice/06-refuse.mp3` | 15.6s | YOU: ChatGPT relaying the refusal, if you shot it — otherwise b-roll of two refusals in red. |
 | 8 | `voice/07-seal.mp3` | 18.8s | B-roll: the leak test refuses all five channels. |
 | 9 | `voice/08-verbatim.mp3` | 8.4s | B-roll: a feed row expands to its verbatim payload. |
 | 10 | `voice/09-close.mp3` | 15.9s | B-roll: rest on the ledger. |

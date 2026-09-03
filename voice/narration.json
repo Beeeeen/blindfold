@@ -54,7 +54,7 @@
     {
       "id": "06-refuse",
       "footage": "YOU: ChatGPT relaying the refusal, if you shot it — otherwise b-roll of two refusals in red.",
-      "text": "Ask who is paid most, and it refuses. A maximum is one real person's salary. And the refusal tells the agent what to ask instead, so it recovers on the next turn.",
+      "text": "Ask for the highest salary in a team, and it refuses. A maximum is not a statistic — it is one person's exact pay, copied out of the file. And the refusal tells the agent what to ask instead, so it recovers on the next turn.",
       "rate": "-4%"
     },
     {

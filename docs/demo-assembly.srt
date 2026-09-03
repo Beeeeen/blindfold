@@ -139,101 +139,105 @@ the agent was zero bytes of data.
 It has still never seen a salary.
 
 36
-00:01:25,951 --> 00:01:27,253
-Ask who is paid most,
+00:01:25,964 --> 00:01:27,930
+Ask for the highest salary in a team,
 
 37
-00:01:27,644 --> 00:01:28,686
+00:01:28,373 --> 00:01:29,467
 and it refuses.
 
 38
-00:01:29,102 --> 00:01:31,680
-A maximum is one real person's salary.
+00:01:29,844 --> 00:01:32,774
+A maximum is not a statistic — it is one
 
 39
-00:01:32,110 --> 00:01:34,519
-And the refusal tells the agent what to ask
+00:01:32,787 --> 00:01:35,743
+person's exact pay, copied out of the file.
 
 40
-00:01:34,519 --> 00:01:36,993
-instead, so it recovers on the next turn.
+00:01:36,172 --> 00:01:38,672
+And the refusal tells the agent what to ask
 
 41
-00:01:37,508 --> 00:01:40,527
-But a counter reading zero is just this page
+00:01:38,686 --> 00:01:41,094
+instead, so it recovers on the next turn.
 
 42
-00:01:40,540 --> 00:01:42,189
-marking its own homework.
+00:01:41,612 --> 00:01:44,631
+But a counter reading zero is just this page
 
 43
-00:01:42,615 --> 00:01:45,301
-So the page revokes its own network access.
+00:01:44,644 --> 00:01:46,293
+marking its own homework.
 
 44
-00:01:45,726 --> 00:01:48,373
-Watch me try to leak the data on purpose.
+00:01:46,719 --> 00:01:49,405
+So the page revokes its own network access.
 
 45
-00:01:48,891 --> 00:01:49,277
-Fetch.
+00:01:49,830 --> 00:01:52,477
+Watch me try to leak the data on purpose.
 
 46
-00:01:49,689 --> 00:01:50,394
-XHR.
+00:01:52,995 --> 00:01:53,381
+Fetch.
 
 47
-00:01:50,633 --> 00:01:51,484
-WebSocket.
+00:01:53,793 --> 00:01:54,498
+XHR.
 
 48
-00:01:51,937 --> 00:01:52,269
-Beacon.
+00:01:54,737 --> 00:01:55,588
+WebSocket.
 
 49
-00:01:52,695 --> 00:01:53,679
-Tracking pixel.
+00:01:56,041 --> 00:01:56,373
+Beacon.
 
 50
-00:01:54,091 --> 00:01:55,753
-Chrome refuses all five.
+00:01:56,799 --> 00:01:57,783
+Tracking pixel.
 
 51
-00:01:56,273 --> 00:01:59,181
-And this is every byte the agent actually received.
+00:01:58,195 --> 00:01:59,857
+Chrome refuses all five.
 
 52
-00:01:59,615 --> 00:02:01,628
-Not a summary — the literal text.
+00:02:00,377 --> 00:02:03,285
+And this is every byte the agent actually received.
 
 53
-00:02:02,050 --> 00:02:02,997
-Search it for a name,
+00:02:03,719 --> 00:02:05,732
+Not a summary — the literal text.
 
 54
-00:02:03,392 --> 00:02:04,208
-and there is none.
+00:02:06,154 --> 00:02:07,101
+Search it for a name,
 
 55
-00:02:04,724 --> 00:02:06,276
-Ninety-nine megabytes in.
+00:02:07,496 --> 00:02:08,312
+and there is none.
 
 56
-00:02:06,729 --> 00:02:07,554
-Kilobytes out.
+00:02:08,828 --> 00:02:10,380
+Ninety-nine megabytes in.
 
 57
-00:02:08,007 --> 00:02:08,941
-Zero rows.
+00:02:10,833 --> 00:02:11,658
+Kilobytes out.
 
 58
-00:02:09,380 --> 00:02:11,867
-And it holds: ten million rows,
+00:02:12,111 --> 00:02:13,045
+Zero rows.
 
 59
-00:02:12,087 --> 00:02:16,029
-a full gigabyte, every query still under a second.
+00:02:13,484 --> 00:02:15,971
+And it holds: ten million rows,
 
 60
-00:02:16,496 --> 00:02:20,067
+00:02:16,191 --> 00:02:20,133
+a full gigabyte, every query still under a second.
+
+61
+00:02:20,600 --> 00:02:24,171
 Blindfold — analyse a file your AI could never read.
