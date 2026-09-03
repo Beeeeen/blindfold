@@ -47,197 +47,185 @@ filter on them, or ever receive them.
 The grading is a heuristic — column names and how
 
 13
-00:00:32,044 --> 00:00:35,260
-unique the values are — so sometimes it will be
+00:00:32,044 --> 00:00:35,585
+unique the values are — so sometimes it will be wrong.
 
 14
-00:00:35,260 --> 00:00:35,585
-wrong.
-
-15
 00:00:36,002 --> 00:00:37,031
 One click overrules it.
 
-16
+15
 00:00:37,460 --> 00:00:39,244
 Watch what happens when I seal a column the
 
-17
+16
 00:00:39,244 --> 00:00:43,124
 agent was just using: every tool is withdrawn and
 
-18
+17
 00:00:43,124 --> 00:00:46,913
 re-registered, the descriptions rewritten around the new grading,
 
-19
+18
 00:00:47,330 --> 00:00:49,062
 and the query that worked a moment ago is
 
-20
+19
 00:00:49,075 --> 00:00:49,830
 refused.
 
-21
+20
 00:00:50,350 --> 00:00:53,488
 Eight WebMCP tools, and notice what is missing:
 
-22
+21
 00:00:53,960 --> 00:00:55,580
 there is no run_sql.
 
-23
+22
 00:00:55,988 --> 00:00:58,284
 The agent cannot write a query at all.
 
-24
+23
 00:00:58,705 --> 00:00:59,738
 It fills in a form,
 
-25
+24
 00:01:00,031 --> 00:01:01,243
 and the page compiles it.
 
-26
+25
 00:01:01,677 --> 00:01:04,712
 The same eight tools appear in ChatGPT and in
 
-27
+26
 00:01:04,712 --> 00:01:05,899
 Chrome behind the flag.
 
-28
+27
 00:01:06,294 --> 00:01:08,156
 This is the standard, not one app.
 
-29
+28
 00:01:08,662 --> 00:01:12,386
 So I ask ChatGPT where pay is least equitable.
 
-30
+29
 00:01:12,803 --> 00:01:15,732
 It reads the schema, compares the cohorts level by
 
-31
+30
 00:01:15,732 --> 00:01:17,881
 level, and draws me the chart.
 
-32
+31
 00:01:18,298 --> 00:01:19,274
 It asked for that chart,
 
-33
+32
 00:01:19,548 --> 00:01:21,397
 I can see it, and what came back to
 
-34
+33
 00:01:21,397 --> 00:01:23,389
 the agent was zero bytes of data.
 
-35
+34
 00:01:23,805 --> 00:01:25,433
 It has still never seen a salary.
 
-36
+35
 00:01:25,964 --> 00:01:27,930
 Ask for the highest salary in a team,
 
-37
+36
 00:01:28,373 --> 00:01:29,467
 and it refuses.
 
-38
+37
 00:01:29,844 --> 00:01:32,774
 A maximum is not a statistic — it is one
 
-39
+38
 00:01:32,787 --> 00:01:35,743
 person's exact pay, copied out of the file.
 
-40
+39
 00:01:36,172 --> 00:01:38,672
 And the refusal tells the agent what to ask
 
-41
+40
 00:01:38,686 --> 00:01:41,094
 instead, so it recovers on the next turn.
 
-42
+41
 00:01:41,612 --> 00:01:44,631
 But a counter reading zero is just this page
 
-43
+42
 00:01:44,644 --> 00:01:46,293
 marking its own homework.
 
-44
+43
 00:01:46,719 --> 00:01:49,405
 So the page revokes its own network access.
 
-45
+44
 00:01:49,830 --> 00:01:52,477
 Watch me try to leak the data on purpose.
 
+45
+00:01:52,995 --> 00:01:54,498
+Fetch. XHR.
+
 46
-00:01:52,995 --> 00:01:53,381
-Fetch.
+00:01:54,737 --> 00:01:56,373
+WebSocket. Beacon.
 
 47
-00:01:53,793 --> 00:01:54,498
-XHR.
-
-48
-00:01:54,737 --> 00:01:55,588
-WebSocket.
-
-49
-00:01:56,041 --> 00:01:56,373
-Beacon.
-
-50
 00:01:56,799 --> 00:01:57,783
 Tracking pixel.
 
-51
+48
 00:01:58,195 --> 00:01:59,857
 Chrome refuses all five.
 
-52
+49
 00:02:00,377 --> 00:02:03,285
 And this is every byte the agent actually received.
 
-53
+50
 00:02:03,719 --> 00:02:05,732
 Not a summary — the literal text.
 
-54
+51
 00:02:06,154 --> 00:02:07,101
 Search it for a name,
 
-55
+52
 00:02:07,496 --> 00:02:08,312
 and there is none.
 
-56
+53
 00:02:08,828 --> 00:02:10,380
 Ninety-nine megabytes in.
 
-57
+54
 00:02:10,833 --> 00:02:11,658
 Kilobytes out.
 
-58
+55
 00:02:12,111 --> 00:02:13,045
 Zero rows.
 
-59
+56
 00:02:13,484 --> 00:02:15,971
 And it holds: ten million rows,
 
-60
+57
 00:02:16,191 --> 00:02:20,133
 a full gigabyte, every query still under a second.
 
-61
+58
 00:02:20,600 --> 00:02:24,171
 Blindfold — analyse a file your AI could never read.

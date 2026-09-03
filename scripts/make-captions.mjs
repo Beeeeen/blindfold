@@ -28,6 +28,15 @@ if (existsSync(join(ROOT, 'docs', 'broll', '05b-chatgpt.webm'))) {
 
 const MAX_WORDS = 9;
 const MAX_MS = 4200;
+/**
+ * A caption on screen for a third of a second is a flash, not a subtitle. Two
+ * ways it happens: a line breaks at the word limit and leaves the last word of
+ * the sentence stranded on its own, and the script has deliberate one-word
+ * beats -- "Fetch. XHR. WebSocket." -- each of which is its own sentence. Both
+ * read better joined to a neighbour, and joining keeps them in sync because the
+ * timings still come from the voice.
+ */
+const MIN_MS = 700;
 
 /**
  * The script spells some things out so the synthesiser says them correctly.
@@ -90,6 +99,7 @@ const cues = [];
 let offset = 0;
 
 for (const beat of beats) {
+  const from = cues.length;
   const timingFile = join(VOICE, `${beat.id}.timings.json`);
   if (!existsSync(timingFile)) {
     console.error(`no timings for ${beat.id} — run npm run voice`);
@@ -118,8 +128,36 @@ for (const beat of beats) {
     if (endsClause || softBreak || line.length >= MAX_WORDS || span >= MAX_MS) flush();
   }
   flush();
+  joinFlashes(cues, from);
 
   offset += Math.round(durations[beat.id] * 1000);
+}
+
+/** Fold every sub-MIN_MS cue in this beat into whichever neighbour is shorter. */
+function joinFlashes(all, from) {
+  let i = from;
+  while (i < all.length) {
+    const c = all[i];
+    if (c.end - c.start >= MIN_MS || all.length - from < 2) { i++; continue; }
+    const prev = i > from ? all[i - 1] : null;
+    const next = i + 1 < all.length ? all[i + 1] : null;
+    const span = (x) => x.end - x.start;
+    const ends = (x) => /[.!?]$/.test(x.text);
+    // A stranded last word belongs to the sentence it finishes, even if that
+    // cue is the longer one -- otherwise "wrong." reads as the opening of the
+    // next sentence rather than the end of this one.
+    const completes = prev && ends(c) && !ends(prev) && span(prev) + span(c) <= MAX_MS;
+    const target = completes ? prev : !prev ? next : !next ? prev : span(prev) <= span(next) ? prev : next;
+    if (!target) break;
+    if (target === prev) {
+      prev.end = c.end;
+      prev.text = `${prev.text} ${c.text}`;
+    } else {
+      next.start = c.start;
+      next.text = `${c.text} ${next.text}`;
+    }
+    all.splice(i, 1);
+  }
 }
 
 const srt = cues
