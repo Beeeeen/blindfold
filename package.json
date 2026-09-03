@@ -26,7 +26,8 @@
     "chatgpt": "node scripts/use-chatgpt-clip.mjs",
     "voice:lab": "node scripts/voice-lab.mjs",
     "captions": "node scripts/make-captions.mjs",
-    "test:coi": "node test/coi-check.mjs"
+    "test:coi": "node test/coi-check.mjs",
+    "test:csp": "node test/csp-evidence.mjs"
   },
   "dependencies": {
     "@duckdb/duckdb-wasm": "^1.29.0",

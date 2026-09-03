@@ -1,6 +1,6 @@
 # The demo video
 
-**Already built: `docs/demo-assembly.mp4` — 1:47, narrated, captioned, ready to upload.**
+**Already built: `docs/demo-assembly.mp4` — 1:54, narrated, captioned, ready to upload.**
 
 The narration is not written out here. It lives in
 [`../voice/narration.json`](../voice/narration.json), which is what the pipeline
@@ -45,7 +45,32 @@ because the figure came from a different session.
 
 ## What a camera would still add
 
-Nothing is missing. One thing is optional:
+Nothing is missing. Two things would strengthen it, and both need OS-level
+screen capture, which `page.screencast()` cannot do — it records the page, not
+the browser's own UI.
+
+### The DevTools Console during the leak test (strongest)
+
+The seal panel reports the five refusals, but the page reporting on itself is
+exactly what this project argues against. Chrome saying it is a level up.
+
+**Film the Console, not the Network panel.** Verified with `npm run test:csp`:
+the Network panel records `blockedReason=csp` for only two of the five channels
+(XHR and Image), because fetch, sendBeacon and WebSocket do not produce separate
+Network rows. The Console carries all six messages, in readable red:
+
+```
+Refused to connect because it violates the document's Content Security Policy.
+Connecting to 'https://example.com/…' violates the following Content Security
+Policy directive: "connect-src 'none'".
+Loading the image 'https://example.com/….gif?rows=leaked' violates … "img-src"
+```
+
+Open DevTools in Chrome 149+ with the WebMCP flag on, load the sample, press
+**Try to leak data on purpose**, and film the Console filling with refusals. Cut
+it over beat 7.
+
+### The ChatGPT conversation (optional)
 
 **The ChatGPT conversation.** The tool calls in the B-roll go through the
 browser's real WebMCP API, so the execution is genuine, but a script chooses
