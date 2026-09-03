@@ -13,7 +13,8 @@
  * Output is gitignored. The repo ships the generator, not the data.
  */
 import { build } from 'esbuild';
-import { writeFileSync, mkdirSync, rmSync } from 'node:fs';
+import { mkdirSync, rmSync, createWriteStream } from 'node:fs';
+import { once } from 'node:events';
 import { join, dirname } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
@@ -38,12 +39,29 @@ await build({
   logLevel: 'silent',
 });
 
-const { generateSampleCsv } = await import(pathToFileURL(tmp).href);
+const { generateSampleRows } = await import(pathToFileURL(tmp).href);
 rmSync(tmp, { force: true });
 
-const csv = generateSampleCsv({ rows });
+// Streamed in blocks. A gigabyte of CSV is past what V8 will hand back as one
+// string, and this has to be able to produce files larger than that.
 const out = join(outDir, 'employee_compensation_2026.csv');
-writeFileSync(out, csv, 'utf8');
+const sink = createWriteStream(out, { encoding: 'utf8' });
+let bytes = 0;
+let block = [];
 
-const mb = (Buffer.byteLength(csv, 'utf8') / 1024 / 1024).toFixed(1);
-console.log(`${out}\n${rows.toLocaleString()} rows, ${mb} MB`);
+const flush = async (suffix) => {
+  const chunk = block.join('\n') + suffix;
+  bytes += Buffer.byteLength(chunk);
+  if (!sink.write(chunk)) await once(sink, 'drain');
+  block = [];
+};
+
+for (const line of generateSampleRows({ rows })) {
+  block.push(line);
+  if (block.length >= 20000) await flush('\n');
+}
+if (block.length) await flush('');
+sink.end();
+await once(sink, 'finish');
+
+console.log(`${out}\n${rows.toLocaleString()} rows, ${(bytes / 1024 / 1024).toFixed(1)} MB`);

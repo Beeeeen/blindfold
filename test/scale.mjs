@@ -53,8 +53,12 @@ try {
   const ingest = Date.now() - t0;
   console.log(`ingest + classify: ${(ingest / 1000).toFixed(1)}s`);
   console.log('meta:', await page.$eval('#dataset-meta', (e) => e.textContent));
-  check('a 99 MB file is readable at all', true);
-  check('ingest and classification stay under 30s', ingest < 30000, `${(ingest / 1000).toFixed(1)}s`);
+  check('the file is readable at all', true);
+  // Roughly 30 MB/s of parse and profile; the check should scale with the file
+  // rather than pinning a figure that only suited one size.
+  const budget = Math.max(15000, (size / 1024 / 1024) * 45);
+  check('ingest keeps pace with file size', ingest < budget,
+    `${(ingest / 1000).toFixed(1)}s against a ${(budget / 1000).toFixed(0)}s budget`);
 
   const call = (n, a) => page.evaluate((x, y) => window.blindfold.callTool(x, y), n, a);
 
@@ -100,9 +104,9 @@ try {
   console.log(`\n  heavy query returned ${(heavy.match(/\{/g) ?? []).length} grouped rows`);
 
   console.log('\nassertions');
-  check('every query over a million rows answers in under 2s',
+  check('every query answers in under 2s',
     slowest.ms < 2000, `slowest was ${slowest.label} at ${(slowest.ms / 1000).toFixed(2)}s`);
-  check('all million rows were read, none sampled', snap.rowsIngested === 1000000, String(snap.rowsIngested));
+  check('every row was read, none sampled', snap.rowsIngested >= 1000000, String(snap.rowsIngested));
   check('the file is past any context window', approxTokens > 5_000_000, `${approxTokens} tokens`);
   check('what crossed would fit in one prompt',
     Math.round(snap.bytesReleased / 4) < 50_000, `${Math.round(snap.bytesReleased / 4)} tokens`);

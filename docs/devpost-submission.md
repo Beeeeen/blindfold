@@ -139,6 +139,11 @@ Measured on a million rows — 99 MB, about 26 million tokens of text:
 | Sent to the agent | 27 KB, about 6,800 tokens |
 | Raw rows sent to the agent | 0 |
 
+Pushed further on the same machine: 5,000,000 rows (502 MB) answers in 0.42s,
+and 10,000,000 rows — a full gigabyte, about 264 million tokens — still answers
+every query in under a second, releasing 7 KB. The disclosure ratio there is
+1 : 37,369.
+
 One byte reached the agent for every 3,799 that did not, and on the way it found
 a real seeded result: a gender pay gap of about 3% at IC1–IC3 that widens to
 12–14% from IC4 upward. The model never saw a salary.

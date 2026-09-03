@@ -51,6 +51,9 @@ const browser = await puppeteer.launch({
   headless: false, // screencast needs a real window
   args: ['--no-sandbox', '--enable-features=WebMCP', '--window-size=1620,1020', '--hide-scrollbars'],
   defaultViewport: { width: 1600, height: 900, deviceScaleFactor: 2 }, // 16:9
+  // testSeal fires a synchronous XHR on purpose, which parks the main thread
+  // long enough that the default CDP timeout can fire mid-beat.
+  protocolTimeout: 180000,
 });
 
 try {

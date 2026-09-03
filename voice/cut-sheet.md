@@ -2,7 +2,7 @@
 
 Voice: `en-US-AndrewMultilingualNeural` at rate `-4%`. Regenerate with `npm run voice`.
 
-**Total narration 1:54**, against a 3:00 limit. Leave the gaps between
+**Total narration 2:01**, against a 3:00 limit. Leave the gaps between
 clips short — the numbers below are speech only.
 
 | # | Clip | Length | Footage |
@@ -15,7 +15,7 @@ clips short — the numbers below are speech only.
 | 6 | `voice/06-refuse.mp3` | 11.5s | B-roll: two refusals appear in red. |
 | 7 | `voice/07-seal.mp3` | 18.8s | B-roll: the leak test refuses all five channels. |
 | 8 | `voice/08-verbatim.mp3` | 8.4s | B-roll: a feed row expands to its verbatim payload. |
-| 9 | `voice/09-close.mp3` | 9.0s | B-roll: rest on the ledger. |
+| 9 | `voice/09-close.mp3` | 15.9s | B-roll: rest on the ledger. |
 | 10 | `voice/05b-chatgpt.mp3` | 16.4s | YOU: the ChatGPT conversation, if you shoot it. Swap it in for 05-work. |
 
 ## What you still have to shoot

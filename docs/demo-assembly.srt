@@ -195,17 +195,25 @@ Search it for a name,
 and there is none.
 
 50
-00:01:45,070 --> 00:01:46,608
+00:01:45,070 --> 00:01:46,622
 Ninety-nine megabytes in.
 
 51
-00:01:47,048 --> 00:01:47,858
+00:01:47,075 --> 00:01:47,900
 Kilobytes out.
 
 52
-00:01:48,312 --> 00:01:49,287
+00:01:48,353 --> 00:01:49,287
 Zero rows.
 
 53
-00:01:49,740 --> 00:01:53,573
+00:01:49,726 --> 00:01:52,213
+And it holds: ten million rows,
+
+54
+00:01:52,433 --> 00:01:56,375
+a full gigabyte, every query still under a second.
+
+55
+00:01:56,842 --> 00:02:00,413
 Blindfold — analyse a file your AI could never read.

@@ -74,7 +74,7 @@
         "(read from the ledger at record time)",
         "0 raw rows"
       ],
-      "text": "Ninety-nine megabytes in. Kilobytes out. Zero rows. Blindfold — analyse a file your A-I could never read.",
+      "text": "Ninety-nine megabytes in. Kilobytes out. Zero rows. And it holds: ten million rows, a full gigabyte, every query still under a second. Blindfold — analyse a file your A-I could never read.",
       "rate": "-9%"
     }
   ],

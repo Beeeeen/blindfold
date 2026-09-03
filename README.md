@@ -21,8 +21,19 @@ unable to see.
 | **Sent to the agent** | **27 KB — about 6,800 tokens** |
 | **Raw rows sent to the agent** | **0** |
 
-One byte reached the agent for every 3,799 that did not. Measured, not
-estimated: `npm run test:scale`.
+One byte reached the agent for every 3,799 that did not.
+
+It does not stop there. Measured on the same machine, same code:
+
+| Rows | File | Tokens of text | Slowest query | Bytes to the agent |
+|---|---|---|---|---|
+| 1,000,000 | 99 MB | 26 M | 0.13 s | 27 KB |
+| 5,000,000 | 502 MB | 132 M | 0.42 s | 28 KB |
+| **10,000,000** | **1.0 GB** | **264 M** | **0.86 s** | **7 KB** |
+
+A gigabyte of CSV is roughly 264 million tokens. Every query over it still
+answers in under a second, and the agent still receives no rows. Reproduce with
+`npm run sample -- 10000000 && npm run test:scale`.
 
 ![Blindfold analysing a payroll file](docs/screenshot.png)
 

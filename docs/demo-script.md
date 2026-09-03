@@ -1,6 +1,6 @@
 # The demo video
 
-**Already built: `docs/demo-assembly.mp4` — 1:54, narrated, captioned, ready to upload.**
+**Already built: `docs/demo-assembly.mp4` — 2:01, narrated, captioned, ready to upload.**
 
 The narration is not written out here. It lives in
 [`../voice/narration.json`](../voice/narration.json), which is what the pipeline
@@ -36,7 +36,7 @@ Clips land within 0.15s of their narration.
 | 6 | refuse | 11.5s | Two refusals in red |
 | 7 | seal | 18.8s | The leak test refusing all five channels |
 | 8 | verbatim | 8.4s | A feed row expanded to its exact payload |
-| 9 | close | 9.0s | The ledger |
+| 9 | close | 15.9s | The ledger, then the tested ceiling |
 
 Number callouts are burnt in, and the two that quote measurements — the query
 time and the byte counts — are read off the running page at record time rather

@@ -81,11 +81,17 @@ export interface SampleOptions {
   seed?: number;
 }
 
-export function generateSampleCsv({ rows = 50000, seed = 20260903 }: SampleOptions = {}): string {
+export const SAMPLE_HEADER =
+  'employee_id,full_name,email,department,level,region,gender,tenure_years,performance_rating,base_salary,bonus';
+
+/**
+ * Yields one CSV line at a time. The in-page sample is small enough to hold in
+ * a string, but the files used for scale testing are not -- a gigabyte of text
+ * is past what V8 will hand back as a single value.
+ */
+export function* generateSampleRows({ rows = 50000, seed = 20260903 }: SampleOptions = {}): Generator<string> {
   const rand = makeRandom(seed);
-  const header =
-    'employee_id,full_name,email,department,level,region,gender,tenure_years,performance_rating,base_salary,bonus';
-  const lines: string[] = [header];
+  yield SAMPLE_HEADER;
 
   for (let i = 0; i < rows; i++) {
     const dept = weightedPick(DEPARTMENTS, rand());
@@ -120,8 +126,7 @@ export function generateSampleCsv({ rows = 50000, seed = 20260903 }: SampleOptio
     const bonusRate = level.name.startsWith('M') ? 0.18 : dept.name === 'Sales' ? 0.22 : 0.11;
     const bonus = Math.round((salary * bonusRate * (0.5 + rating / 5) * (1 + gaussian(rand) * 0.15)) / 100) * 100;
 
-    lines.push(
-      [
+    yield [
         id,
         `${first} ${last}`,
         email,
@@ -133,11 +138,13 @@ export function generateSampleCsv({ rows = 50000, seed = 20260903 }: SampleOptio
         rating,
         salary,
         Math.max(0, bonus),
-      ].join(','),
-    );
+      ].join(',');
   }
+}
 
-  return lines.join('\n');
+/** The whole file as one string. Fine for the in-page sample, not for a gigabyte. */
+export function generateSampleCsv(options: SampleOptions = {}): string {
+  return [...generateSampleRows(options)].join('\n');
 }
 
 export function sampleFile(options: SampleOptions = {}): File {
