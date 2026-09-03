@@ -268,6 +268,27 @@ export async function aggregate(ctx: GuardContext, spec: AggregateSpec): Promise
     ` LIMIT ${limit + 1}`;
 
   const rows = await rawQuery(sql);
+
+  /**
+   * An ungrouped aggregate returns one row, so it used to skip the k-check that
+   * every grouped result goes through — and filters could narrow the cohort to
+   * one person without ever grouping. `avg` over a cohort of one is that
+   * person's exact salary, reached entirely through permitted calls. The
+   * min/max rule guarded the front door while this stood open beside it.
+   *
+   * A cohort of zero is refused in the same words as a cohort of four. Refusing
+   * only 1-4 would answer "is anybody here?" by the shape of the response.
+   */
+  if (!groupCols.length) {
+    const cohort = Number(rows[0]?.__n ?? 0);
+    if (cohort < K_ANON) {
+      throw new PolicyError(
+        `Those filters describe fewer than ${K_ANON} people, so any figure over them would be about individuals.`,
+        'Widen the filters, or group the query so each group can be checked on its own.',
+      );
+    }
+  }
+
   return suppress(rows, groupCols.length > 0);
 }
 

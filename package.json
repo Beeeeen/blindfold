@@ -12,7 +12,7 @@
     "shot": "node test/shot.mjs",
     "test:live": "node test/webmcp-live.mjs",
     "test:coverage": "node test/coverage.mjs",
-    "test:all": "node test/smoke.mjs && node test/webmcp-live.mjs && node test/coverage.mjs && node test/seal.mjs && node test/race.mjs",
+    "test:all": "node test/smoke.mjs && node test/webmcp-live.mjs && node test/coverage.mjs && node test/seal.mjs && node test/attack.mjs && node test/race.mjs",
     "test:race": "node test/race.mjs",
     "sample": "node scripts/make-sample.mjs",
     "test:sample": "node test/verify-sample-file.mjs",
@@ -31,7 +31,8 @@
     "record:devtools": "node test/record-devtools.mjs",
     "ask": "node scripts/ask.mjs",
     "chatgpt:stills": "node scripts/use-chatgpt-stills.mjs",
-    "contactsheet": "node scripts/contactsheet.mjs"
+    "contactsheet": "node scripts/contactsheet.mjs",
+    "test:attack": "node test/attack.mjs"
   },
   "dependencies": {
     "@duckdb/duckdb-wasm": "^1.29.0",

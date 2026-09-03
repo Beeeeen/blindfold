@@ -139,6 +139,15 @@ it. `compare_groups` is stricter still: *both* cohorts must independently clear
 k, because a "gap" computed over two people is just those two people's salaries
 with extra steps.
 
+An aggregate with no `group_by` is checked the same way, against the cohort the
+filters describe. That rule exists because it was missing: an ungrouped query
+returns one row, so it used to skip the check that every grouped result went
+through, and four permitted filters could narrow the data to one person before
+`avg` handed back their exact salary. `npm run test:attack` is written from the
+attacker's side and finds it if it ever comes back. An empty cohort is refused
+in the same words as a cohort of four — refusing only 1–4 would answer "is
+anybody here?" by the shape of the response.
+
 ### 5. The page revokes its own network access
 
 A ledger reading "nothing left this tab" is the page marking its own homework.
@@ -229,6 +238,7 @@ npm test             # 29 checks: engine, classifier, guard, charts, ledger
 npm run test:live    # 14 checks: against Chrome's real WebMCP implementation
 npm run test:coverage # 33 checks: user files, every chart kind, every refusal
 npm run test:seal    # 19 checks: the seal holds, and the transcript names nobody
+npm run test:attack  # 13 attempts to get one person's row out, from the attacker's side
 npm run test:race    # 5 runs: clicking before the engine has finished booting
 npm run test:all     # all of the above
 

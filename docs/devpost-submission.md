@@ -209,6 +209,22 @@ on offer while the agent held tools describing a file that was no longer loaded.
 That one only showed up when we started testing against the browser's real
 implementation instead of our own abstraction over it.
 
+The one that mattered most was found by writing the attacker instead of the
+test. The pitch says a leak should be impossible to *express*, and that is worth
+nothing until somebody has honestly tried. Four permitted filters —
+department, level, region, gender — narrow this dataset to exactly one person,
+and `avg` over that cohort returned 67,100: their salary, through calls the
+guard allowed at every step. k-anonymity was only ever applied to *grouped*
+results, and an ungrouped aggregate returns a single row, so it walked around
+the check that the whole design rested on. The min/max rule was guarding the
+front door while this stood open beside it.
+
+Ungrouped aggregates are now checked against the cohort their filters describe,
+and an empty cohort is refused in the same words as a cohort of four — refusing
+only 1–4 would answer "is anybody here?" by the shape of the response.
+`npm run test:attack` keeps trying, from the attacker's side, and a failure
+there is a finding rather than a broken test.
+
 A DuckDB precision bug also cost an hour — interpolating JS floats into SQL made
 DuckDB read them as DECIMALs, and multiplying them compounded the scale until
 histogram bin edges no longer fit a JS number. Explicit `CAST(... AS DOUBLE)`
