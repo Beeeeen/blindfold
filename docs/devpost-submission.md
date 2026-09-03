@@ -13,6 +13,63 @@ A million rows in the tab, 27 KB to the agent, zero rows disclosed.
 
 ---
 
+## The four things the rules ask the description to explain
+
+Answered directly, before the narrative sections below.
+
+### Why this use case is a strong fit for WebMCP
+
+Because the guarantee depends on *where the code runs*. A server-side MCP would
+have to hold the data in order to analyse it — the privacy claim would be a
+promise about someone's backend. In-page, the rows sit in memory the agent has
+no way to address, while the agent still directs the whole analysis.
+
+Take WebMCP away and this project does not degrade into a worse version of
+itself. It stops existing.
+
+### How it creates a better user experience
+
+You can point an agent at a 99 MB spreadsheet and have an answer in seconds,
+without either of the two things that normally stop you: the context window and
+the upload.
+
+When the guard refuses, the refusal arrives with a legal alternative — "use p25,
+median or p75" — so the agent corrects itself on the next turn instead of
+dead-ending. And the page keeps a receipt: every byte that crossed to the agent,
+verbatim, searchable, exportable.
+
+### What people and agents can do together that was difficult or impossible before
+
+Three things, in increasing order of how much WebMCP is doing:
+
+1. **Analyse a file larger than any context window, without sampling.** A
+   million rows is ~26 million tokens. The agent answers questions about all of
+   it because it never reads any of it.
+2. **Delegate authority over data you are not willing to disclose.** You can now
+   hand an agent the controls to a payroll file while it stays structurally
+   unable to read a row. Delegation and disclosure used to be the same act.
+3. **Have an agent show you something it never saw itself.** `render_chart`
+   takes aggregates and a shape, draws on the human's screen, and returns the
+   word "drawn". The person gets the picture; the model gets a receipt. A
+   server-side agent cannot show you anything without first holding it.
+
+### How we implemented WebMCP
+
+`document.modelContext.registerTool()` (with a `navigator.modelContext`
+fallback for hosts still on the pre-150 Chromium location), eight tools, no SQL.
+
+The parts that took real work:
+
+- **Re-registered per dataset**, so tool descriptions name that file's actual
+  columns and tiers rather than describing a generic shape.
+- **Withdrawal by `AbortSignal`.** Chrome 152 ships no `unregisterTool`, so
+  aborting the previous batch is the only way to replace a toolset without
+  colliding with names already registered.
+- **Refusals as return values, not exceptions**, each carrying a reason and a
+  legal alternative.
+- **A write tool that returns nothing.** `render_chart` mutates the page and
+  discloses zero bytes.
+
 ## Inspiration
 
 Every real dataset hits two walls at once, and they are usually treated as
@@ -93,7 +150,7 @@ Observable Plot draws.
 
 Tools register through `document.modelContext.registerTool()`, with a fallback to
 `navigator.modelContext` so the page works in ChatGPT's built-in browser and in
-Chrome 146+ behind the testing flag.
+Chrome 149+ behind the testing flag.
 
 Three WebMCP details did most of the work:
 
@@ -200,3 +257,5 @@ a compliance team actually needs before they will let this near production data.
 - [ ] Demo video under 3:00, public on YouTube, **with audio**
 - [ ] Text description covering use-case fit, UX benefit, implementation
 - [ ] Submitted before **3 Sep 2026, 13:00 PDT** (4 Sep, 04:00 Taiwan)
+- [ ] Leave the site up: judging runs to **21 Sep 2026, 17:00 PDT**, and the
+      rules require the project stay free and unrestricted for testing until then

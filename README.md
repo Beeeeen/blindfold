@@ -186,8 +186,9 @@ npm run dev
 ```
 
 Then open the page in **ChatGPT's built-in browser** (desktop app, latest
-version, GPT-5.6 Sol or Terra), or in **Chrome 146+** with
-`chrome://flags/#enable-webmcp-testing` set to Enabled. Turning on
+version, GPT-5.6 Sol or Terra), or in **Chrome 149+** with
+`chrome://flags/#enable-webmcp-testing` set to Enabled (149 is the minimum the
+challenge names; verified here on 152). Turning on
 `chrome://flags/#devtools-webmcp-support` as well lets you inspect the
 registered tools in DevTools. Verified working on Chrome 152.
 

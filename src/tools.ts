@@ -15,31 +15,42 @@ import { renderChart, type ChartSpec } from './chart';
  * cannot be called against data that is not there.
  */
 
-interface ModelContext {
-  registerTool(tool: ToolDefinition, options?: { signal?: AbortSignal }): Promise<unknown> | unknown;
-  /** Not present in Chrome 152; kept for hosts that offer it. */
-  unregisterTool?(name: string): Promise<unknown> | unknown;
-}
+type ToolDefinition = WebMCPToolDescriptor;
+type ToolResult = WebMCPToolResult;
 
-interface ToolDefinition {
-  name: string;
-  description: string;
-  inputSchema: Record<string, unknown>;
-  annotations?: { readOnlyHint?: boolean };
-  execute: (input: Record<string, never>) => Promise<ToolResult>;
-}
-
-interface ToolResult {
-  content: { type: 'text'; text: string }[];
-  structuredContent?: unknown;
-}
-
+/**
+ * The spec puts the registry on `document.modelContext`. Chromium carried it on
+ * `navigator.modelContext` until 150 and some hosts may still, so both are
+ * checked — document first, since that is where the standard landed.
+ */
 export function getModelContext(): ModelContext | null {
-  const doc = (document as unknown as { modelContext?: ModelContext }).modelContext;
-  if (doc && typeof doc.registerTool === 'function') return doc;
-  const nav = (navigator as unknown as { modelContext?: ModelContext }).modelContext;
-  if (nav && typeof nav.registerTool === 'function') return nav;
+  if (typeof document.modelContext?.registerTool === 'function') return document.modelContext;
+  if (typeof navigator.modelContext?.registerTool === 'function') return navigator.modelContext;
   return null;
+}
+
+/**
+ * Registration, written as the spec writes it:
+ *
+ *   document.modelContext.registerTool({
+ *     name: "search_products",
+ *     description: "Search the product catalog",
+ *     inputSchema: { ... },
+ *     execute: async (input) => { ... }
+ *   });
+ *
+ * The signal is what withdraws the tool later — Chrome 152 ships no
+ * `unregisterTool`, so aborting the batch is the only way to replace a toolset
+ * without colliding with the names already registered.
+ */
+async function registerWithHost(tool: ToolDefinition, signal: AbortSignal): Promise<void> {
+  if (typeof document.modelContext?.registerTool === 'function') {
+    await document.modelContext.registerTool(tool, { signal });
+    return;
+  }
+  if (typeof navigator.modelContext?.registerTool === 'function') {
+    await navigator.modelContext.registerTool(tool, { signal });
+  }
 }
 
 export function isSupported(): boolean {
@@ -393,7 +404,7 @@ export async function registerTools({ ctx, fileName }: RegisterOptions): Promise
 
   for (const def of defs) {
     handlers.set(def.name, def);
-    if (mc) await mc.registerTool(def, { signal: batch.signal });
+    if (mc) await registerWithHost(def, batch.signal);
     registered.push(def.name);
   }
   return registered;
