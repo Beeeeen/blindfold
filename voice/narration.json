@@ -48,7 +48,7 @@
         "(timed at record time)",
         "across 1,000,000 rows"
       ],
-      "text": "Schema. Cohort comparison. Chart. Each one across all one million rows in under a tenth of a second. And look at what just happened with that chart: the agent asked for it, I can see it, and the agent got back one word — drawn. Three percent pay gap at the junior levels, thirteen at the senior ones.",
+      "text": "Schema. Cohort comparison. Chart. Each one across all one million rows in under a tenth of a second. And look at what just happened with that chart: the agent asked for it, I can see it, and what came back to the agent was zero bytes of data. Three percent pay gap at the junior levels, thirteen at the senior ones.",
       "rate": "-4%"
     },
     {
@@ -88,7 +88,7 @@
     {
       "id": "05b-chatgpt",
       "footage": "YOU: the ChatGPT conversation, if you shoot it. Swap it in for 05-work.",
-      "text": "So I ask ChatGPT where pay is least equitable. It reads the schema, compares the cohorts level by level, and draws me the chart. It asked for that chart, I can see it, and what it got back was one word — drawn. It has still never seen a salary.",
+      "text": "So I ask ChatGPT where pay is least equitable. It reads the schema, compares the cohorts level by level, and draws me the chart. It asked for that chart, I can see it, and what came back to the agent was zero bytes of data. It has still never seen a salary.",
       "rate": "-4%"
     }
   ]

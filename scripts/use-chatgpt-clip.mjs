@@ -80,7 +80,7 @@ const beat = beatFlag >= 0 && args[beatFlag + 1] ? args[beatFlag + 1] : '05b-cha
  * beats we actually shoot this way; --callout overrides, --no-callout drops it.
  */
 const DEFAULT_CALLOUTS = {
-  '05b-chatgpt': ['it has never seen a salary', 'the chart came back as one word: drawn'],
+  '05b-chatgpt': ['it has never seen a salary', 'the chart cost zero bytes of data'],
   '06-refuse': ['refused, then redirected', 'the guard tells the agent what to ask instead'],
 };
 const calloutFlag = args.indexOf('--callout');

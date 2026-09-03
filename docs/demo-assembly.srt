@@ -111,129 +111,129 @@ Chrome behind the flag.
 This is the standard, not one app.
 
 29
-00:01:08,662 --> 00:01:12,308
+00:01:08,662 --> 00:01:12,386
 So I ask ChatGPT where pay is least equitable.
 
 30
-00:01:12,738 --> 00:01:15,772
+00:01:12,803 --> 00:01:15,732
 It reads the schema, compares the cohorts level by
 
 31
-00:01:15,772 --> 00:01:17,790
+00:01:15,732 --> 00:01:17,881
 level, and draws me the chart.
 
 32
-00:01:18,219 --> 00:01:19,170
+00:01:18,298 --> 00:01:19,274
 It asked for that chart,
 
 33
-00:01:19,417 --> 00:01:21,331
-I can see it, and what it got back
+00:01:19,548 --> 00:01:21,397
+I can see it, and what came back to
 
 34
-00:01:21,331 --> 00:01:22,477
-was one word — drawn.
+00:01:21,397 --> 00:01:23,389
+the agent was zero bytes of data.
 
 35
-00:01:22,907 --> 00:01:24,522
+00:01:23,805 --> 00:01:25,433
 It has still never seen a salary.
 
 36
-00:01:25,015 --> 00:01:26,317
+00:01:25,951 --> 00:01:27,253
 Ask who is paid most,
 
 37
-00:01:26,708 --> 00:01:27,750
+00:01:27,644 --> 00:01:28,686
 and it refuses.
 
 38
-00:01:28,166 --> 00:01:30,744
+00:01:29,102 --> 00:01:31,680
 A maximum is one real person's salary.
 
 39
-00:01:31,174 --> 00:01:33,583
+00:01:32,110 --> 00:01:34,519
 And the refusal tells the agent what to ask
 
 40
-00:01:33,583 --> 00:01:36,057
+00:01:34,519 --> 00:01:36,993
 instead, so it recovers on the next turn.
 
 41
-00:01:36,572 --> 00:01:39,591
+00:01:37,508 --> 00:01:40,527
 But a counter reading zero is just this page
 
 42
-00:01:39,604 --> 00:01:41,253
+00:01:40,540 --> 00:01:42,189
 marking its own homework.
 
 43
-00:01:41,679 --> 00:01:44,365
+00:01:42,615 --> 00:01:45,301
 So the page revokes its own network access.
 
 44
-00:01:44,790 --> 00:01:47,437
+00:01:45,726 --> 00:01:48,373
 Watch me try to leak the data on purpose.
 
 45
-00:01:47,955 --> 00:01:48,341
+00:01:48,891 --> 00:01:49,277
 Fetch.
 
 46
-00:01:48,753 --> 00:01:49,458
+00:01:49,689 --> 00:01:50,394
 XHR.
 
 47
-00:01:49,697 --> 00:01:50,548
+00:01:50,633 --> 00:01:51,484
 WebSocket.
 
 48
-00:01:51,001 --> 00:01:51,333
+00:01:51,937 --> 00:01:52,269
 Beacon.
 
 49
-00:01:51,759 --> 00:01:52,743
+00:01:52,695 --> 00:01:53,679
 Tracking pixel.
 
 50
-00:01:53,155 --> 00:01:54,817
+00:01:54,091 --> 00:01:55,753
 Chrome refuses all five.
 
 51
-00:01:55,337 --> 00:01:58,245
+00:01:56,273 --> 00:01:59,181
 And this is every byte the agent actually received.
 
 52
-00:01:58,679 --> 00:02:00,692
+00:01:59,615 --> 00:02:01,628
 Not a summary — the literal text.
 
 53
-00:02:01,114 --> 00:02:02,061
+00:02:02,050 --> 00:02:02,997
 Search it for a name,
 
 54
-00:02:02,456 --> 00:02:03,272
+00:02:03,392 --> 00:02:04,208
 and there is none.
 
 55
-00:02:03,788 --> 00:02:05,340
+00:02:04,724 --> 00:02:06,276
 Ninety-nine megabytes in.
 
 56
-00:02:05,793 --> 00:02:06,618
+00:02:06,729 --> 00:02:07,554
 Kilobytes out.
 
 57
-00:02:07,071 --> 00:02:08,005
+00:02:08,007 --> 00:02:08,941
 Zero rows.
 
 58
-00:02:08,444 --> 00:02:10,931
+00:02:09,380 --> 00:02:11,867
 And it holds: ten million rows,
 
 59
-00:02:11,151 --> 00:02:15,093
+00:02:12,087 --> 00:02:16,029
 a full gigabyte, every query still under a second.
 
 60
-00:02:15,560 --> 00:02:19,131
+00:02:16,496 --> 00:02:20,067
 Blindfold — analyse a file your AI could never read.

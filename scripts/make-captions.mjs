@@ -60,7 +60,8 @@ function withPunctuation(words, sourceText) {
       if (bare(tokens[k]) === target) {
         const token = tokens[k];
         // A standalone dash carries no timing of its own, so it would vanish
-        // and leave "one word drawn" where the line reads "one word — drawn".
+        // and leave "Ninety-nine megabytes twenty-six million tokens" where the
+        // line reads "Ninety-nine megabytes — twenty-six million tokens".
         const dashes = tokens.slice(ti, k).filter((t) => /^[—–-]$/.test(t));
         ti = k + 1;
         if (dashes.length) {

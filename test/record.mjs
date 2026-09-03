@@ -42,6 +42,12 @@ try {
   process.exit(1);
 }
 const calloutFor = (id) => spec.beats.find((b) => b.id === id)?.callout ?? null;
+/** Re-shoot a single beat without redoing the other nine. */
+const ONLY = process.env.ONLY_BEAT ?? null;
+if (ONLY && !durations[ONLY]) {
+  console.error(`No beat named ${ONLY}. Known: ${Object.keys(durations).join(', ')}`);
+  process.exit(1);
+}
 mkdirSync(OUT_DIR, { recursive: true });
 
 const beat = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -110,16 +116,38 @@ try {
         d.style.transform = 'scale(.6)';
         setTimeout(() => (d.style.transform = 'scale(1)'), 200);
       };
+      /**
+       * The ring is fixed-position, so measuring an element once and leaving it
+       * there is only correct until something moves. Expanding a feed row or
+       * scrolling to the next panel used to slide the page out from under it,
+       * and the ring would end up neatly framing an unrelated paragraph. It now
+       * follows its element every frame, and hides itself when that element is
+       * collapsed or off screen — a ring around nothing is worse than no ring.
+       */
       window.__spot = (selector, pad = 8) => {
         const r = document.getElementById('__spot');
-        const el = selector && document.querySelector(selector);
-        if (!el) { r.style.opacity = '0'; return; }
-        const b = el.getBoundingClientRect();
-        r.style.left = `${b.left - pad}px`;
-        r.style.top = `${b.top - pad}px`;
-        r.style.width = `${b.width + pad * 2}px`;
-        r.style.height = `${b.height + pad * 2}px`;
-        r.style.opacity = '1';
+        if (r.__raf) cancelAnimationFrame(r.__raf);
+        if (!selector) { r.style.opacity = '0'; return; }
+        // Keep the glide between spots, then stop transitioning so tracking is
+        // exact rather than always 450ms behind the page.
+        r.style.transition = 'opacity .35s ease, all .45s cubic-bezier(.3,.9,.3,1)';
+        const settled = performance.now() + 470;
+        const track = (now) => {
+          const el = document.querySelector(selector);
+          const b = el?.getBoundingClientRect();
+          if (b && b.height > 4 && b.bottom > 8 && b.top < window.innerHeight - 8) {
+            r.style.left = `${b.left - pad}px`;
+            r.style.top = `${b.top - pad}px`;
+            r.style.width = `${b.width + pad * 2}px`;
+            r.style.height = `${b.height + pad * 2}px`;
+            r.style.opacity = '1';
+          } else {
+            r.style.opacity = '0';
+          }
+          if (now > settled) r.style.transition = 'opacity .35s ease';
+          r.__raf = requestAnimationFrame(track);
+        };
+        r.__raf = requestAnimationFrame(track);
       };
       window.__callout = (a, b) => {
         const c = document.getElementById('__callout');
@@ -159,13 +187,20 @@ try {
   async function clip(id, action) {
     const target = durations[id];
     if (!target) throw new Error(`no measured duration for ${id}`);
+    // ONLY_BEAT=07-seal re-shoots one clip. The earlier beats still run, because
+    // each one leaves the page in the state the next one films — they just are
+    // not recorded, and are not held to their narration length.
+    const skip = ONLY && id !== ONLY;
     const started = Date.now();
-    const recorder = await page.screencast({ path: join(OUT_DIR, `${id}.webm`) });
+    const recorder = skip ? null : await page.screencast({ path: join(OUT_DIR, `${id}.webm`) });
     await action();
     const pad = Math.round(target * 1000) - (Date.now() - started);
-    if (pad > 0) await beat(pad);
-    await recorder.stop();
-    console.log(`  ${id.padEnd(12)} ${target.toFixed(1)}s${pad < 0 ? `  OVER by ${(-pad / 1000).toFixed(1)}s` : ''}`);
+    if (!skip && pad > 0) await beat(pad);
+    if (recorder) await recorder.stop();
+    console.log(
+      `  ${id.padEnd(12)} ${skip ? 'skipped' : `${target.toFixed(1)}s`}` +
+        `${!skip && pad < 0 ? `  OVER by ${(-pad / 1000).toFixed(1)}s` : ''}`,
+    );
   }
 
   console.log('recording clips →', OUT_DIR);
@@ -290,6 +325,7 @@ try {
 
   // ── 04 · the tool surface ────────────────────────────────────────
   await clip('04-tools', async () => {
+    await spotOff();
     await page.evaluate(() => document.querySelector('#tools-offered')?.scrollIntoView({ block: 'center' }));
     await beat(500);
     await pointAt('#tools-offered summary');
@@ -364,6 +400,7 @@ try {
   // ── 07 · the seal ────────────────────────────────────────────────
   await clip('07-seal', async () => {
     const [a, b] = calloutFor('07-seal') ?? [];
+    await spotOff();
     await page.evaluate(() => document.querySelector('#seal')?.scrollIntoView({ block: 'center' }));
     await beat(1600);
     await pointAt('#seal-test');
@@ -383,13 +420,29 @@ try {
   // this says exactly what crossed to the agent, character for character.
   await clip('08-verbatim', async () => {
     await callout(null, null);
+    await spotOff();
     await page.evaluate(() => document.querySelector('.feed-wrap')?.scrollIntoView({ block: 'center' }));
     await beat(700);
-    await pointAt('#feed .feed-item:nth-child(3)');
-    await page.evaluate(() => document.querySelectorAll('#feed .feed-item')[2]?.click());
+    // The line is "not a summary — the literal text, search it for a name". So
+    // open a row that actually returned data: render_chart releases nothing, and
+    // a row reading zero bytes has nothing to search.
+    const row = await page.evaluate(() => {
+      const items = [...document.querySelectorAll('#feed .feed-item')];
+      const i = items.findIndex(
+        (el) => el.dataset.verdict === 'released' && el.querySelector('.feed-tool')?.textContent === 'aggregate',
+      );
+      return (i < 0 ? 2 : i) + 1;
+    });
+    await pointAt(`#feed .feed-item:nth-child(${row})`);
+    await page.evaluate((n) => document.querySelectorAll('#feed .feed-item')[n - 1]?.click(), row);
     await beat(500);
     await hidePointer();
-    await spot('#feed .feed-item:nth-child(3) .feed-returned', 6);
+    // Expanding the row is what the line is about, so put the payload itself on
+    // screen before framing it rather than wherever the row happened to sit.
+    await page.evaluate(() =>
+      document.querySelector('#feed .feed-returned')?.scrollIntoView({ block: 'center' }));
+    await beat(500);
+    await spot('#feed .feed-returned', 6);
     await beat(400);
   });
 

@@ -12,12 +12,12 @@ clips short — the numbers below are speech only.
 | 3 | `voice/03-grading.mp3` | 11.7s | B-roll: cursor across the three sealed badges. |
 | 4 | `voice/035-override.mp3` | 21.7s | B-roll: department is reclassified to sealed, the toolset rebuilds, the same query is then refused. |
 | 5 | `voice/04-tools.mp3` | 18.3s | B-roll: the registered tool list opens. |
-| 6 | `voice/05-work.mp3` | 19.3s | B-roll: the tools run, both charts appear. |
-| 7 | `voice/06-refuse.mp3` | 11.5s | B-roll: two refusals appear in red. |
+| 6 | `voice/05-work.mp3` | 20.1s | B-roll: the tools run, both charts appear. |
+| 7 | `voice/06-refuse.mp3` | 11.5s | YOU: ChatGPT relaying the refusal, if you shot it — otherwise b-roll of two refusals in red. |
 | 8 | `voice/07-seal.mp3` | 18.8s | B-roll: the leak test refuses all five channels. |
 | 9 | `voice/08-verbatim.mp3` | 8.4s | B-roll: a feed row expands to its verbatim payload. |
 | 10 | `voice/09-close.mp3` | 15.9s | B-roll: rest on the ledger. |
-| 11 | `voice/05b-chatgpt.mp3` | 16.4s | YOU: the ChatGPT conversation, if you shoot it. Swap it in for 05-work. |
+| 11 | `voice/05b-chatgpt.mp3` | 17.3s | YOU: the ChatGPT conversation, if you shoot it. Swap it in for 05-work. |
 
 ## What you still have to shoot
 

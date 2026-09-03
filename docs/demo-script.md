@@ -33,10 +33,10 @@ Clips land within 0.15s of their narration.
 | 3 | grading | 11.7s | Cursor across the three sealed columns |
 | 3b | override | 21.7s | department reclassified to sealed; the same query then refused |
 | 4 | tools | 18.3s | The registered tool list opening |
-| 5 | work | 16.4s | The ChatGPT conversation: the question, then the chart landing |
+| 5 | work | 17.3s | The ChatGPT conversation: the question, then the chart landing |
 | 6 | refuse | 11.5s | ChatGPT relaying the refusal, and offering a percentile instead |
 | 7 | seal | 18.8s | The leak test refusing all five channels |
-| 8 | verbatim | 8.4s | A feed row expanded to its exact payload |
+| 8 | verbatim | 8.4s | A feed row expanded to the literal rows the agent received |
 | 9 | close | 15.9s | The ledger, then the tested ceiling |
 
 Number callouts are burnt in, and the two that quote measurements — the query
@@ -101,7 +101,7 @@ half minutes to answer, and most of a real-time recording is therefore someone
 waiting. Each image is held for an equal share of the line with a slow push-in
 and cross-dissolves, which reads as framing rather than as a slideshow.
 
-It is fitted to the 16.4s alternate line by adjusting speed, so record for as
+It is fitted to the 17.3s alternate line by adjusting speed, so record for as
 long as the agent needs. Assembly prefers the take while
 `docs/broll/05b-chatgpt.webm` exists; delete that file to go back to the
 scripted one.
@@ -112,7 +112,7 @@ close to real speed instead of one long take compressed evenly:
 
 ```bash
 # beat 5: the question, then the chart landing
-npm run chatgpt -- recording.mp4 --ranges 25-35,92-104 --callout-at 13.2
+npm run chatgpt -- recording.mp4 --ranges 25-35,92-104 --callout-at 14.0
 
 # beat 6: the refusal, keeping the narration that beat already has
 npm run chatgpt -- recording.mp4 --beat 06-refuse --ranges 166-180 --callout-at 7.7
