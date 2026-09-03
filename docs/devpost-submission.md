@@ -9,7 +9,7 @@ of those.
 ## Tagline (short)
 
 Analyse a file your AI could never read — without showing it a single row.
-A million rows in the tab, 27 KB to the agent, zero rows disclosed.
+A million rows in the tab. 27 KB to the agent. Zero rows disclosed.
 
 ---
 
@@ -100,15 +100,22 @@ The agent can compute almost anything: aggregates, distributions, correlations,
 cohort comparisons with effect sizes. It can draw charts on your screen. What it
 cannot do is see a row.
 
+- **The page revokes its own network access.** A counter reading zero is the page
+  marking its own homework, so once the engine boots Blindfold injects a CSP
+  taking away its own ability to reach the network — `connect-src 'none'`,
+  `form-action 'none'`, `img-src data:`. From then on the *browser* refuses
+  fetch, XHR, WebSocket, sendBeacon and tracking pixels. There is a button that
+  attempts all five so you can watch them fail, and you can read the policy out
+  of `document.head` yourself.
+- **There is no SQL tool.** Deliberately. Free-form SQL can't be proven
+  non-disclosive without a parser and a lot of hope. The agent fills in narrow
+  structured specs and the page compiles them to queries it controls. A leak
+  should be impossible to *express*, not merely refused afterwards.
 - **Columns are graded before the agent hears about them.** Direct identifiers
   (`full_name`, `email`, `employee_id`) are *sealed*: not groupable, not
   filterable, never returned. Personal measurements (`base_salary`) are
   aggregate-only. Every grade is one click to override, and changing one
   re-registers the entire toolset with new descriptions.
-- **There is no SQL tool.** Deliberately. Free-form SQL can't be proven
-  non-disclosive without a parser and a lot of hope. The agent fills in narrow
-  structured specs and the page compiles them to queries it controls. A leak
-  should be impossible to *express*, not merely refused afterwards.
 - **k-anonymity, enforced.** Any group covering fewer than five people is
   suppressed before it becomes a return value. `compare_groups` is stricter: both
   cohorts must independently clear k, because a "gap" computed over two people is
@@ -118,13 +125,6 @@ cannot do is see a row.
   it recovers on the next turn rather than giving up.
 - **A ledger, on screen.** Bytes into the page versus bytes released to the agent,
   values spent against a disclosure budget, calls refused, groups suppressed.
-- **The page revokes its own network access.** A counter reading zero is the page
-  marking its own homework, so once the engine boots Blindfold injects a CSP
-  taking away its own ability to reach the network — `connect-src 'none'`,
-  `form-action 'none'`, `img-src data:`. From then on the *browser* refuses
-  fetch, XHR, WebSocket, sendBeacon and tracking pixels. There is a button that
-  attempts all five so you can watch them fail, and you can read the policy out
-  of `document.head` yourself.
 - **A transcript, not a summary.** Every call is stored with the exact text that
   went back, character for character. Search it for a name and there is none.
 
@@ -142,6 +142,11 @@ Measured on a million rows — 99 MB, about 26 million tokens of text:
 One byte reached the agent for every 3,799 that did not, and on the way it found
 a real seeded result: a gender pay gap of about 3% at IC1–IC3 that widens to
 12–14% from IC4 upward. The model never saw a salary.
+
+That 27 KB is five questions' worth. Ask fewer and it is a couple of kilobytes;
+ask a hundred and it climbs, which is exactly why there is a disclosure budget
+rather than only a per-query check. The number that does not move is the one
+underneath it: zero rows, at any question count.
 
 ## How we built it
 
