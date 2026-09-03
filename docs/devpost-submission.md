@@ -284,7 +284,8 @@ a compliance team actually needs before they will let this near production data.
 
 - [x] Live URL, HTTPS, reachable in ChatGPT's browser or Chrome + flag — https://beeeeen.github.io/blindfold/
 - [x] Public repo, MIT licence, full source — https://github.com/Beeeeen/blindfold
-- [ ] Demo video under 3:00, public on YouTube, **with audio**
+- [x] Demo video under 3:00, public on YouTube, **with audio** —
+      https://youtu.be/AdJ01OssTeM (2:24, narrated, captions uploaded)
 - [ ] Text description covering use-case fit, UX benefit, implementation
 - [ ] Submitted before **3 Sep 2026, 13:00 PDT** (4 Sep, 04:00 Taiwan)
 - [ ] Leave the site up: judging runs to **21 Sep 2026, 17:00 PDT**, and the

@@ -1,6 +1,6 @@
 # The demo video
 
-**Already built: `docs/demo-assembly.mp4` — 2:25, narrated, captioned, with the real ChatGPT conversation in beats 5 and 6.**
+**Published: <https://youtu.be/AdJ01OssTeM>. Source file: `docs/demo-assembly.mp4` — 2:25, narrated, captioned, with the real ChatGPT conversation in beats 5 and 6.**
 
 The narration is not written out here. It lives in
 [`../voice/narration.json`](../voice/narration.json), which is what the pipeline

@@ -2,7 +2,8 @@
 
 **Analyse a file your AI could never read — without showing it a single row.**
 
-**Live: <https://beeeeen.github.io/blindfold/>**
+**Live: <https://beeeeen.github.io/blindfold/>**  
+**Demo (2:24): <https://youtu.be/AdJ01OssTeM>**
 
 A 99 MB spreadsheet is about 26 million tokens. No model can read that. Paste a
 fraction of it and you get an answer about a fraction of your data; upload the
