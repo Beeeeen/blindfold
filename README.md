@@ -151,9 +151,9 @@ three ways to check without trusting any of the above:
 
 | Check | What it proves |
 |---|---|
-| DevTools → Network, then use the app | Nothing goes out, at all |
+| DevTools → Console, then press the leak test | Chrome logging its own refusal for all five channels |
 | `document.querySelector('meta[http-equiv="Content-Security-Policy"]').content` | Read the policy yourself |
-| DevTools → Console during the leak test | The browser logging its own refusals |
+| DevTools → Network, then use the app normally | Nothing goes out at all — the panel stays empty |
 
 ### 6. The transcript is the receipt, not a summary
 

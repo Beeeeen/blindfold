@@ -85,7 +85,17 @@ try {
         '<div id="__callout_a" style="font-size:44px;font-weight:700;letter-spacing:-.02em;line-height:1.05"></div>' +
         '<div id="__callout_b" style="font-size:17px;font-weight:500;color:#9fb3a8;margin-top:9px"></div>';
 
-      document.body.append(dot, call);
+      const ring = document.createElement('div');
+      ring.id = '__spot';
+      ring.style.cssText = [
+        'position:fixed', 'z-index:99997', 'pointer-events:none',
+        'border:3px solid #1f6f4a', 'border-radius:10px',
+        'box-shadow:0 0 0 4px rgba(31,111,74,.16), 0 0 26px rgba(31,111,74,.30)',
+        'opacity:0', 'transition:opacity .35s ease, all .45s cubic-bezier(.3,.9,.3,1)',
+        'left:0', 'top:0', 'width:0', 'height:0',
+      ].join(';');
+
+      document.body.append(dot, call, ring);
       window.__point = (x, y, show = true) => {
         const d = document.getElementById('__cursor');
         d.style.opacity = show ? '1' : '0';
@@ -96,6 +106,17 @@ try {
         const d = document.getElementById('__cursor');
         d.style.transform = 'scale(.6)';
         setTimeout(() => (d.style.transform = 'scale(1)'), 200);
+      };
+      window.__spot = (selector, pad = 8) => {
+        const r = document.getElementById('__spot');
+        const el = selector && document.querySelector(selector);
+        if (!el) { r.style.opacity = '0'; return; }
+        const b = el.getBoundingClientRect();
+        r.style.left = `${b.left - pad}px`;
+        r.style.top = `${b.top - pad}px`;
+        r.style.width = `${b.width + pad * 2}px`;
+        r.style.height = `${b.height + pad * 2}px`;
+        r.style.opacity = '1';
       };
       window.__callout = (a, b) => {
         const c = document.getElementById('__callout');
@@ -122,6 +143,8 @@ try {
     await page.evaluate(() => window.__press());
   };
   const hidePointer = () => page.evaluate(() => window.__point(0, 0, false));
+  const spot = (selector, pad) => page.evaluate((s, p) => window.__spot(s, p), selector ?? null, pad ?? 8);
+  const spotOff = () => page.evaluate(() => window.__spot(null));
   const callout = (a, b) => page.evaluate((x, y) => window.__callout(x, y), a ?? null, b ?? null);
   const call = (n, a) => page.evaluate((x, y) => window.blindfold.callTool(x, y), n, a);
 
@@ -176,6 +199,7 @@ try {
   await clip('02-claim', async () => {
     const [a, b] = calloutFor('02-claim') ?? [];
     await beat(400);
+    await spot('#dataset-meta', 10);
     await callout(a, b);
     await beat(600);
   });
@@ -200,6 +224,8 @@ try {
     await beat(900);
     await hidePointer();
     await page.evaluate(() => document.querySelector('#tools-offered')?.scrollIntoView({ block: 'center' }));
+    await beat(600);
+    await spot('#tool-list', 8);
     await beat(1200);
   });
 
@@ -221,7 +247,9 @@ try {
       x_label: 'Job level', y_label: 'Gap vs male peers (%)',
       caption: 'Around 3% at IC1–IC3, then 12–14% from IC4 upward.',
     });
-    await beat(1600);
+    await beat(700);
+    await spot('.chart-card', 6);
+    await beat(900);
     // Quote what this run actually took, not a figure from another session.
     await callout(`${took.toFixed(2)} seconds`, b ?? a);
     const dept = await call('aggregate', { agg: 'median', metric: 'base_salary', group_by: ['department'] });
@@ -238,9 +266,10 @@ try {
     await callout(null, null);
     await page.evaluate(() => document.querySelector('.feed-wrap')?.scrollIntoView({ block: 'center' }));
     await beat(900);
-    await pointAt('#feed .feed-item:nth-child(1) .feed-detail');
+    await spot('#feed .feed-item:nth-child(1)', 5);
     await beat(2400);
     await hidePointer();
+    await spotOff();
   });
 
   // ── 06 · it refuses ──────────────────────────────────────────────
@@ -249,9 +278,14 @@ try {
     await page.evaluate(() => document.querySelector('.feed-wrap')?.scrollIntoView({ block: 'center' }));
     await beat(900);
     await call('aggregate', { agg: 'max', metric: 'base_salary' });
-    await beat(3200);
+    await beat(900);
+    await spot('#feed .feed-item:nth-child(1)', 5);
+    await beat(2300);
     await call('aggregate', { agg: 'count', group_by: ['full_name'] });
-    await beat(2600);
+    await beat(900);
+    await spot('#feed .feed-item:nth-child(1)', 5);
+    await beat(1700);
+    await spotOff();
   });
 
   // ── 07 · the seal ────────────────────────────────────────────────
@@ -263,7 +297,9 @@ try {
     await page.click('#seal-test');
     await page.waitForFunction(() => document.querySelectorAll('#seal-results li').length >= 5, { timeout: 30000 });
     await hidePointer();
-    await beat(2200);
+    await beat(600);
+    await spot('#seal-results', 8);
+    await beat(1600);
     await callout(a, b);
     await beat(2000);
   });
@@ -280,12 +316,17 @@ try {
     await page.evaluate(() => document.querySelectorAll('#feed .feed-item')[2]?.click());
     await beat(500);
     await hidePointer();
+    await spot('#feed .feed-item:nth-child(3) .feed-returned', 6);
+    await beat(400);
   });
 
   await clip('09-close', async () => {
     await callout(null, null);
+    await spotOff();
     await page.evaluate(() => document.querySelector('.panel-ledger')?.scrollIntoView({ block: 'start' }));
-    await beat(1600);
+    await beat(900);
+    await spot('.meters', 8);
+    await beat(1400);
     // Straight off the ledger, so the burnt-in figures match what is on screen.
     const { inText, outText } = await page.evaluate(() => ({
       inText: document.querySelector('#bytes-in')?.textContent ?? '',
